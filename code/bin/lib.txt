@@ -1,0 +1,38 @@
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Nome                                   Versão                                 Descrição
++++-======================================-=======================================-==============================================================================
+un  libgl-dev                              <nenhum>                                (sem descrição disponível)
+un  libgl1                                 <nenhum>                                (sem descrição disponível)
+ii  libgl1-mesa-dev                        8.0.3+8.0.2-0ubuntu3.2                  free implementation of the OpenGL API -- GLX development files
+ii  libgl1-mesa-dri                        8.0.3+8.0.2-0ubuntu3.2                  free implementation of the OpenGL API -- DRI modules
+un  libgl1-mesa-dri-dev                    <nenhum>                                (sem descrição disponível)
+un  libgl1-mesa-dri-experimental           <nenhum>                                (sem descrição disponível)
+ii  libgl1-mesa-glx                        8.0.3+8.0.2-0ubuntu3.2                  free implementation of the OpenGL API -- GLX runtime
+un  libgl1-mesa-glx-no-multiarch           <nenhum>                                (sem descrição disponível)
+un  libgl1-mesa-swx11-dev                  <nenhum>                                (sem descrição disponível)
+un  libgl1-nvidia-alternatives             <nenhum>                                (sem descrição disponível)
+ii  libglade2-0                            1:2.6.4-1ubuntu1.1                      library to load .glade files at runtime
+ii  libglapi-mesa                          8.0.3+8.0.2-0ubuntu3.2                  free implementation of the GL API -- shared library
+un  libglew-dev                            <nenhum>                                (sem descrição disponível)
+un  libglew1                               <nenhum>                                (sem descrição disponível)
+un  libglew1.5-dev                         <nenhum>                                (sem descrição disponível)
+ii  libglew1.6                             1.6.0-4                                 OpenGL Extension Wrangler - runtime environment
+ii  libglew1.6-dev                         1.6.0-4                                 OpenGL Extension Wrangler - development environment
+ii  libglewmx1.6                           1.6.0-4                                 OpenGL Extension Wrangler - runtime environment
+ii  libglib-perl                           2:1.241-1                               interface to the GLib and GObject libraries
+ii  libglib2.0-0                           2.32.3-0ubuntu1                         GLib library of C routines
+ii  libglib2.0-bin                         2.32.3-0ubuntu1                         Programs for the GLib library
+ii  libglib2.0-data                        2.32.3-0ubuntu1                         Common files for GLib library
+un  libglib2.0-dev                         <nenhum>                                (sem descrição disponível)
+ii  libglibmm-2.4-1c2a                     2.32.0-0ubuntu1                         C++ wrapper for the GLib toolkit (shared libraries)
+un  libglide3                              <nenhum>                                (sem descrição disponível)
+un  libglu-dev                             <nenhum>                                (sem descrição disponível)
+un  libglu1                                <nenhum>                                (sem descrição disponível)
+ii  libglu1-mesa                           8.0.3+8.0.2-0ubuntu3.2                  Mesa OpenGL utility library (GLU)
+ii  libglu1-mesa-dev                       8.0.3+8.0.2-0ubuntu3.2                  Mesa OpenGL utility library -- development files
+ii  libglui-dev                            2.36-4ubuntu1                           A GLUT-based C++ user interface library
+un  libglui2                               <nenhum>                                (sem descrição disponível)
+un  libglui2c102                           <nenhum>                                (sem descrição disponível)
+ii  libglui2c2                             2.36-4ubuntu1                           GLUI, a C++ GLUT based GUI library - Runtime support
