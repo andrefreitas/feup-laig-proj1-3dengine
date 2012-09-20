@@ -22,6 +22,7 @@ LIBS = -Llib -L/usr/local/lib -L/usr/lib  -lCGF -lm -lglut -lglui -lGL -lGLU -lG
 LDFLAGS = -g
 
 .SUFFIXES: .cpp
+all: default
 
 default: $(OUT)
 
