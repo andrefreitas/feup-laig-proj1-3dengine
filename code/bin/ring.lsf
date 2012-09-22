@@ -1,0 +1,154 @@
+<lsf>
+
+	<!-- global settings -->
+	<globals>
+		<!-- background color -->
+		<background r="ff" g="ff" b="ff" a="ff" />
+		
+		<!-- polygons configurations -->
+		<polygon mode="ss" shading="ss" />
+		
+		<!-- culling configurations -->
+		<culling frontfaceorder="ss" cullface="ss" enabled="tt" />		
+	</globals>
+	
+	
+	
+	
+	<!-- scene cameras -->
+	<cameras initial="ss" >
+		<!-- fighter 1 camera -->
+		<perspective id="ss" near="ff" far="ff" angle="ff">
+			<from x="ff" y="ff" z="ff" />
+			<to x="ff" y="ff" z="ff" />
+		</perspective>
+		
+		<!-- fighter 2 camera -->
+		<perspective id="ss" near="ff" far="ff" angle="ff">
+			<from x="ff" y="ff" z="ff" />
+			<to x="ff" y="ff" z="ff" />
+		</perspective>
+		
+		<!-- judge camera -->
+		<perspective id="ss" near="ff" far="ff" angle="ff">
+			<from x="ff" y="ff" z="ff" />
+			<to x="ff" y="ff" z="ff" />
+		</perspective>
+		
+		<!-- audience camera -->
+		<perspective id="ss" near="ff" far="ff" angle="ff">
+			<from x="ff" y="ff" z="ff" />
+			<to x="ff" y="ff" z="ff" />
+		</perspective>
+	
+		<!-- top camera -->
+		<ortho id="ss" near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" />
+	</cameras>
+	
+	
+	
+	
+	<!-- general lighting -->
+	<lighting doublesided="tt" local="tt" enabled="tt" >
+		<!-- scene ambient light -->
+		<ambient r="ff" g="ff" b="ff" a="ff" />
+		
+		<!-- scene lights -->
+		<lights>
+			<!-- top ring light -->
+			<light id="ss" enabled="tt">
+				<location x="ff" y="ff" z="ff" />
+				<ambient r="ff" g="ff" b="ff" a="ff" />
+				<diffuse r="ff" g="ff" b="ff" a="ff" />
+				<specular r="ff" g="ff" b="ff" a="ff" />
+			</light>
+			
+			<!-- spotlight 1 -->
+			<light id="ss" enabled="tt">
+				<location x="ff" y="ff" z="ff" />
+				<ambient r="ff" g="ff" b="ff" a="ff" />
+				<diffuse r="ff" g="ff" b="ff" a="ff" />
+				<specular r="ff" g="ff" b="ff" a="ff" />
+				<spot angle="ff" exponent="ff" dirx="ff" diry="ff" dirz="ff" />
+			</light>
+			
+			<!-- spotlight 2 -->
+			<light id="ss" enabled="tt">
+				<location x="ff" y="ff" z="ff" />
+				<ambient r="ff" g="ff" b="ff" a="ff" />
+				<diffuse r="ff" g="ff" b="ff" a="ff" />
+				<specular r="ff" g="ff" b="ff" a="ff" />
+				<spot angle="ff" exponent="ff" dirx="ff" diry="ff" dirz="ff" />
+			</light>
+			
+			<!-- spotlight 3 -->
+			<light id="ss" enabled="tt">
+				<location x="ff" y="ff" z="ff" />
+				<ambient r="ff" g="ff" b="ff" a="ff" />
+				<diffuse r="ff" g="ff" b="ff" a="ff" />
+				<specular r="ff" g="ff" b="ff" a="ff" />
+				<spot angle="ff" exponent="ff" dirx="ff" diry="ff" dirz="ff" />
+			</light>
+			
+			<!-- spotlight 4 -->
+			<light id="ss" enabled="tt">
+				<location x="ff" y="ff" z="ff" />
+				<ambient r="ff" g="ff" b="ff" a="ff" />
+				<diffuse r="ff" g="ff" b="ff" a="ff" />
+				<specular r="ff" g="ff" b="ff" a="ff" />
+				<spot angle="ff" exponent="ff" dirx="ff" diry="ff" dirz="ff" />
+			</light>
+		</lights>
+	</lighting>
+	
+	
+	
+	
+	<!-- materials appearance -->
+	<appearances>
+		<!-- appearance 1 -->
+		<appearance id="ss">
+			<emissive r="ff" g="ff" b="ff" a="ff" />
+			<ambient r="ff" g="ff" b="ff" a="ff" />
+			<diffuse r="ff" g="ff" b="ff" a="ff" />
+			<specular r="ff" g="ff" b="ff" a="ff" />
+			<shininess value="ff" />
+			
+			<!-- texture - optional -->
+			<texture file="ss" lenght_s="ff" lenght_t="ff" />
+		</appearance>
+		
+		<!-- more appearances here -->
+		
+	</appearances>
+	
+	
+	
+	
+	<!-- graph information -->
+	<graph rootid="ss">
+		<!-- arena -->
+		<node id="ss">
+			<transforms>
+				<translate x="ff" y="ff" z="ff" />
+				<rotate axis="ee" angle="ff" />
+				<scale x="ff" y="ff" z="ff" />
+			</transforms>
+			
+			<appearanceref id="ss" />
+			
+			<children>
+				<rectangle x1="ff" y1="ff" x2="ff" y2="ff" />
+				<triangle x1="ff" y1="ff" z1="ff" x2="ff" y2="ff" z2="ff" x3="ff" y3="ff" z3="ff" />
+				<cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+				<sphere radius="ff" slices="ii" stacks="ii" />
+				<torus inner="ff" outer="ff" slices="ii" loops="ii" />
+				
+				<noderef id="ss" /> 
+			</children>
+		</node>
+		
+		<!-- more nodes here -->
+		
+	</graph>
+</lsf>
