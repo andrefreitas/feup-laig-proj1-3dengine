@@ -30,13 +30,13 @@
 		<!-- ring camera -->
 		<perspective id="ringCam" near="0.0" far="10.0" angle="0.0">
 			<from x="0.0" y="1.0" z="0.0" />
-			<to x="" y="ff" z="ff" />
+			<to x="-10" y="1.0" z="0.0" />
 		</perspective>
 		
 		<!-- top camera -->
-		<perspective id="topCam" near="ff" far="ff" angle="ff">
-			<from x="ff" y="ff" z="ff" />
-			<to x="ff" y="ff" z="ff" />
+		<perspective id="topCam" near="0.0" far="5.0" angle="0.0">
+			<from x="0.0" y="5.0" z="0.0" />
+			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 		
 
