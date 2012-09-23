@@ -122,13 +122,144 @@
 	
 	
 	<!-- graph information -->
-	<graph rootid="ss">
-		<!-- arena -->
-		<node id="ss">
+	<graph rootid="WrestlingRing">
+	
+		<!-- begenning node -->
+		<node id="WrestlingRing">
 			<transforms>
-				<translate x="ff" y="ff" z="ff" />
-				<rotate axis="ee" angle="ff" />
-				<scale x="ff" y="ff" z="ff" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="Floor" /> 
+				<noderef id="FitnessBall" />
+				<noderef id="Doors" />
+				<noderef id="Walls" />
+				<noderef id="Ring" />
+				<noderef if="Table" />
+			</children>
+		</node>
+		
+		<node id="Floor">
+			<transforms>
+				<rotate axis="x" angle="90.0" />
+			</transforms>
+			
+			<appearanceref id="ss" />
+			
+			<children>
+				<rectangle x1="-10.0" y1="-10.0" x2="10.0" y2="10.0" />
+			</children>
+		</node>
+		
+		<node id="FitnessBall">
+			<transforms>
+				<translate x="7.0" y="0.4" z="-6.5" />
+			</transforms>
+			
+			<appearanceref id="ss" />
+			
+			<children>
+				<sphere radius="0.4" slices="18" stacks="20" />
+			</children>
+		</node>
+		
+		<node id="Doors">
+			<transforms>
+			</transforms>
+			
+			<appearanceref id="ss" />
+			
+			<children>
+				<noderef id="LeftDoor" /> 
+				<noderef id="RightDoor" />
+			</children>
+		</node>
+		
+		<node id="LeftDoor">
+			<transforms>
+				<translate x="-1.5" y="0.0" z="-9.9" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="0.0" y1="0.0" x2="1.2" y2="2.3" />
+			</children>
+		</node>
+		
+		<node id="RightDoor">
+			<transforms>
+				<translate x="0.0" y="0.0" z="-9.9" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="0.0" y1="0.0" x2="1.2" y2="2.3" /> 
+			</children>
+		</node>
+		
+		<node id="Walls">
+			<transforms>
+			</transforms>
+			
+			<appearanceref id="ss" />
+			
+			<children>
+				<noderef id="LeftWall" />
+				<noderef id="BackWall" />
+				<noderef id="RightWall" /> 
+			</children>
+		</node>
+		
+		<node id="LeftWall">
+			<transforms>
+				<rotate axis="y" angle="90.0" />
+				<translate x="-10.0" y="0.0" z="0.0" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="5.0" />
+			</children>
+		</node>
+		
+		<node id="BackWall">
+			<transforms>
+				<translate x="0.0" y="0.0" z="-10.0" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="5.0" />
+			</children>
+		</node>
+		
+		<node id="RightWall">
+			<transforms>
+				<rotate axis="y" angle="-90.0" />
+				<translate x="10.0" y="0.0" z="0.0" />
+				
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="5.0" />
+			</children>
+		</node>
+		
+	
+		<!-- ***************************** -->
+		<node id="">
+			<transforms>
+				<translate x="0.0" y="0.0" z="0.0" />
+				<rotate axis="x" angle="90.0" />
+				<scale x="1.0" y="1.0" z="1.0" />
 			</transforms>
 			
 			<appearanceref id="ss" />
@@ -143,8 +274,6 @@
 				<noderef id="ss" /> 
 			</children>
 		</node>
-		
-		<!-- more nodes here -->
 		
 	</graph>
 </lsf>
