@@ -253,6 +253,146 @@
 			</children>
 		</node>
 		
+		<node id="Ring">
+			<transforms>
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="RingBox" />
+				<noderef id="Ropes" />
+				<noderef id="Poles" />
+				<noderef id="Ladder" /> 
+			</children>
+		</node>
+		
+		<node id="RingBox">
+			<transforms>
+				<scale x="5.0" y="1.0" z="5.0" />
+				<translate x="-2.5" y="0.0" z="0.0" />
+			</transforms>
+			
+			<appearanceref id="ss" />
+			
+			<children>
+				<noderef id="UnitCube" /> 
+			</children>
+		</node>
+		
+		<node id="Ropes">
+			<transforms>
+				<rotate axis="x" angle="90.0" />
+			</transforms>
+			
+			<appearanceref id="ss" />
+			
+			<children>
+				<noderef id="RopeLeft" />
+				<noderef id="RopeBack" />
+				<noderef id="RopeRight" />
+				<noderef id="RopeFront" />
+			</children>
+		</node>
+		
+		<node id="RopeLeft">
+			<transforms>
+				<translate x="-2.5" y="0.0" z="0.0" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="RopeGroup" /> 
+			</children>
+		</node>
+		
+		<node id="RopeBack">
+			<transforms>
+				<rotate axis="y" angle="-90.0"
+				<translate x="0.0" y="0.0" z="-2.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="RopeGroup" /> 
+			</children>
+		</node>
+		
+		<node id="RopeRight">
+			<transforms>
+				<translate x="2.5" y="0.0" z="0.0" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="RopeGroup" /> 
+			</children>
+		</node>
+		
+		<node id="RopeFront">
+			<transforms>
+				<rotate axis="y" angle="-90.0" />
+				<translate x="0.0" y="0.0" z="2.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="RopeGroup" /> 
+			</children>
+		</node>
+		
+		<node id="RopeGroup">
+			<transforms>
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="RG_Bottom" />
+				<noderef id="RG_Middle" />
+				<noderef id="RG_Top" />
+			</children>
+		</node>
+		
+		<node id="RG_Bottom">
+			<transforms>
+				<translate x="0.0" y="1.5" z="0.0" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+			</children>
+		</node>
+		
+		<node id="RG_Middle">
+			<transforms>
+				<translate x="0.0" y="2.0" z="0.0" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+			</children>
+		</node>
+		
+		<node id="RG_Top">
+			<transforms>
+				<translate x="0.0" y="2.5" z="0.0" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+			</children>
+		</node>
 	
 		<!-- ***************************** -->
 		<node id="">
