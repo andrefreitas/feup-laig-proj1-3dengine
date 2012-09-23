@@ -3,46 +3,43 @@
 	<!-- global settings -->
 	<globals>
 		<!-- background color -->
-		<background r="ff" g="ff" b="ff" a="ff" />
+		<background r="0.0" g="0.0" b="0.0" a="1.0" />
 		
 		<!-- polygons configurations -->
-		<polygon mode="ss" shading="ss" />
+		<!-- mode: "fill", "line", "point" -->
+		<!-- shading: "flat", "gouraud" -->
+		<polygon mode="fill" shading="gouraud" />
 		
 		<!-- culling configurations -->
-		<culling frontfaceorder="ss" cullface="ss" enabled="tt" />		
+		<!-- frontfaceorder: "CCW", "CW" -->
+		<!-- cullface: "back", "front", "both" -->
+		<culling frontfaceorder="CCW" cullface="both" enabled="true" />		
 	</globals>
 	
 	
 	
 	
 	<!-- scene cameras -->
-	<cameras initial="ss" >
-		<!-- fighter 1 camera -->
-		<perspective id="ss" near="ff" far="ff" angle="ff">
-			<from x="ff" y="ff" z="ff" />
-			<to x="ff" y="ff" z="ff" />
+	<cameras initial="userCam" >
+		<!-- user camera -->
+		<perspective id="userCam" near="5.0" far="20.0" angle="0.0">
+			<from x="-10.0" y="0.0" z="10.0" />
+			<to x="10.0" y="5.0" z="-10.0" />
 		</perspective>
 		
-		<!-- fighter 2 camera -->
-		<perspective id="ss" near="ff" far="ff" angle="ff">
-			<from x="ff" y="ff" z="ff" />
-			<to x="ff" y="ff" z="ff" />
+		<!-- ring camera -->
+		<perspective id="ringCam" near="0.0" far="10.0" angle="0.0">
+			<from x="0.0" y="1.0" z="0.0" />
+			<to x="" y="ff" z="ff" />
 		</perspective>
 		
-		<!-- judge camera -->
-		<perspective id="ss" near="ff" far="ff" angle="ff">
-			<from x="ff" y="ff" z="ff" />
-			<to x="ff" y="ff" z="ff" />
-		</perspective>
-		
-		<!-- audience camera -->
-		<perspective id="ss" near="ff" far="ff" angle="ff">
-			<from x="ff" y="ff" z="ff" />
-			<to x="ff" y="ff" z="ff" />
-		</perspective>
-	
 		<!-- top camera -->
-		<ortho id="ss" near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" />
+		<perspective id="topCam" near="ff" far="ff" angle="ff">
+			<from x="ff" y="ff" z="ff" />
+			<to x="ff" y="ff" z="ff" />
+		</perspective>
+		
+
 	</cameras>
 	
 	
