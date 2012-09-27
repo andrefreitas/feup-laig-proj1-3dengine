@@ -1,8 +1,6 @@
 #ifndef LSFPARSER_H
 #define LSFPARSER_H
 
-#include <map>
-
 #include "tinyxml.h"
 
 class lsfParser:{
