@@ -3,7 +3,7 @@
 
 #include "tinyxml.h"
 
-class lsfParser:{
+class lsfParser{
 	private:
 		TiXmlDocument* file;
 		
@@ -16,12 +16,18 @@ class lsfParser:{
 		TiXmlElement* graph;
 		
 	public:
-		void loadFile(TiXmlDocument* file);
+		lsfParser(TiXmlDocument* file);
+		~lsfParser();
+
 		void readGlobals(TiXmlElement* globals);
 		void readCameras(TiXmlElement* cameras);
 		void readLighting(TiXmlElement* lighting);
 		void readAppearances(TiXmlElement* appearances);
 		void readGraph(TiXmlElement* graph);
 		
-		
+		TiXmlElement* getGlobals();
+		TiXmlElement* getCameras();
+		TiXmlElement* getLighting();
+		TiXmlElement* getAppearances();
+		TiXmlElement* getGraph();
 }
