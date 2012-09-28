@@ -13,7 +13,7 @@ INCLUDES = -I. -I./include/  -I./include/CGF -I/usr/local/include
 CCFLAGS = -g
 
 # compiler
-CCC = g++
+CCC = gcc
 
 # library paths
 LIBS = -Llib -L/usr/local/lib -L/usr/lib  -lCGF -lm -lglut -lglui -lGL -lGLU -lGLEW

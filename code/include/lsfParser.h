@@ -6,9 +6,9 @@
 class lsfParser{
 	private:
 		TiXmlDocument* file;
-		
+
 		TiXmlNode* node;
-		
+
 		TiXmlElement* globals;
 		TiXmlElement* cameras;
 		TiXmlElement* lighting;
@@ -30,4 +30,6 @@ class lsfParser{
 		TiXmlElement* getLighting();
 		TiXmlElement* getAppearances();
 		TiXmlElement* getGraph();
-}
+};
+
+#endif
