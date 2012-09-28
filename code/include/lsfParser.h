@@ -16,7 +16,7 @@ class lsfParser{
 		TiXmlElement* graph;
 		
 	public:
-		lsfParser(TiXmlDocument* file);
+		lsfParser(char* file);
 		~lsfParser();
 
 		void readGlobals(TiXmlElement* globals);

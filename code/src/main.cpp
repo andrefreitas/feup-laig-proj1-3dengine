@@ -10,6 +10,8 @@
 #include "TPscene.h"
 #include "DemoScene.h"
 
+#include "lsfParser.h"
+
 using std::cout;
 using std::exception;
 
@@ -23,7 +25,10 @@ int main(int argc, char* argv[]) {
 
 		app.setScene(new DemoScene());
 		app.setInterface(new CGFinterface());
-		
+
+		lsfParser *p;
+		p = new lsfParser(argv[1]);
+
 		app.run();
 	}
 	catch(GLexception& ex) {
