@@ -1,7 +1,6 @@
 #include "LSFscene.h"
 #include "CGFaxis.h"
 #include "CGFapplication.h"
-
 #include <math.h>
 
 float pi = acos(-1.0);
@@ -27,6 +26,9 @@ void LSFscene::init()
 
 	// Defines a default normal
 	glNormal3f(0,0,1);
+
+	// Initializate the parser
+	sceneParser = new lsfParser("ring.lsf");
 
 }
 

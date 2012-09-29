@@ -1,35 +1,18 @@
 #ifndef LSFPARSER_H
 #define LSFPARSER_H
-
+#define DEBUGMODE 1
 #include "tinyxml.h"
+using namespace std;
 
 class lsfParser{
 	private:
-		TiXmlDocument* file;
-
-		TiXmlNode* node;
-
-		TiXmlElement* globals;
-		TiXmlElement* cameras;
-		TiXmlElement* lighting;
-		TiXmlElement* appearances;
-		TiXmlElement* graph;
-		
+		TiXmlDocument *lsfFile;
+		TiXmlElement* lsfElement;
+		TiXmlElement* globalsElement;
 	public:
-		lsfParser(char* file);
-		~lsfParser();
+		lsfParser(char* a);
+		void getGlobals();
 
-		void readGlobals(TiXmlElement* globals);
-		void readCameras(TiXmlElement* cameras);
-		void readLighting(TiXmlElement* lighting);
-		void readAppearances(TiXmlElement* appearances);
-		void readGraph(TiXmlElement* graph);
-		
-		TiXmlElement* getGlobals();
-		TiXmlElement* getCameras();
-		TiXmlElement* getLighting();
-		TiXmlElement* getAppearances();
-		TiXmlElement* getGraph();
 };
 
 #endif
