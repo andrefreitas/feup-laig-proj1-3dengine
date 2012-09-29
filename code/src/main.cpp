@@ -1,18 +1,10 @@
-/* 
- * G0_Base: projeto inicial de CGra
- * 
- */
-
 #include <iostream>
 #include <exception>
-
 #include "CGFapplication.h"
-#include "TPscene.h"
-#include "DemoScene.h"
+#include "LSFscene.h"
 
 using std::cout;
 using std::exception;
-
 
 int main(int argc, char* argv[]) {
 
@@ -21,7 +13,7 @@ int main(int argc, char* argv[]) {
 	try {
 		app.init(&argc, argv);
 
-		app.setScene(new DemoScene());
+		app.setScene(new LSFscene());
 		app.setInterface(new CGFinterface());
 		
 		app.run();
