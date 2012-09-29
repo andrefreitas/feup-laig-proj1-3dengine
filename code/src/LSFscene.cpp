@@ -28,10 +28,12 @@ void LSFscene::init()
 	glNormal3f(0,0,1);
 
 	// Initializate the parser
-	sceneParser = new lsfParser("ring.lsf");
+	sceneParser = new lsfParser("teste.lsf");
 
 	// Get Global configurations
 	setGlobals();
+	vector<CGFcamera*> cameras;
+	sceneParser->getCameras(cameras);
 
 }
 

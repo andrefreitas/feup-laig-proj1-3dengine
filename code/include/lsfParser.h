@@ -2,7 +2,8 @@
 #define LSFPARSER_H
 #define DEBUGMODE 1
 #include "tinyxml.h"
-#include <map>
+#include <vector>
+#include "CGFcamera.h"
 using namespace std;
 
 struct globalsData{
@@ -16,9 +17,11 @@ class lsfParser{
 		TiXmlDocument *lsfFile;
 		TiXmlElement* lsfElement;
 		TiXmlElement* globalsElement;
+		TiXmlElement* camerasElement;
 	public:
 		lsfParser(char* a);
 		void getGlobals(struct globalsData *globals);
+		void getCameras(vector<CGFcamera*> &cameras);
 
 
 };
