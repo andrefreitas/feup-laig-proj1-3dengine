@@ -116,7 +116,23 @@ void LSFscene::display()
 void LSFscene::setGlobals(){
 	struct globalsData globals;
 	sceneParser->getGlobals(&globals);
+
 	// Set Background
 	glClearColor(globals.background_r, globals.background_g, globals.background_b, globals.background_a);
+
+	// Set polygon mode and shading
+	GLenum  face=GL_FRONT_AND_BACK, mode=GL_FILL;
+	if(strcmp(globals.polygon_mode,"line")==0) mode=GL_LINE;
+	else if (strcmp(globals.polygon_mode,"point")==0) mode=GL_POINT;
+	glPolygonMode(face, mode);
+
+	// Set cullings params
+	if(strcmp(globals.culling__frontfaceorder,"CW")==0) glFrontFace(GL_CW);
+	face=GL_BACK;
+	if(strcmp(globals.culling_cullface,"front")==0) face=GL_FRONT;
+	if(strcmp(globals.culling_cullface,"both")==0) face=GL_FRONT_AND_BACK;
+	glCullFace(face);
+	if(globals.culling_enabled) glEnable(GL_CULL_FACE);
+	else glDisable(GL_CULL_FACE);
 
 }

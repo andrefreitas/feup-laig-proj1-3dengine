@@ -8,7 +8,7 @@
 		<polygon mode="fill" shading="gouraud" />
 		
 		<!-- culling configurations -->
-		<culling frontfaceorder="CCW" cullface="both" enabled="true" />		
+		<culling frontfaceorder="CCW" cullface="back" enabled="true" />		
 	</globals>
 	
 	
