@@ -2,7 +2,7 @@
 	<!-- global settings -->
 	<globals>
 		<!-- background color -->
-		<background r="0.0" g="0.0" b="0.0" a="1.0" />
+		<background r="0.95" g="0.95" b="0.95" a="1.0" />
 		
 		<!-- polygons configurations -->
 		<polygon mode="fill" shading="gouraud" />
@@ -19,6 +19,8 @@
 			<from x="-10.0" y="0.0" z="10.0" />
 			<to x="10.0" y="5.0" z="-10.0" />
 		</perspective>
+		
+		<ortho id="s1s" near="5.0" far="20.0" left="14.0" right="22.0" top="20.0" bottom="20.0" />
 		
 		<!-- ring camera -->
 		<perspective id="ringCam" near="0.0" far="10.0" angle="0.0">
@@ -237,6 +239,9 @@
 			
 	</appearances>
 	
+	
+	
+	
 	<!-- graph information -->
 	<graph rootid="WrestlingRing">
 	
@@ -244,7 +249,7 @@
 			<transforms>
 			</transforms>
 			
-			<appearanceref id="inherit" />
+			<appearanceref id="ss" />
 			
 			<children>
 				<noderef id="UnitCubeFront" />
@@ -256,9 +261,9 @@
 			</children>
 		</node>
 		
-		<node id="UnitCubeFront">
+		<node id="UnitCubeBack">
 			<transforms>
-				<translate x="0.0" y="0.0" z="0.5" />
+				<translate x="0.0" y="0.0" z="-0.5" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -270,7 +275,7 @@
 		
 		<node id="UnitCubeRight">
 			<transforms>
-				<rotate axis="y" angle="90" />
+				<rotate axis="y" angle="-90" />
 				<translate x="0.0" y="0.0" z="-0.5" />
 			</transforms>
 			
@@ -281,9 +286,9 @@
 			</children>
 		</node>
 		
-		<node id="UnitCubeBack">
+		<node id="UnitCubeFront">
 			<transforms>
-				<rotate axis="y" angle="180" />
+				<rotate axis="y" angle="-180" />
 				<translate x="0.0" y="0.0" z="-0.5" />
 			</transforms>
 			
@@ -296,7 +301,7 @@
 		
 		<node id="UnitCubeLeft">
 			<transforms>
-				<rotate axis="y" angle="270" />
+				<rotate axis="y" angle="-270" />
 				<translate x="0.0" y="0.0" z="-0.5" />
 			</transforms>
 			
@@ -309,7 +314,7 @@
 		
 		<node id="UnitCubeTop">
 			<transforms>
-				<rotate axis="x" angle="90" />
+				<rotate axis="x" angle="-90" />
 				<translate x="0.0" y="0.0" z="-0.5" />
 			</transforms>
 			
@@ -322,7 +327,7 @@
 		
 		<node id="UnitCubeBottom">
 			<transforms>
-				<rotate axis="x" angle="-90" />
+				<rotate axis="x" angle="90" />
 				<translate x="0.0" y="0.0" z="-0.5" />
 			</transforms>
 			
@@ -333,6 +338,7 @@
 			</children>
 		</node>
 	
+		<!-- beginning node -->
 		<node id="WrestlingRing">
 			<transforms>
 			</transforms>
@@ -425,8 +431,8 @@
 		
 		<node id="LeftWall">
 			<transforms>
-				<translate x="-10.0" y="0.0" z="0.0" />
 				<rotate axis="y" angle="90.0" />
+				<translate x="-10.0" y="0.0" z="0.0" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -450,8 +456,8 @@
 		
 		<node id="RightWall">
 			<transforms>
-				<translate x="10.0" y="0.0" z="0.0" />
 				<rotate axis="y" angle="-90.0" />
+				<translate x="10.0" y="0.0" z="0.0" />
 				
 			</transforms>
 			
@@ -478,6 +484,8 @@
 		
 		<node id="RingBox">
 			<transforms>
+				<scale x="5.0" y="1.0" z="5.0" />
+				<translate x="-2.5" y="0.0" z="0.0" />
 			</transforms>
 			
 			<appearanceref id="ringSide" />
@@ -529,6 +537,7 @@
 		
 		<node id="Ropes">
 			<transforms>
+				<rotate axis="x" angle="90.0" />
 			</transforms>
 			
 			<appearanceref id="ringRope" />
@@ -618,7 +627,6 @@
 		<node id="RopeGroupMiddle">
 			<transforms>
 				<translate x="0.0" y="0.4" z="0.0" />
-				<rotate axis="x" angle="90" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -631,7 +639,6 @@
 		<node id="RopeGroupTop">
 			<transforms>
 				<translate x="0.0" y="0.8" z="0.0" />
-				<rotate axis="x" angle="90" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -844,7 +851,7 @@
 			</children>
 		</node>
 		
-		<node id="TableLeg">
+		<node id="TableLegsGroup">
 			<transforms>
 				<translate x="0.0" y="0.4" z="0.0" />
 				<scale x="0.1" y="0.8" z="0.1" />
@@ -898,7 +905,7 @@
 		
 		<node id="Donuts2">
 			<transforms>
-				<translate x="0.2" y="0.01" z="0.1" />
+				<translate x="0.0" y="0.0" z="0.0" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
