@@ -30,6 +30,9 @@ void LSFscene::init()
 	// Initializate the parser
 	sceneParser = new lsfParser("ring.lsf");
 
+	// Get Global configurations
+	setGlobals();
+
 }
 
 void LSFscene::display()
@@ -94,8 +97,7 @@ void LSFscene::display()
 
 	// ---- BEGIN Primitive drawing section
 
-    // NOTE: the visible face of the polygon is determined by the order of the vertices
-
+    // Background:
 	glBegin(GL_QUADS);
 		glVertex3d(0,0,0);
 		glVertex3d(4,0,0);
@@ -109,4 +111,12 @@ void LSFscene::display()
 	// while the graphics card is showing the contents of another buffer - the front buffer
 	// glutSwapBuffers() will swap pointers so that the back buffer becomes the front buffer and vice-versa
 	glutSwapBuffers();
+}
+
+void LSFscene::setGlobals(){
+	struct globalsData globals;
+	sceneParser->getGlobals(&globals);
+	// Set Background
+	glClearColor(globals.background_r, globals.background_g, globals.background_b, globals.background_a);
+
 }

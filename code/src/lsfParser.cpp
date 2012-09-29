@@ -14,14 +14,33 @@ lsfParser::lsfParser(char* a){
 	globalsElement=lsfElement->FirstChildElement( "globals" );
 
 	// Parse
-	getGlobals();
+	struct globalsData globals;
+	getGlobals(&globals);
 }
 
-void lsfParser::getGlobals(){
+void lsfParser::getGlobals(struct globalsData *globals){
+	// Background:
 	TiXmlElement *background=globalsElement->FirstChildElement( "background" );
-	float r,g,b;
-	background->QueryFloatAttribute("r",&r);
-	background->QueryFloatAttribute("g",&g);
-	background->QueryFloatAttribute("b",&b);
-	cout << "background r= " << r <<" g= " << g << " b= " << b << endl;
+	background->QueryFloatAttribute("r",&globals->background_r);
+	background->QueryFloatAttribute("g",&globals->background_g);
+	background->QueryFloatAttribute("b",&globals->background_b);
+	background->QueryFloatAttribute("a",&globals->background_a);
+
+	// Polygon
+	TiXmlElement *polygon=globalsElement->FirstChildElement( "polygon" );
+	globals->polygon_mode=polygon->Attribute("mode");
+	globals->polygon_shading=polygon->Attribute("shading");
+
+	// Culling
+	TiXmlElement *culling=globalsElement->FirstChildElement( "culling" );
+	globals->culling__frontfaceorder=culling->Attribute("frontfaceorder");
+	globals->culling_cullface=culling->Attribute("cullface");
+	culling->QueryBoolAttribute("enabled",&globals->culling_enabled);
+
+	if(DEBUGMODE){
+		cout << "\n--- Globals---\n";
+		cout << "\tbackground: " <<globals->background_r << ' ' << globals->background_g << ' ' << globals->background_b << ' ' << globals->background_a << endl;
+		cout << "\tpolygon: " <<globals->polygon_mode << ' '<< globals->polygon_shading << endl;
+		cout << "\tculling: " <<globals->culling__frontfaceorder << ' '<< globals->culling_cullface <<' ' << globals->culling_enabled <<  endl;
+	}
 }
