@@ -39,12 +39,12 @@ class CGFappearance
 
 		int materialType;
 
-		float ambient[3];
-		float diffuse[3];
-		float specular[3];
+		float ambient[4];
+		float diffuse[4];
+		float specular[4];
 		float shininess;
 
-		float color[3];
+		float color[4];
 
 		string texName;
 		int sWrap, tWrap;

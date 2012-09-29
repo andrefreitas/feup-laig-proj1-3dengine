@@ -7,7 +7,6 @@
  * 
  */
 
-
 class CGFshader
 /// Shader class for loading, storing, compiling, applying and updating GLSL shaders (vertex and fragment).
 {
