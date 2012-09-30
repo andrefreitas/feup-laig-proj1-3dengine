@@ -5,14 +5,20 @@ lsfParser::lsfParser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
 	lsfFile= new TiXmlDocument(a);
+
 	if(DEBUGMODE){
 		cout << "1- XML open: ";
-		(lsfFile->LoadFile())? cout << "OK": cout << "ERROR";
+		(lsfFile->LoadFile())? cout << "OK": cout << "ERROR" << endl;
 	}
-	// Fetch main elements sections
-	lsfElement=lsfFile->FirstChildElement( "lsf" );
-	globalsElement=lsfElement->FirstChildElement( "globals" );
-	camerasElement=lsfElement->FirstChildElement( "cameras" );
+
+	if(lsfFile->LoadFile()){
+		// Fetch main elements sections
+		lsfElement=lsfFile->FirstChildElement( "lsf" );
+		globalsElement=lsfElement->FirstChildElement( "globals" );
+		camerasElement=lsfElement->FirstChildElement( "cameras" );
+	}
+	else
+		exit(1);
 
 	// Parse
 }

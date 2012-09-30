@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	try {
 		app.init(&argc, argv);
 
-		app.setScene(new LSFscene());
+		app.setScene(new LSFscene(argv));
 		app.setInterface(new CGFinterface());
 		
 		app.run();

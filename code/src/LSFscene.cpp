@@ -10,6 +10,18 @@ float deg2rad=pi/180.0;
 
 CGFappearance *mat1;
 
+LSFscene::LSFscene(char* argv[]){
+	if(argv[1] == NULL)
+		inputScene = "teste.lsf";
+	else{
+		inputScene = argv[1];
+	}
+}
+
+LSFscene::~LSFscene(){
+
+}
+
 void LSFscene::init()
 {
 	// Enables lighting computations
@@ -28,7 +40,8 @@ void LSFscene::init()
 	glNormal3f(0,0,1);
 
 	// Initializate the parser
-	sceneParser = new lsfParser("teste.lsf");
+//	sceneParser = new lsfParser("teste.lsf");
+	sceneParser = new lsfParser(inputScene);
 
 	// Get Global configurations
 	setGlobals();

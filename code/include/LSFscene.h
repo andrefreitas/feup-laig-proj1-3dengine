@@ -7,9 +7,13 @@
 
 class LSFscene : public CGFscene
 {
+	char* inputScene;
 	lsfParser *sceneParser;
 	vector<CGFcamera*> cameras;
 public:
+	LSFscene(char* argv[]);
+	~LSFscene();
+
 	void init();
 	void display();
 	// -----
