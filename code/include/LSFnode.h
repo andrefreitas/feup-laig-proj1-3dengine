@@ -1,47 +1,36 @@
-#ifndef LSFPARSER_H
-#define LSFPARSER_H
-#include <stack>
+#ifndef LSFNODE_H
+#define LSFNODE_H
+#include <map>
+#include <string>
+#include <CGFappearance.h>
 
-// Classes for transformations
+// Class for getting the matrix of a certain transformation
 enum Axis{ X, Y, Z};
-class Transform{
+class TransformMatrix{
 	public:
-		virtual void apply();
-		virtual ~Transform();
+		static float **getRotation(Axis axis, float deg);
+		static float **getTranslate(float x, float y, float z);
+		static float **getScale(float x, float y, float z);
+		static float **mult(float **m1, float **m2);
 };
 
-class Translate:Transform{
-	protected:
-		float x,y,z;
+// Class for saving the primitive params
+enum PrimitiveType{ rectangle,triangle,cylinder,sphere,torus};
+class Primitive{
 	public:
-		Translate(float x,float y, float z);
-		void apply();
-
-};
-
-class Rotate:Transform{
-	protected:
-		float angle;
-		Axis axis;
-	public:
-		Rotate(axis,angle);
-		void apply();
-};
-
-class Scale:Transform{
-	protected:
-		float scaleX;
-		float scaleY;
-	public:
-		Scale(scaleX,scaleY);
-		void apply();
+		PrimitiveType type;
+		map<const char*,float> attr;
+		Primitive(PrimitiveType type):type(type){};
 
 };
 
-// The node
+// The node in the graph
 class LSFnode{
-	protected:
-		stack<Transform> transforms;
-};
+	public:
+		float **transformMatrix; // When the node is parsed, the transformations are put in a stack
+		CGFappearance *appearance; // Fetches the loaded appearance pointer
+		vector<Primitive> childPrimitives; // All the basic primitives
+		vector<string> childNoderefs; // All the child nodes
 
+};
 #endif

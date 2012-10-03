@@ -1,6 +1,6 @@
 #include <iostream>
 #include "LSFParser.h"
-
+#include "LSFnode.h"
 LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
@@ -16,6 +16,7 @@ LSFparser::LSFparser(char* a){
 		lsfElement=lsfFile->FirstChildElement( "lsf" );
 		globalsElement=lsfElement->FirstChildElement( "globals" );
 		camerasElement=lsfElement->FirstChildElement( "cameras" );
+		graphElement=lsfElement->FirstChildElement( "graph" );
 	}
 	else
 		exit(1);
@@ -114,5 +115,50 @@ void LSFparser::getCameras(vector<CGFcamera*> &cameras){
 		// -->
 		node=node->NextSiblingElement();
 	}
+}
+
+void LSFparser::getNodes(){
+	const char * rootid=graphElement->Attribute("rootid");
+	cout << "\nGraph: " << rootid << endl;
+	TiXmlElement *node=graphElement->FirstChildElement();
+	vector<LSFnode*> nodes;
+
+	while(node){
+		cout << "\tNode: " << node->Attribute("id") << endl;
+		// (1) Transforms
+		TiXmlElement *transforms=node->FirstChildElement("transforms");
+		TiXmlElement *transform=transforms->FirstChildElement();
+		cout << "\tTransforms:"<< endl;
+		while(transform){
+			float x,y,z,angle;
+			char axis;
+			const char* transVal=transform->Value();
+			if(strcmp(transVal,"translate")==0){
+				transform->QueryFloatAttribute("x",&x);
+				transform->QueryFloatAttribute("y",&y);
+				transform->QueryFloatAttribute("z",&z);
+				cout << "\t\tTranslate: " << x << " " << y << " " << z << endl;
+			}
+			else if (strcmp(transVal,"rotate")==0){
+				transform->QueryFloatAttribute("angle",&angle);
+				axis=*transform->Attribute("axis");
+				cout << "\t\tRotate: " << angle << " " << axis << endl;
+
+			}
+			else if (strcmp(transVal,"scale")==0){
+				transform->QueryFloatAttribute("x",&x);
+				transform->QueryFloatAttribute("y",&y);
+				transform->QueryFloatAttribute("z",&z);
+				cout << "\t\tScale: " << x << " " << y << " " << z << endl;
+			}
+			// -->
+			transform=transform->NextSiblingElement();
+		}
+
+		// -->
+		node=node->NextSiblingElement();
+		cout << "\n";
+	}
+
 }
 

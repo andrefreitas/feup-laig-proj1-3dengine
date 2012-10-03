@@ -2,7 +2,7 @@
 #include <exception>
 #include "CGFapplication.h"
 #include "LSFscene.h"
-
+#include "LSFnode.h"
 using std::cout;
 using std::exception;
 using namespace std;
@@ -26,6 +26,5 @@ int main(int argc, char* argv[]) {
 		cout << "Erro inesperado: " << ex.what();
 		return -1;
 	}
-
 	return 0;
 }

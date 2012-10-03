@@ -47,6 +47,7 @@ void LSFscene::init()
 	setGlobals();
 	vector<CGFcamera*> cameras;
 	sceneParser->getCameras(cameras);
+	sceneParser->getNodes();
 
 }
 
@@ -84,7 +85,7 @@ void LSFscene::display()
 
 	// Rotate 30 degrees around Y
 	// These constants would normally be pre-computed at initialization time
-	// they are placed here just to simplify the exampl
+	// they are placed here just to simplify the example
 	
 	float a_rad=30.0*deg2rad;
 	float cos_a = cos(a_rad);
