@@ -1,6 +1,7 @@
 #include <iostream>
 #include "LSFParser.h"
 #include "LSFnode.h"
+#include <map>
 LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
@@ -119,7 +120,7 @@ void LSFparser::getCameras(vector<CGFcamera*> &cameras){
 
 void LSFparser::getNodes(){
 	const char * rootid=graphElement->Attribute("rootid");
-	cout << "\nGraph: " << rootid << endl;
+	cout << "\n--- Graph: " << rootid << " ---"<< endl;
 	TiXmlElement *node=graphElement->FirstChildElement();
 	vector<LSFnode*> nodes;
 
@@ -166,7 +167,63 @@ void LSFparser::getNodes(){
 		TiXmlElement *child=children->FirstChildElement();
 		while(child){
 			const char* childVal=child->Value();
-			cout << "\t\t" << childVal << endl;
+			map<const char*,float> attr;
+			// -->
+			if(strcmp(childVal,"rectangle")==0){
+				child->QueryFloatAttribute("x1",&attr["x1"]);
+				child->QueryFloatAttribute("x2",&attr["x2"]);
+				child->QueryFloatAttribute("y1",&attr["y1"]);
+				child->QueryFloatAttribute("y2",&attr["y2"]);
+				cout << "\t\trectangle: " << attr["x1"] << " " << attr["y1"] << " " << attr["x2"] << " " << attr["y2"] << endl;
+
+			} else if(strcmp(childVal,"triangle")==0){
+				child->QueryFloatAttribute("x1",&attr["x1"]);
+				child->QueryFloatAttribute("x2",&attr["x2"]);
+				child->QueryFloatAttribute("x3",&attr["x3"]);
+				child->QueryFloatAttribute("y1",&attr["y1"]);
+				child->QueryFloatAttribute("y2",&attr["y2"]);
+				child->QueryFloatAttribute("y3",&attr["y3"]);
+				child->QueryFloatAttribute("z1",&attr["z1"]);
+				child->QueryFloatAttribute("z2",&attr["z2"]);
+				child->QueryFloatAttribute("z3",&attr["z3"]);
+				cout << "\t\ttriangle " << attr["x1"] << " " << attr["y1"] << " " << attr["z1"] << ""
+				     << attr["x2"] << " " << attr["y2"] << " " << attr["z2"] << ""
+				     << attr["x3"] << " " << attr["y3"] << " " << attr["z3"]
+				     << endl;
+
+
+			} else if(strcmp(childVal,"cylinder")==0){
+				int slices, stacks;
+				child->QueryFloatAttribute("base",&attr["base"]);
+				child->QueryFloatAttribute("top",&attr["top"]);
+				child->QueryFloatAttribute("height",&attr["height"]);
+				child->QueryIntAttribute("slices",&slices);
+				child->QueryIntAttribute("stacks",&stacks);
+				cout << "\t\tcylinder " << attr["base"] << " " << attr["top"] << " " << attr["height"] << " " << slices << " " << stacks << endl;
+
+			} else if(strcmp(childVal,"sphere")==0){
+				float radius;
+				int slices,stacks;
+				child->QueryFloatAttribute("radius",&radius);
+				child->QueryIntAttribute("slices",&slices);
+				child->QueryIntAttribute("stacks",&stacks);
+				cout << "\t\tsphere " << radius << " " << slices << " " << stacks << endl;
+
+			}else if(strcmp(childVal,"torus")==0){
+				float inner, outer;
+				int slices, loops;
+				child->QueryFloatAttribute("inner",&inner);
+				child->QueryFloatAttribute("outer",&outer);
+				child->QueryIntAttribute("slices",&slices);
+				child->QueryIntAttribute("loops",&loops);
+				cout << "\t\ttorus " <<  inner << " " << outer << " " << slices << " " << loops <<endl;
+
+			}else if(strcmp(childVal,"noderef")==0){
+				const char *idRef=child->Attribute("id");
+				cout << "\t\tnoderef " << idRef << endl;
+
+			}
+
 			// -->
 			child=child->NextSiblingElement();
 		}
