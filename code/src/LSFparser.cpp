@@ -1,7 +1,7 @@
 #include <iostream>
-#include "lsfParser.h"
+#include "LSFParser.h"
 
-lsfParser::lsfParser(char* a){
+LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
 	lsfFile= new TiXmlDocument(a);
@@ -23,7 +23,7 @@ lsfParser::lsfParser(char* a){
 	// Parse
 }
 
-void lsfParser::getGlobals(struct globalsData *globals){
+void LSFparser::getGlobals(struct globalsData *globals){
 	// Background:
 	TiXmlElement *background=globalsElement->FirstChildElement( "background" );
 	background->QueryFloatAttribute("r",&globals->background_r);
@@ -50,7 +50,7 @@ void lsfParser::getGlobals(struct globalsData *globals){
 	}
 }
 
-void lsfParser::getCameras(vector<CGFcamera*> &cameras){
+void LSFparser::getCameras(vector<CGFcamera*> &cameras){
 	TiXmlElement *node=camerasElement->FirstChildElement();
 	int counter=0;
 	const char *camera_id, *initial;
@@ -115,3 +115,4 @@ void lsfParser::getCameras(vector<CGFcamera*> &cameras){
 		node=node->NextSiblingElement();
 	}
 }
+

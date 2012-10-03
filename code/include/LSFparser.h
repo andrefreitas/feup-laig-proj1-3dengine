@@ -4,6 +4,7 @@
 #include "tinyxml.h"
 #include <vector>
 #include "CGFcamera.h"
+#include "LSFnode.h"
 using namespace std;
 
 struct globalsData{
@@ -12,14 +13,14 @@ struct globalsData{
 	const char *culling__frontfaceorder, *culling_cullface; bool culling_enabled;
 };
 
-class lsfParser{
+class LSFparser{
 	private:
 		TiXmlDocument *lsfFile;
 		TiXmlElement* lsfElement;
 		TiXmlElement* globalsElement;
 		TiXmlElement* camerasElement;
 	public:
-		lsfParser(char* a);
+		LSFparser(char* a);
 		void getGlobals(struct globalsData *globals);
 		void getCameras(vector<CGFcamera*> &cameras);
 

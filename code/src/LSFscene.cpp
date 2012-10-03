@@ -41,7 +41,7 @@ void LSFscene::init()
 
 	// Initializate the parser
 //	sceneParser = new lsfParser("teste.lsf");
-	sceneParser = new lsfParser(inputScene);
+	sceneParser = new LSFparser(inputScene);
 
 	// Get Global configurations
 	setGlobals();
