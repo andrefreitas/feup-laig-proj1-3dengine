@@ -155,9 +155,25 @@ void LSFparser::getNodes(){
 			transform=transform->NextSiblingElement();
 		}
 
+		// (2) Appearance
+		TiXmlElement *appearanceref=node->FirstChildElement("appearanceref");
+		const char *appearance=appearanceref->Attribute("id");
+		cout << "\tAppearance: " << appearance<< endl;
+
+		// (3) Children
+		cout << "\tChildren: " << endl;
+		TiXmlElement *children=node->FirstChildElement("children");
+		TiXmlElement *child=children->FirstChildElement();
+		while(child){
+			const char* childVal=child->Value();
+			cout << "\t\t" << childVal << endl;
+			// -->
+			child=child->NextSiblingElement();
+		}
+
 		// -->
 		node=node->NextSiblingElement();
-		cout << "\n";
+		cout << "\n\t-----\n";
 	}
 
 }
