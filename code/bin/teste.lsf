@@ -240,21 +240,99 @@
 	<!-- graph information -->
 	<graph rootid="UnitCube">
 	
-		<node id="UnitCube">
+	<node id="UnitCube">
 			<transforms>
+			<translate x="0" y="4" z="0"/>
 			</transforms>
 			
 			<appearanceref id="inherit" />
 			
 			<children>
-				<rectangle x1="3" y1="3" x2="6" y2="6" /> 
-				<cylinder base="2.0" top="1" height="10" slices="17" stacks="5" /> 
-				<triangle x1="3" y1="6" z1="0" x2="6" y2="6" z2="0" x3="4.5" y3="9" z3="0" /> 
-				<sphere radius="2" slices="16" stacks="16" />
-				<torus inner="0.5" outer="4.3" slices="16" loops="16" />
+				<noderef id="UnitCubeFront" />
+				<noderef id="UnitCubeLeft" />
+				<noderef id="UnitCubeBack" />
+				<noderef id="UnitCubeRight" />
+				<noderef id="UnitCubeTop" />
+				<noderef id="UnitCubeBottom" />
 			</children>
 		</node>
-	
+		
+		<node id="UnitCubeFront">
+			<transforms>
+				<translate x="0.0" y="0.0" z="0.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
+			</children>
+		</node>
+		
+		<node id="UnitCubeRight">
+			<transforms>
+				<rotate axis="y" angle="90" />
+				<translate x="0.0" y="0.0" z="-0.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
+			</children>
+		</node>
+		
+		<node id="UnitCubeBack">
+			<transforms>
+				<rotate axis="y" angle="180" />
+				<translate x="0.0" y="0.0" z="-0.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
+			</children>
+		</node>
+		
+		<node id="UnitCubeLeft">
+			<transforms>
+				<rotate axis="y" angle="270" />
+				<translate x="0.0" y="0.0" z="-0.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
+			</children>
+		</node>
+		
+		<node id="UnitCubeTop">
+			<transforms>
+				<rotate axis="x" angle="90" />
+				<translate x="0.0" y="0.0" z="-0.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
+			</children>
+		</node>
+		
+		<node id="UnitCubeBottom">
+			<transforms>
+				<rotate axis="x" angle="-90" />
+				<translate x="0.0" y="0.0" z="-0.5" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
+			</children>
+		</node>
 			
 	</graph>
 </lsf>

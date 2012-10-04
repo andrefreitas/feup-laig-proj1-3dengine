@@ -3,6 +3,13 @@
 #include <iostream>
 using namespace std;
 void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
+	if(nodes[rootNode]==0) {
+		cout << "\nNo inexistente\n";
+		return;
+	}
+	// Transforms
+	glPushMatrix();
+	glMultMatrixf(nodes[rootNode]->transformMatrix);
 	// Process the primitives
 	for (int unsigned i=0; i<nodes[rootNode]->childPrimitives.size();i++){
 		Primitive primitive=nodes[rootNode]->childPrimitives[i];
@@ -31,8 +38,11 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 			}
 		}
 
-
-
 	}
+	// Process the noderefs
+	for (int unsigned i=0; i<nodes[rootNode]->childNoderefs.size();i++){
+		render(nodes,nodes[rootNode]->childNoderefs[i]);
+	}
+	glPopMatrix();
 
 }

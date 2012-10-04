@@ -136,6 +136,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 		TiXmlElement *transform=transforms->FirstChildElement();
 		if(DEBUGMODE)cout << "\tTransforms:"<< endl;
 		// Compute transforms
+		glPushMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		stack<Transform> transfs;
@@ -177,6 +178,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 			transform=transform->NextSiblingElement();
 		}
 		glGetFloatv(GL_MODELVIEW_MATRIX,pnode->transformMatrix);
+		glPopMatrix();
 
 		// (2) Appearance
 		TiXmlElement *appearanceref=node->FirstChildElement("appearanceref");
@@ -241,7 +243,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 				child->QueryIntAttribute("stacks",&stacks);
 				prim.attr["slices"]=slices;
 				prim.attr["stacks"]=stacks;
-				if(DEBUGMODE) cout << "\t\tsphere " << &prim.attr["radius"] << " " << prim.attr["slices"]<< " " << prim.attr["stacks"] << endl;
+				if(DEBUGMODE) cout << "\t\tsphere " << prim.attr["radius"] << " " << prim.attr["slices"]<< " " << prim.attr["stacks"] << endl;
 				pnode->childPrimitives.push_back(prim);
 
 			}else if(strcmp(childVal,"torus")==0){
