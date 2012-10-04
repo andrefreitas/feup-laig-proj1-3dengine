@@ -120,11 +120,11 @@ void LSFparser::getCameras(vector<CGFcamera*> &cameras){
 	}
 }
 
-void LSFparser::getNodes(){
+void LSFparser::getNodes(map<const char*,LSFnode*> &nodes,string &rootNode){
 	const char * rootid=graphElement->Attribute("rootid");
+	rootNode.assign(rootid);
 	if(DEBUGMODE) cout << "\n--- Graph: " << rootid << " ---"<< endl;
 	TiXmlElement *node=graphElement->FirstChildElement();
-	vector<LSFnode*> nodes;
 
 	while(node){
 		LSFnode *pnode=new LSFnode();
@@ -269,6 +269,7 @@ void LSFparser::getNodes(){
 		}
 
 		// -->
+		nodes[pnode->id]=pnode; // Add this node
 		node=node->NextSiblingElement();
 		if(DEBUGMODE) cout << "\n\t-----\n";
 	}

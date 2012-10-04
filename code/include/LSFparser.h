@@ -24,7 +24,8 @@ class LSFparser{
 		LSFparser(char* a);
 		void getGlobals(struct globalsData *globals);
 		void getCameras(vector<CGFcamera*> &cameras);
-		void getNodes();
+		void getNodes(map<const char*,LSFnode*> &nodes,string &rootNode);
+		void buildSceneGraph();
 
 
 };
