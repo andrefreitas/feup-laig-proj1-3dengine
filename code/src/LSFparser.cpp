@@ -3,6 +3,7 @@
 #include "LSFnode.h"
 #include <map>
 #include <stack>
+#include <CGFapplication.h>
 LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
@@ -127,7 +128,7 @@ void LSFparser::getNodes(){
 
 	while(node){
 		LSFnode *pnode=new LSFnode();
-
+		pnode->id=new char[100];
 		strcpy(pnode->id,node->Attribute("id")); // save in the node
 
 		cout << "\tNode: " << node->Attribute("id") << endl;
@@ -135,10 +136,9 @@ void LSFparser::getNodes(){
 		TiXmlElement *transforms=node->FirstChildElement("transforms");
 		TiXmlElement *transform=transforms->FirstChildElement();
 		cout << "\tTransforms:"<< endl;
-
-		// Use openGL to compute matrix
-		//glMatrixMode(GL_MODELVIEW);
-		//glLoadIdentity();
+		// Compute transforms
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 		stack<Transform> transfs;
 		// --->
 		while(transform){
@@ -150,14 +150,19 @@ void LSFparser::getNodes(){
 				transform->QueryFloatAttribute("y",&y);
 				transform->QueryFloatAttribute("z",&z);
 				cout << "\t\tTranslate: " << x << " " << y << " " << z << endl;
-				Transform aux(translate);
-
+				glTranslatef(x,y,z);
 
 			}
 			else if (strcmp(transVal,"rotate")==0){
 				transform->QueryFloatAttribute("angle",&angle);
 				axis=*transform->Attribute("axis");
 				cout << "\t\tRotate: " << angle << " " << axis << endl;
+				x=0; y=0; z=0;
+				if(axis=='x') x=1;
+				if(axis=='y') y=1;
+				if(axis=='z') z=1;
+				glRotatef(angle,x,y,z);
+
 
 			}
 			else if (strcmp(transVal,"scale")==0){
@@ -165,15 +170,20 @@ void LSFparser::getNodes(){
 				transform->QueryFloatAttribute("y",&y);
 				transform->QueryFloatAttribute("z",&z);
 				cout << "\t\tScale: " << x << " " << y << " " << z << endl;
+				glScalef(x,y,z);
+
 			}
+
 			// -->
 			transform=transform->NextSiblingElement();
 		}
+		glGetFloatv(GL_MODELVIEW_MATRIX,pnode->transformMatrix);
 
 		// (2) Appearance
 		TiXmlElement *appearanceref=node->FirstChildElement("appearanceref");
 		const char *appearance=appearanceref->Attribute("id");
 		cout << "\tAppearance: " << appearance<< endl;
+		//TODO: use appearances[appearanceref]
 
 		// (3) Children
 		cout << "\tChildren: " << endl;
@@ -183,12 +193,19 @@ void LSFparser::getNodes(){
 			const char* childVal=child->Value();
 			map<const char*,float> attr;
 			// -->
+
 			if(strcmp(childVal,"rectangle")==0){
 				child->QueryFloatAttribute("x1",&attr["x1"]);
 				child->QueryFloatAttribute("x2",&attr["x2"]);
 				child->QueryFloatAttribute("y1",&attr["y1"]);
 				child->QueryFloatAttribute("y2",&attr["y2"]);
 				cout << "\t\trectangle: " << attr["x1"] << " " << attr["y1"] << " " << attr["x2"] << " " << attr["y2"] << endl;
+				Primitive prim(rectangle);
+				prim.attr["x1"]=attr["x1"];
+				prim.attr["x2"]=attr["x2"];
+				prim.attr["y1"]=attr["y1"];
+				prim.attr["y2"]=attr["y2"];
+				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"triangle")==0){
 				child->QueryFloatAttribute("x1",&attr["x1"]);
@@ -234,7 +251,9 @@ void LSFparser::getNodes(){
 
 			}else if(strcmp(childVal,"noderef")==0){
 				const char *idRef=child->Attribute("id");
-				cout << "\t\tnoderef " << idRef << endl;
+				string st(idRef);
+				pnode->childNoderefs.push_back(st);
+				cout << "\t\tnoderef " << st << endl;
 
 			}
 
