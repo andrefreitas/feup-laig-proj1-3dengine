@@ -1,6 +1,6 @@
 #ifndef LSFPARSER_H
 #define LSFPARSER_H
-#define DEBUGMODE 0
+#define DEBUGMODE 1
 #include "tinyxml.h"
 #include <vector>
 #include "CGFcamera.h"

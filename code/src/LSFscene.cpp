@@ -50,7 +50,7 @@ void LSFscene::init()
 	vector<CGFcamera*> cameras;
 	sceneParser->getCameras(cameras);
 	sceneParser->getNodes(nodes,rootNode);
-	cout << nodes["UnitCube"]->childNoderefs.size() ;
+	cout << "x2: " << nodes["UnitCube"]->childPrimitives[0].attr["x2"];
 }
 
 void LSFscene::display()

@@ -9,7 +9,7 @@ enum PrimitiveType{ rectangle,triangle,cylinder,sphere,torus};
 class Primitive{
 	public:
 		PrimitiveType type;
-		map<const char*,float> attr;
+		map<string,float> attr;
 		Primitive(PrimitiveType type):type(type){};
 
 };
@@ -18,7 +18,7 @@ enum TransformType{ translate,rotateX,rotateY,rotateZ,scale};
 class Transform{
 	public:
 	    TransformType type;
-		map<const char*,float> attr;
+		map<string,float> attr;
 		Transform(TransformType type):type(type){};
 
 };

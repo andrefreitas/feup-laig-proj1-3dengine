@@ -271,7 +271,6 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 		string aux;
 		aux.assign(pnode->id);
 		nodes[aux]=pnode; // Add this node
-		cout << aux << endl;
 		node=node->NextSiblingElement();
 		if(DEBUGMODE) cout << "\n\t-----\n";
 	}
