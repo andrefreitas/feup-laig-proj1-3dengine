@@ -10,7 +10,7 @@ class LSFscene : public CGFscene
 	char* inputScene;
 	LSFparser *sceneParser;
 	map<const char*,CGFappearance*> appearances;
-	map<const char*,LSFnode*> nodes;
+	map<string,LSFnode*> nodes;
 	string rootNode;
 
 public:

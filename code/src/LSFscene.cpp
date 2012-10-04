@@ -3,6 +3,8 @@
 #include "CGFapplication.h"
 #include <math.h>
 #include "LSFrender.h"
+#include <iostream>
+using namespace std;
 float pi = acos(-1.0);
 float deg2rad=pi/180.0;
 
@@ -48,6 +50,7 @@ void LSFscene::init()
 	vector<CGFcamera*> cameras;
 	sceneParser->getCameras(cameras);
 	sceneParser->getNodes(nodes,rootNode);
+	cout << nodes["UnitCube"]->childNoderefs.size() ;
 }
 
 void LSFscene::display()
@@ -71,8 +74,6 @@ void LSFscene::display()
 	// ---- END Background, camera and axis setup
 
 	// ---- BEGIN Primitive drawing section
-	LSFrender::render(nodes,rootNode);
-
 	// ---- END Primitive drawing section
 
 	// We have been drawing in a memory area that is not visible - the back buffer, 
