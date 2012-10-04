@@ -72,6 +72,7 @@ void LSFscene::display()
 	axis.draw();
 
 	// ---- END Background, camera and axis setup
+	LSFrender::render(nodes,rootNode);
 
 	// ---- BEGIN Primitive drawing section
 	// ---- END Primitive drawing section
