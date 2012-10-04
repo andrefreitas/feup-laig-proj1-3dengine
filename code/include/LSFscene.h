@@ -4,12 +4,14 @@
 #include "CGFscene.h"
 #include "CGFappearance.h"
 #include <vector>
-
+#include <map>
 class LSFscene : public CGFscene
 {
 	char* inputScene;
 	LSFparser *sceneParser;
-	vector<CGFcamera*> cameras;
+	map<const char*,CGFappearance*> appearances;
+	map<const char*,LSFnode*> nodes;
+
 public:
 	LSFscene(char* argv[]);
 	~LSFscene();

@@ -2,6 +2,7 @@
 #include "LSFParser.h"
 #include "LSFnode.h"
 #include <map>
+#include <stack>
 LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
@@ -125,11 +126,21 @@ void LSFparser::getNodes(){
 	vector<LSFnode*> nodes;
 
 	while(node){
+		LSFnode *pnode=new LSFnode();
+
+		strcpy(pnode->id,node->Attribute("id")); // save in the node
+
 		cout << "\tNode: " << node->Attribute("id") << endl;
 		// (1) Transforms
 		TiXmlElement *transforms=node->FirstChildElement("transforms");
 		TiXmlElement *transform=transforms->FirstChildElement();
 		cout << "\tTransforms:"<< endl;
+
+		// Use openGL to compute matrix
+		//glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
+		stack<Transform> transfs;
+		// --->
 		while(transform){
 			float x,y,z,angle;
 			char axis;
@@ -139,6 +150,9 @@ void LSFparser::getNodes(){
 				transform->QueryFloatAttribute("y",&y);
 				transform->QueryFloatAttribute("z",&z);
 				cout << "\t\tTranslate: " << x << " " << y << " " << z << endl;
+				Transform aux(translate);
+
+
 			}
 			else if (strcmp(transVal,"rotate")==0){
 				transform->QueryFloatAttribute("angle",&angle);

@@ -24,9 +24,19 @@ class Primitive{
 
 };
 
+enum TransformType{ translate,rotateX,rotateY,rotateZ,scale};
+class Transform{
+	public:
+	    TransformType type;
+		map<const char*,float> attr;
+		Transform(TransformType type):type(type){};
+
+};
+
 // The node in the graph
 class LSFnode{
 	public:
+		char *id;
 		float **transformMatrix; // When the node is parsed, the transformations are put in a stack
 		CGFappearance *appearance; // Fetches the loaded appearance pointer
 		vector<Primitive> childPrimitives; // All the basic primitives
