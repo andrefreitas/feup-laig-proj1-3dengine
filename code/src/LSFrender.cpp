@@ -1,6 +1,6 @@
 #include "LSFrender.h"
 #include <iostream>
 using namespace std;
-void LSFrender::render(map<const char*,LSFnode*> &nodes,string &rootNode){
+void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 
 }

@@ -6,7 +6,7 @@
 #include "CGFapplication.h"
 class LSFrender{
 	public:
-		static void render(map<const char*,LSFnode*> &nodes,string &rootNode);
+		static void render(map<string,LSFnode*> &nodes,string &rootNode);
 };
 
 
