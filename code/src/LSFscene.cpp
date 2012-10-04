@@ -2,7 +2,7 @@
 #include "CGFaxis.h"
 #include "CGFapplication.h"
 #include <math.h>
-
+#include "LSFrender.h"
 float pi = acos(-1.0);
 float deg2rad=pi/180.0;
 
@@ -47,9 +47,7 @@ void LSFscene::init()
 	setGlobals();
 	vector<CGFcamera*> cameras;
 	sceneParser->getCameras(cameras);
-
 	sceneParser->getNodes(nodes,rootNode);
-
 }
 
 void LSFscene::display()
@@ -72,17 +70,8 @@ void LSFscene::display()
 
 	// ---- END Background, camera and axis setup
 
-	
-
 	// ---- BEGIN Primitive drawing section
-
-    // Background:
-	glBegin(GL_QUADS);
-		glVertex3d(0,0,0);
-		glVertex3d(4,0,0);
-		glVertex3d(4,3,0);
-		glVertex3d(0,3,0);
-	glEnd();
+	LSFrender::render(nodes,rootNode);
 
 	// ---- END Primitive drawing section
 
