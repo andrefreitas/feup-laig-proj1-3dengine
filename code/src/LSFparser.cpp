@@ -62,7 +62,7 @@ void LSFparser::getCameras(vector<CGFcamera*> &cameras){
 	float camera_near,camera_far,camera_angle,camera_left, camera_right, camera_top,camera_bottom;
 	float camera_fromX,camera_fromY,camera_fromZ;
 	float camera_toX,camera_toY,camera_toZ;
-	cout << "\n--- Cameras: " << initial << " ---";
+	if(DEBUGMODE) cout << "\n--- Cameras: " << initial << " ---";
 	// Loop trough cameras
 	while(node){
 		counter++;
@@ -122,7 +122,7 @@ void LSFparser::getCameras(vector<CGFcamera*> &cameras){
 
 void LSFparser::getNodes(){
 	const char * rootid=graphElement->Attribute("rootid");
-	cout << "\n--- Graph: " << rootid << " ---"<< endl;
+	if(DEBUGMODE) cout << "\n--- Graph: " << rootid << " ---"<< endl;
 	TiXmlElement *node=graphElement->FirstChildElement();
 	vector<LSFnode*> nodes;
 
@@ -131,11 +131,11 @@ void LSFparser::getNodes(){
 		pnode->id=new char[100];
 		strcpy(pnode->id,node->Attribute("id")); // save in the node
 
-		cout << "\tNode: " << node->Attribute("id") << endl;
+		if(DEBUGMODE) cout << "\tNode: " << node->Attribute("id") << endl;
 		// (1) Transforms
 		TiXmlElement *transforms=node->FirstChildElement("transforms");
 		TiXmlElement *transform=transforms->FirstChildElement();
-		cout << "\tTransforms:"<< endl;
+		if(DEBUGMODE)cout << "\tTransforms:"<< endl;
 		// Compute transforms
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -149,14 +149,14 @@ void LSFparser::getNodes(){
 				transform->QueryFloatAttribute("x",&x);
 				transform->QueryFloatAttribute("y",&y);
 				transform->QueryFloatAttribute("z",&z);
-				cout << "\t\tTranslate: " << x << " " << y << " " << z << endl;
+				if(DEBUGMODE) cout << "\t\tTranslate: " << x << " " << y << " " << z << endl;
 				glTranslatef(x,y,z);
 
 			}
 			else if (strcmp(transVal,"rotate")==0){
 				transform->QueryFloatAttribute("angle",&angle);
 				axis=*transform->Attribute("axis");
-				cout << "\t\tRotate: " << angle << " " << axis << endl;
+				if(DEBUGMODE) cout << "\t\tRotate: " << angle << " " << axis << endl;
 				x=0; y=0; z=0;
 				if(axis=='x') x=1;
 				if(axis=='y') y=1;
@@ -169,7 +169,7 @@ void LSFparser::getNodes(){
 				transform->QueryFloatAttribute("x",&x);
 				transform->QueryFloatAttribute("y",&y);
 				transform->QueryFloatAttribute("z",&z);
-				cout << "\t\tScale: " << x << " " << y << " " << z << endl;
+				if(DEBUGMODE) cout << "\t\tScale: " << x << " " << y << " " << z << endl;
 				glScalef(x,y,z);
 
 			}
@@ -182,11 +182,11 @@ void LSFparser::getNodes(){
 		// (2) Appearance
 		TiXmlElement *appearanceref=node->FirstChildElement("appearanceref");
 		const char *appearance=appearanceref->Attribute("id");
-		cout << "\tAppearance: " << appearance<< endl;
+		if(DEBUGMODE) cout << "\tAppearance: " << appearance<< endl;
 		//TODO: use appearances[appearanceref]
 
 		// (3) Children
-		cout << "\tChildren: " << endl;
+		if(DEBUGMODE) cout << "\tChildren: " << endl;
 		TiXmlElement *children=node->FirstChildElement("children");
 		TiXmlElement *child=children->FirstChildElement();
 		while(child){
@@ -195,65 +195,72 @@ void LSFparser::getNodes(){
 			// -->
 
 			if(strcmp(childVal,"rectangle")==0){
-				child->QueryFloatAttribute("x1",&attr["x1"]);
-				child->QueryFloatAttribute("x2",&attr["x2"]);
-				child->QueryFloatAttribute("y1",&attr["y1"]);
-				child->QueryFloatAttribute("y2",&attr["y2"]);
-				cout << "\t\trectangle: " << attr["x1"] << " " << attr["y1"] << " " << attr["x2"] << " " << attr["y2"] << endl;
 				Primitive prim(rectangle);
-				prim.attr["x1"]=attr["x1"];
-				prim.attr["x2"]=attr["x2"];
-				prim.attr["y1"]=attr["y1"];
-				prim.attr["y2"]=attr["y2"];
+				child->QueryFloatAttribute("x1",&prim.attr["x1"]);
+				child->QueryFloatAttribute("x2",&prim.attr["x2"]);
+				child->QueryFloatAttribute("y1",&prim.attr["y1"]);
+				child->QueryFloatAttribute("y2",&prim.attr["y2"]);
+				if(DEBUGMODE) cout << "\t\trectangle: " << prim.attr["x1"] << " " << prim.attr["y1"] << " " << prim.attr["x2"] << " " << prim.attr["y2"] << endl;
 				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"triangle")==0){
-				child->QueryFloatAttribute("x1",&attr["x1"]);
-				child->QueryFloatAttribute("x2",&attr["x2"]);
-				child->QueryFloatAttribute("x3",&attr["x3"]);
-				child->QueryFloatAttribute("y1",&attr["y1"]);
-				child->QueryFloatAttribute("y2",&attr["y2"]);
-				child->QueryFloatAttribute("y3",&attr["y3"]);
-				child->QueryFloatAttribute("z1",&attr["z1"]);
-				child->QueryFloatAttribute("z2",&attr["z2"]);
-				child->QueryFloatAttribute("z3",&attr["z3"]);
-				cout << "\t\ttriangle " << attr["x1"] << " " << attr["y1"] << " " << attr["z1"] << ""
-				     << attr["x2"] << " " << attr["y2"] << " " << attr["z2"] << ""
-				     << attr["x3"] << " " << attr["y3"] << " " << attr["z3"]
+				Primitive prim(triangle);
+				child->QueryFloatAttribute("x1",&prim.attr["x1"]);
+				child->QueryFloatAttribute("x2",&prim.attr["x2"]);
+				child->QueryFloatAttribute("x3",&prim.attr["x3"]);
+				child->QueryFloatAttribute("y1",&prim.attr["y1"]);
+				child->QueryFloatAttribute("y2",&prim.attr["y2"]);
+				child->QueryFloatAttribute("y3",&prim.attr["y3"]);
+				child->QueryFloatAttribute("z1",&prim.attr["z1"]);
+				child->QueryFloatAttribute("z2",&prim.attr["z2"]);
+				child->QueryFloatAttribute("z3",&prim.attr["z3"]);
+				if(DEBUGMODE)cout << "\t\ttriangle " << prim.attr["x1"] << " " << prim.attr["y1"] << " " << prim.attr["z1"] << ""
+				    << prim.attr["x2"] << " " << prim.attr["y2"] << " " << prim.attr["z2"] << ""
+				    << prim.attr["x3"] << " " << prim.attr["y3"] << " " << prim.attr["z3"]
 				     << endl;
-
+				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"cylinder")==0){
+				Primitive prim(cylinder);
 				int slices, stacks;
-				child->QueryFloatAttribute("base",&attr["base"]);
-				child->QueryFloatAttribute("top",&attr["top"]);
-				child->QueryFloatAttribute("height",&attr["height"]);
+				child->QueryFloatAttribute("base",&prim.attr["base"]);
+				child->QueryFloatAttribute("top",&prim.attr["top"]);
+				child->QueryFloatAttribute("height",&prim.attr["height"]);
 				child->QueryIntAttribute("slices",&slices);
 				child->QueryIntAttribute("stacks",&stacks);
-				cout << "\t\tcylinder " << attr["base"] << " " << attr["top"] << " " << attr["height"] << " " << slices << " " << stacks << endl;
+				prim.attr["slices"]=slices;
+				prim.attr["stacks"]=stacks;
+				if(DEBUGMODE) cout << "\t\tcylinder " << prim.attr["base"] << " " << prim.attr["top"] << " " << prim.attr["height"] << " "
+						<< prim.attr["slices"] << " " << prim.attr["stacks"] << endl;
+				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"sphere")==0){
-				float radius;
+				Primitive prim(sphere);
 				int slices,stacks;
-				child->QueryFloatAttribute("radius",&radius);
+				child->QueryFloatAttribute("radius",&prim.attr["radius"]);
 				child->QueryIntAttribute("slices",&slices);
 				child->QueryIntAttribute("stacks",&stacks);
-				cout << "\t\tsphere " << radius << " " << slices << " " << stacks << endl;
+				prim.attr["slices"]=slices;
+				prim.attr["stacks"]=stacks;
+				if(DEBUGMODE) cout << "\t\tsphere " << &prim.attr["radius"] << " " << prim.attr["slices"]<< " " << prim.attr["stacks"] << endl;
+				pnode->childPrimitives.push_back(prim);
 
 			}else if(strcmp(childVal,"torus")==0){
-				float inner, outer;
+				Primitive prim(torus);
 				int slices, loops;
-				child->QueryFloatAttribute("inner",&inner);
-				child->QueryFloatAttribute("outer",&outer);
+				child->QueryFloatAttribute("inner",&prim.attr["inner"]);
+				child->QueryFloatAttribute("outer",&prim.attr["outer"]);
 				child->QueryIntAttribute("slices",&slices);
 				child->QueryIntAttribute("loops",&loops);
-				cout << "\t\ttorus " <<  inner << " " << outer << " " << slices << " " << loops <<endl;
-
+				prim.attr["slices"]=slices;
+				prim.attr["loops"]=loops;
+				//cout << "\t\ttorus " <<  prim.attr["inner"]<< " " << prim.attr["outer"] << " " << prim.attr["slices"] << " " << prim.attr["loops"]<<endl;
+				pnode->childPrimitives.push_back(prim);
 			}else if(strcmp(childVal,"noderef")==0){
 				const char *idRef=child->Attribute("id");
 				string st(idRef);
 				pnode->childNoderefs.push_back(st);
-				cout << "\t\tnoderef " << st << endl;
+				if(DEBUGMODE) cout << "\t\tnoderef " << st << endl;
 
 			}
 
@@ -263,7 +270,7 @@ void LSFparser::getNodes(){
 
 		// -->
 		node=node->NextSiblingElement();
-		cout << "\n\t-----\n";
+		if(DEBUGMODE) cout << "\n\t-----\n";
 	}
 
 }
