@@ -248,16 +248,17 @@
 			<appearanceref id="inherit" />
 			
 			<children>
-				<noderef id="UnitCubeFront" />
-				<noderef id="UnitCubeLeft" />
-				<noderef id="UnitCubeBack" />
-				<noderef id="UnitCubeRight" />
-				<noderef id="UnitCubeTop" />
-				<noderef id="UnitCubeBottom" />
+				<noderef id="UC1" />
+				<noderef id="UC2" />
+				<noderef id="UC3" />
+				<noderef id="UC4" />
+				<noderef id="UCTop" />
+				<noderef id="UCBot" />
+	
 			</children>
 		</node>
 		
-		<node id="UnitCubeFront">
+		<node id="UC1">
 			<transforms>
 				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
@@ -269,10 +270,10 @@
 			</children>
 		</node>
 		
-		<node id="UnitCubeRight">
+		<node id="UC2">
 			<transforms>
-				<rotate axis="y" angle="90" />
-				<translate x="0.0" y="0.0" z="-0.5" />
+				<rotate axis="y" angle="90"/>
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -282,10 +283,10 @@
 			</children>
 		</node>
 		
-		<node id="UnitCubeBack">
+		<node id="UC3">
 			<transforms>
-				<rotate axis="y" angle="180" />
-				<translate x="0.0" y="0.0" z="-0.5" />
+				<rotate axis="y" angle="180"/>
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -295,10 +296,10 @@
 			</children>
 		</node>
 		
-		<node id="UnitCubeLeft">
+		<node id="UC4">
 			<transforms>
-				<rotate axis="y" angle="270" />
-				<translate x="0.0" y="0.0" z="-0.5" />
+				<rotate axis="y" angle="270"/>
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -308,10 +309,10 @@
 			</children>
 		</node>
 		
-		<node id="UnitCubeTop">
+		<node id="UCTop">
 			<transforms>
-				<rotate axis="x" angle="90" />
-				<translate x="0.0" y="0.0" z="-0.5" />
+				<rotate axis="x" angle="90"/>
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -321,10 +322,10 @@
 			</children>
 		</node>
 		
-		<node id="UnitCubeBottom">
+		<node id="UCBot">
 			<transforms>
-				<rotate axis="x" angle="-90" />
-				<translate x="0.0" y="0.0" z="-0.5" />
+				<rotate axis="x" angle="-90"/>
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -333,6 +334,7 @@
 				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
 			</children>
 		</node>
+		
 			
 	</graph>
 </lsf>

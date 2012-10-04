@@ -14,7 +14,14 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 	for (int unsigned i=0; i<nodes[rootNode]->childPrimitives.size();i++){
 		Primitive primitive=nodes[rootNode]->childPrimitives[i];
 		switch(primitive.type){
-			case rectangle: glRectf(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["x2"],primitive.attr["y2"]); break;
+			case rectangle:{
+				glBegin(GL_QUADS);
+					glVertex3d(primitive.attr["x1"],primitive.attr["y1"],0);
+					glVertex3d(primitive.attr["x2"],primitive.attr["y1"],0);
+					glVertex3d(primitive.attr["x2"],primitive.attr["y2"],0);
+					glVertex3d(primitive.attr["x1"],primitive.attr["y2"],0);
+				glEnd();
+			}break;
 			case triangle:{
 				glBegin(GL_TRIANGLES);
 						glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
