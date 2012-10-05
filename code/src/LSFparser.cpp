@@ -365,7 +365,7 @@ void LSFparser::getAppearances(vector<CGFappearance*> &appearances){
 				cout << "texture file=" << texture->ValueTStr().c_str() << " length_s=" << texture_length_s << " length_t=" << texture_length_t << endl;
 
 			cout << endl;
-			cin.get();
+//			cin.get();
 		}
 
 		node=node->NextSiblingElement();

@@ -214,7 +214,7 @@
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.02" g="0.02" b="0.02" a="1" />
 			<specular r="0.1" g="0.1" b="0.1" a="1" />
-			<shininess value="0.7" />
+			<shininess value="0.1" />
 		</appearance>
 		
       <!-- ringRope appearance -->
@@ -234,13 +234,103 @@
 			<specular r="0.2" g="0.2" b="0.2" a="1" />
 			<shininess value="0.2" />
 		</appearance>
+		
+		<!-- myCylinder appearance -->
+		<appearance id="myCylinder">
+	 		<emissive r="0.1" g="0.1" b="0.1" a="1" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1" />
+			<diffuse r="0.1" g="0.1" b="0.1" a="1" />
+			<specular r="0.1" g="0.1" b="0.1" a="1" />
+			<shininess value="0.1" />
+		</appearance>
+		
+		<!-- circle appearance -->
+		<appearance id="circle">
+	 		<emissive r="0.1" g="0.1" b="0.1" a="1" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1" />
+			<diffuse r="0.1" g="0.1" b="0.1" a="1" />
+			<specular r="0.1" g="0.1" b="0.1" a="1" />
+			<shininess value="0.1" />
+		</appearance>
 			
 	</appearances>
 	
 	<!-- graph information -->
 	<graph rootid="WrestlingRing">
 	
-			<node id="UnitCube">
+			<node id="circle">
+				<transforms>
+				</transforms>
+				
+				<appearanceref id="circle" />
+				
+				<children>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.5" y2="0.0" z2="0.0" x3="0.48" y3="0.0" z3="0.13"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.48" y2="0.0" z2="0.13" x3="0.43" y3="0.0" z3="0.24"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.43" y2="0.0" z2="0.24" x3="0.35" y3="0.0" z3="0.35"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.35" y2="0.0" z2="0.35" x3="0.24" y3="0.0" z3="0.43"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.24" y2="0.0" z2="0.43" x3="0.13" y3="0.0" z3="0.48"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.13" y2="0.0" z2="0.48" x3="0.0" y3="0.0" z3="0.5"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.0" y2="0.0" z2="0.5" x3="-0.13" y3="0.0" z3="0.48"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.13" y2="0.0" z2="0.48" x3="-0.24" y3="0.0" z3="0.43"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.24" y2="0.0" z2="0.43" x3="-0.35" y3="0.0" z3="0.35"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.35" y2="0.0" z2="0.35" x3="-0.43" y3="0.0" z3="0.24"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.43" y2="0.0" z2="0.24" x3="-0.48" y3="0.0" z3="0.13"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.48" y2="0.0" z2="0.13" x3="-0.5" y3="0.0" z3="0.0"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.5" y2="0.0" z2="0.0" x3="-0.48" y3="0.0" z3="-0.13"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.48" y2="0.0" z2="-0.13" x3="-0.43" y3="0.0" z3="-0.24"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.43" y2="0.0" z2="-0.24" x3="-0.35" y3="0.0" z3="-0.35"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.35" y2="0.0" z2="-0.35" x3="-0.24" y3="0.0" z3="-0.43"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.24" y2="0.0" z2="-0.43" x3="-0.13" y3="0.0" z3="-0.48"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="-0.13" y2="0.0" z2="-0.48" x3="0.0" y3="0.0" z3="-0.5"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.0" y2="0.0" z2="-0.5" x3="0.13" y3="0.0" z3="-0.48"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.13" y2="0.0" z2="-0.48" x3="0.24" y3="0.0" z3="-0.43"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.24" y2="0.0" z2="-0.43" x3="0.35" y3="0.0" z3="-0.35"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.35" y2="0.0" z2="-0.35" x3="0.43" y3="0.0" z3="-0.24"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.43" y2="0.0" z2="-0.24" x3="0.48" y3="0.0" z3="-0.13"/>
+					<triangle x1="0.0" y1="0.0" z1="0.0" x2="0.48" y2="0.0" z2="-0.13" x3="0.5" y3="0.0" z3="0.0"/>
+				</children>
+			</node>
+			
+			<node id="topCircle">
+				<transforms>
+					<rotate axis="x" angle="-90" />
+					<translate x="0" y="-0.995" z="0" />
+				</transforms>
+				
+				<appearanceref id="inherit" />
+				
+				<children>
+					<noderef id="circle" />
+				</children>
+			</node>
+			
+			<node id="bottomCircle">
+				<transforms>
+					<rotate axis="x" angle="90" />
+				</transforms>
+				
+				<appearanceref id="inherit" />
+				
+				<children>
+					<noderef id="circle" />
+				</children>
+			</node>			
+			
+			<node id="myCylinder">
+				<transforms>
+				</transforms>
+				
+				<appearanceref id="myCylinder" />
+				
+				<children>
+					<noderef id="topCircle" />
+					<cylinder base="0.495" top="0.495" height="1.0" slices="24" stacks="3" />
+					<noderef id="bottomCircle" />
+				</children>
+			</node>
+			
+		<node id="UnitCube">
 			<transforms>
 			</transforms>
 			
@@ -310,7 +400,7 @@
 		
 		<node id="UCTop">
 			<transforms>
-				<rotate axis="x" angle="90"/>
+				<rotate axis="x" angle="-90"/>
 				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
@@ -323,7 +413,7 @@
 		
 		<node id="UCBot">
 			<transforms>
-				<rotate axis="x" angle="-90"/>
+				<rotate axis="x" angle="90"/>
 				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
@@ -335,7 +425,7 @@
 		</node>
 		<node id="WrestlingRing">
 			<transforms>
-				<rotate axis="y" angle="20"/>
+				<translate x="10.0" y="0.0" z="10.0" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -389,7 +479,7 @@
 		
 		<node id="LeftDoor">
 			<transforms>
-				<translate x="-1.5" y="0.0" z="-9.9" />
+				<translate x="-1.21" y="0.0" z="-9.9" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -591,8 +681,7 @@
 		
 		<node id="RopeGroup">
 			<transforms>
-				<translate x="0" y="1.4" z="2.5" />
-				<rotate axis="y" angle="90" />
+				<translate x="2.5" y="1.4" z="-2.5" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -606,7 +695,6 @@
 		
 		<node id="RopeGroupBottom">
 			<transforms>
-				<rotate axis="x" angle="90" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -619,7 +707,6 @@
 		<node id="RopeGroupMiddle">
 			<transforms>
 				<translate x="0.0" y="0.4" z="0.0" />
-				<rotate axis="x" angle="90" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -632,7 +719,6 @@
 		<node id="RopeGroupTop">
 			<transforms>
 				<translate x="0.0" y="0.8" z="0.0" />
-				<rotate axis="x" angle="90" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -644,6 +730,7 @@
 		
 		<node id="Poles">
 			<transforms>
+				<rotate axis="x" angle="-90" />
 			</transforms>
 			
 			<appearanceref id="ringPole" />
@@ -658,55 +745,59 @@
 		
 		<node id="PoleFrontLeft">
 			<transforms>
-				<translate x="-2.5" y="0.0" z="2.5" />
+				<translate x="-2.5" y="-2.5" z="0.0" />
+				<scale x="0.2" y="0.2" z="2.4" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
 			
 			<children>
-				<cylinder base="0.07" top="0.07" height="2.4" slices="18" stacks="3" />
+				<noderef id="myCylinder" />
 			</children>
 		</node>
 		
 		<node id="PoleFrontRight">
 			<transforms>
-				<translate x="2.5" y="0.0" z="2.5" />
+				<translate x="2.5" y="-2.5" z="0.0" />
+				<scale x="0.2" y="0.2" z="2.4" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
 			
 			<children>
-				<cylinder base="0.07" top="0.07" height="2.4" slices="18" stacks="3" />
+				<noderef id="myCylinder" />
 			</children>
 		</node>
 		
 		<node id="PoleBackRight">
 			<transforms>
-				<translate x="2.5" y="0.0" z="-2.5" />
+				<translate x="2.5" y="2.5" z="0.0" />
+				<scale x="0.2" y="0.2" z="2.4" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
 			
 			<children>
-				<cylinder base="0.07" top="0.07" height="2.4" slices="18" stacks="3" />
+				<noderef id="myCylinder" />
 			</children>
 		</node>
 		
-		<node id="PoleFBackLeft">
+		<node id="PoleBackLeft">
 			<transforms>
-				<translate x="-2.5" y="0.0" z="-2.5" />
+				<translate x="-2.5" y="2.5" z="0.0" />
+				<scale x="0.2" y="0.2" z="2.4" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
 			
 			<children>
-				<cylinder base="0.07" top="0.07" height="2.4" slices="18" stacks="3" />
+				<noderef id="myCylinder" />
 			</children>
 		</node>
 		
 		<node id="Ladder">
 			<transforms>
-				<translate x="-3.25" y="0.0" z="2.0" />
+				<translate x="-2.90" y="0.0" z="2.0" />
 			</transforms>
 			
 			<appearanceref id="ringLadder" />
@@ -860,16 +951,28 @@
 		
 		<node id="Dish">
 			<transforms>
-				<translate x="0.6" y="0.826" z="-1.2" />
+				<rotate axis="x" angle="90" />
+				<translate x="1.0" y="-0.826" z="-0.9" />
 			</transforms>
 			
 			<appearanceref id="dish" />
 			
 			<children>
-				<cylinder base="0.15" top="0.15" height="0.01" slices="18" stacks="1" />
-				 
+				<noderef id="this_dish" />
 				<noderef id="Donuts" />
 				<noderef id="Pizza" />
+			</children>
+		</node>
+		
+		<node id="this_dish">
+			<transforms>
+				<scale x="0.4" y="0.4" z="0.01" />
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="myCylinder" />
 			</children>
 		</node>
 		
@@ -887,31 +990,32 @@
 		
 		<node id="Donuts1">
 			<transforms>
-				<translate x="0.0" y="0.01" z="0.1" />
+				<translate x="-0.06" y="0.05" z="-0.04" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
 			
 			<children>
-				<torus inner="0.04" outer="0.02" slices="18" loops="10" />
+				<torus inner="0.02" outer="0.04" slices="18" loops="10" />
 			</children>
 		</node>
 		
 		<node id="Donuts2">
 			<transforms>
-				<translate x="0.2" y="0.01" z="0.1" />
+				<translate x="0.1" y="0.05" z="-0.04" />
 			</transforms>
 			
 			<appearanceref id="inherit" />
 			
 			<children>
-				<torus inner="0.04" outer="0.02" slices="18" loops="10" />
+				<torus inner="0.02" outer="0.04" slices="18" loops="10" />
 			</children>
 		</node>
 		
 		<node id="Pizza">
 			<transforms>
-				<translate x="0.0" y="0.012" z="0.0" />
+				<rotate axis="x" angle="-90" />
+				<translate x="0.0" y="0.012" z="-0.01" />
 			</transforms>
 			
 			<appearanceref id="pizza" />
