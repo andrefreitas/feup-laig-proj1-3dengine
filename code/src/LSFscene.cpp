@@ -15,9 +15,8 @@ CGFappearance *mat1;
 LSFscene::LSFscene(char* argv[]){
 	if(argv[1] == NULL)
 		inputScene = "teste.lsf";
-	else{
+	else
 		inputScene = argv[1];
-	}
 }
 
 LSFscene::~LSFscene(){
@@ -48,7 +47,9 @@ void LSFscene::init()
 	// Get Global configurations
 	setGlobals();
 	vector<CGFcamera*> cameras;
+	vector<CGFappearance*> appearances;
 	sceneParser->getCameras(cameras);
+	sceneParser->getAppearances(appearances);
 	sceneParser->getNodes(nodes,rootNode);
 }
 

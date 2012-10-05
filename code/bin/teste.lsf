@@ -95,7 +95,145 @@
 	
 	<!-- materials appearance -->
 	<appearances>
-			
+			<!-- floor appearance -->
+		<appearance id="floor">
+		   <emissive r="0.38" g="0.32" b="0.9" a="1" />
+			<ambient r="0.19" g="0.16" b="0.045" a="1" />
+			<diffuse r="0.76" g="0.64" b="0.18" a="1" />
+			<specular r="0.38" g="0.32" b="0.9" a="1" />
+			<shininess value="1" />
+			<texture file="floor.jpg" length_s="1.0" length_t="1.0" />
+		</appearance>
+		
+		<!-- wall appearance -->
+		<appearance id="wall">
+			<emissive r="0.4" g="0.4" b="0.4" a="1" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1" />
+			<diffuse r="0.6" g="0.6" b="0.6" a="1" />
+			<specular r="0.3" g="0.3" b="0.3" a="1" />
+			<shininess value="0.3" />
+			<texture file="wall.jpg" length_s="7.0" length_t="7.0" />
+		</appearance>
+		
+		<!-- door appearance -->
+		<appearance id="door">
+			<emissive r="0.4" g="0.4" b="0.4" a="1" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1" />
+			<diffuse r="0.6" g="0.6" b="0.6" a="1" />
+			<specular r="0.3" g="0.3" b="0.3" a="1" />
+			<shininess value="0.8" />
+			<texture file="door.jpg" length_s="1.0" length_t="1.0" />
+		</appearance>
+		
+		<!-- tableLeg appearance -->
+		<appearance id="tableLeg">
+			<emissive r="0.1" g="0.1" b="0.1" a="1" />
+			<ambient r="0.05" g="0.05" b="0.05" a="1" />
+			<diffuse r="0.2" g="0.2" b="0.2" a="1" />
+			<specular r="0.1" g="0.1" b="0.1" a="1" />
+			<shininess value="0.9" />
+		</appearance>
+		
+		<!-- tableTop appearance -->
+		<appearance id="tableTop">
+	 		<emissive r="0.38" g="0.32" b="0.9" a="1" />
+			<ambient r="0.19" g="0.16" b="0.045" a="1" />
+			<diffuse r="0.76" g="0.64" b="0.18" a="1" />
+			<specular r="0.38" g="0.32" b="0.9" a="1" />
+			<shininess value="0.9" />
+		</appearance>
+		
+		<!-- donut appearance -->
+		<appearance id="donut">
+	 		<emissive r="0.21" g="0.20" b="0.075" a="1" />
+			<ambient r="0.21" g="0.20" b="0.075" a="1" />
+			<diffuse r="0.85" g="0.79" b="0.30" a="1" />
+			<specular r="0.42" g="0.40" b="0.15" a="1" />
+			<shininess value="0.1" />
+		</appearance>
+		
+	   <!-- pizza appearance -->
+		<appearance id="pizza">
+	 		<emissive r="0.21" g="0.20" b="0.075" a="1" />
+			<ambient r="0.21" g="0.20" b="0.075" a="1" />
+			<diffuse r="0.85" g="0.79" b="0.30" a="1" />
+			<specular r="0.42" g="0.40" b="0.15" a="1" />
+			<shininess value="0.1" />
+			<texture file="pizzaSlice.jpg" length_s="1.0" length_t="1.0" />
+		</appearance>
+		
+	   <!-- plate appearance -->
+		<appearance id="plate">
+	 		<emissive r="1.0" g="1.0" b="1.0" a="1" />
+			<ambient r="0.7" g="0.7" b="0.7" a="1" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="1" />
+			<specular r="0.8" g="0.8" b="0.8" a="1" />
+			<shininess value="1.0" />
+		</appearance>
+		
+		 <!-- fitnessBall appearance -->
+		<appearance id="fitnessBall">
+	 		<emissive r="0.0" g="0.0" b="1.0" a="1" />
+			<ambient r="0.0" g="0.0" b="0.7" a="1" />
+			<diffuse r="0.0" g="0.0" b="1.0" a="1" />
+			<specular r="0.0" g="0.0" b="0.8" a="1" />
+			<shininess value="0.75" />
+		</appearance>
+		
+     <!-- ringLadder appearance -->
+		<appearance id="ringLadder">
+	 		<emissive r="0.78" g="0.78" b="0.78" a="1" />
+			<ambient r="0.2" g="0.2" b="0.2" a="1" />
+			<diffuse r="0.78" g="0.78" b="0.78" a="1" />
+			<specular r="0.4" g="0.4" b="0.4" a="1" />
+			<shininess value="0.8" />
+		</appearance>
+		
+		<!-- ringBanner appearance -->
+		<appearance id="ringBanner">
+	 		<emissive r="0.01" g="0.01" b="0.01" a="1" />
+			<ambient r="0.01" g="0.01" b="0.01" a="1" />
+			<diffuse r="0.02" g="0.02" b="0.02" a="1" />
+			<specular r="0.03" g="0.03" b="0.03" a="1" />
+			<shininess value="0.5" />
+			<texture file="ringImage.jpg" length_s="1.0" length_t="1.0" />
+		</appearance>
+		
+		<!-- ringSide appearance -->
+		<appearance id="ringSide">
+	 		<emissive r="0.8" g="0.0" b="0.0" a="1" />
+			<ambient r="0.3" g="0.0" b="0.0" a="1" />
+			<diffuse r="0.7" g="0.0" b="0.0" a="1" />
+			<specular r="0.8" g="0.0" b="0.0" a="1" />
+			<shininess value="0.5" />
+		</appearance>
+		
+		<!-- ringPole appearance -->
+		<appearance id="ringPole">
+	 		<emissive r="0.01" g="0.01" b="0.01" a="1" />
+			<ambient r="0.01" g="0.01" b="0.01" a="1" />
+			<diffuse r="0.02" g="0.02" b="0.02" a="1" />
+			<specular r="0.1" g="0.1" b="0.1" a="1" />
+			<shininess value="0.7" />
+		</appearance>
+		
+      <!-- ringRope appearance -->
+		<appearance id="ringRope">
+	 		<emissive r="0.8" g="0.0" b="0.0" a="1" />
+			<ambient r="0.3" g="0.0" b="0.0" a="1" />
+			<diffuse r="0.7" g="0.0" b="0.0" a="1" />
+			<specular r="0.8" g="0.0" b="0.0" a="1" />
+			<shininess value="0.7" />
+		</appearance>
+		
+		<!-- ringFloor appearance -->
+		<appearance id="ringFloor">
+	 		<emissive r="0.9" g="0.9" b="0.9" a="1" />
+			<ambient r="0.7" g="0.7" b="0.7" a="1" />
+			<diffuse r="0.9" g="0.9" b="0.9" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+			<shininess value="0.2" />
+		</appearance>
 	</appearances>
 	
 	<!-- graph information -->
