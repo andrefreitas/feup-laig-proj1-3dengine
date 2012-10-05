@@ -20,11 +20,13 @@ class LSFparser{
 		TiXmlElement* globalsElement;
 		TiXmlElement* camerasElement;
 		TiXmlElement* graphElement;
+		TiXmlElement* appearancesElement;
 	public:
 		LSFparser(char* a);
 		void getGlobals(struct globalsData *globals);
 		void getCameras(vector<CGFcamera*> &cameras);
 		void getNodes(map<string,LSFnode*> &nodes,string &rootNode);
+		void getAppearances(vector<CGFappearance*> &appearances);
 
 
 };

@@ -20,6 +20,7 @@ LSFparser::LSFparser(char* a){
 		globalsElement=lsfElement->FirstChildElement( "globals" );
 		camerasElement=lsfElement->FirstChildElement( "cameras" );
 		graphElement=lsfElement->FirstChildElement( "graph" );
+		appearancesElement = lsfElement->FirstChildElement( "appearances");
 	}
 	else
 		exit(1);
@@ -279,3 +280,94 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 
 }
 
+void LSFparser::getAppearances(vector<CGFappearance*> &appearances){
+	TiXmlElement *node=appearancesElement->FirstChildElement();
+	int counter = 0;
+	const char *appearance_id;
+	float emissive_r, emissive_g, emissive_b, emissive_a;
+	float ambient_r, ambient_g, ambient_b, ambient_a;
+	float diffuse_r, diffuse_g, diffuse_b, diffuse_a;
+	float specular_r, specular_g, specular_b, specular_a;
+	float shininess_value, texture_length_s, texture_length_t;
+	cout << "\n--- Aparencias  ---" << endl;
+	// Loop trough cameras
+	while(node){
+		counter++;
+
+		appearance_id = node->Attribute("id");
+		TiXmlElement *emissive, *ambient, *diffuse, *specular, *shininess, *texture;
+
+		emissive = node->FirstChildElement("emissive");
+		if(emissive != NULL)
+			if(strcmp(emissive->ValueTStr().c_str(),"emissive")==0){
+				emissive->QueryFloatAttribute("r",&emissive_r);
+				emissive->QueryFloatAttribute("g",&emissive_g);
+				emissive->QueryFloatAttribute("b",&emissive_b);
+				emissive->QueryFloatAttribute("a",&emissive_a);
+			}
+
+		ambient = node->FirstChildElement("ambient");
+		if(ambient != NULL)
+			if(strcmp(ambient->ValueTStr().c_str(), "ambient")==0){
+				ambient->QueryFloatAttribute("r",&ambient_r);
+				ambient->QueryFloatAttribute("g",&ambient_g);
+				ambient->QueryFloatAttribute("b",&ambient_b);
+				ambient->QueryFloatAttribute("a",&ambient_a);
+			}
+
+		diffuse = node->FirstChildElement("diffuse");
+		if(diffuse != NULL)
+			if(strcmp(diffuse->ValueTStr().c_str(), "diffuse")==0){
+				diffuse->QueryFloatAttribute("r",&diffuse_r);
+				diffuse->QueryFloatAttribute("g",&diffuse_g);
+				diffuse->QueryFloatAttribute("b",&diffuse_b);
+				diffuse->QueryFloatAttribute("a",&diffuse_a);
+			}
+
+		specular = node->FirstChildElement("specular");
+		if(specular != NULL)
+			if(strcmp(specular->ValueTStr().c_str(), "specular")==0){
+				specular->QueryFloatAttribute("r",&specular_r);
+				specular->QueryFloatAttribute("g",&specular_g);
+				specular->QueryFloatAttribute("b",&specular_b);
+				specular->QueryFloatAttribute("a",&specular_a);
+			}
+
+		shininess = node->FirstChildElement("shininess");
+		if(shininess != NULL)
+			if(strcmp(shininess->ValueTStr().c_str(), "shininess")==0)
+				shininess->QueryFloatAttribute("value", &shininess_value);
+
+
+		texture = node->FirstChildElement("texture");
+		if(texture != NULL)
+			if(strcmp(texture->ValueTStr().c_str(), "texture")==0){
+				texture->Attribute("file");
+				texture->QueryFloatAttribute("length_s", &texture_length_s);
+				texture->QueryFloatAttribute("length_t", &texture_length_t);
+			}
+
+
+
+		if(DEBUGMODE){
+			cout << "\n\tAparencia: " << appearance_id << " " << endl;
+			if(emissive != NULL)
+				cout << "emissive r=" << emissive_r << " g=" << emissive_g << " b="<< emissive_b << " a="<< emissive_a << endl;
+			if(ambient != NULL)
+				cout << "ambient  r=" << ambient_r  << " g=" << ambient_g  << " b="<< ambient_b  << " a="<< ambient_a << endl;
+			if(diffuse != NULL)
+				cout << "diffuse  r=" << diffuse_r  << " g=" << diffuse_g  << " b="<< diffuse_b  << " a="<< diffuse_a << endl;
+			if(specular != NULL)
+				cout << "specular r=" << specular_r << " g=" << specular_g << " b="<< specular_b << " a="<< specular_a << endl;
+			if(shininess != NULL)
+				cout << "shininess value=" << shininess_value << endl;
+			if(texture != NULL)
+				cout << "texture file=" << texture->ValueTStr().c_str() << " length_s=" << texture_length_s << " length_t=" << texture_length_t << endl;
+
+			cout << endl;
+			cin.get();
+		}
+
+		node=node->NextSiblingElement();
+	}
+}
