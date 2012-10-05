@@ -4,7 +4,7 @@
 using namespace std;
 void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 	if(nodes[rootNode]==0) {
-		cout << "\nNo inexistente\n";
+		//cout << "\nNo inexistente\n";
 		return;
 	}
 	// Transforms

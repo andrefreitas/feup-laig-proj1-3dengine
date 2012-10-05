@@ -158,7 +158,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 				axis=*transform->Attribute("axis");
 				if(DEBUGMODE) cout << "\t\tRotate: " << angle << " " << axis << endl;
 				x=0; y=0; z=0;
-				if(axis=='x') x=1;
+				if(axis=='x') {x=1;angle=-angle; } // Must be -angle
 				if(axis=='y') y=1;
 				if(axis=='z') z=1;
 				glRotatef(angle,x,y,z);

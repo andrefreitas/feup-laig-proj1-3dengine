@@ -242,7 +242,8 @@
 	
 	<node id="UnitCube">
 			<transforms>
-			<translate x="0" y="4" z="0"/>
+			<rotate axis="y" angle="40"/>
+			<translate x="5" y="0" z="0"/>
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -334,6 +335,8 @@
 				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
 			</children>
 		</node>
+		
+		
 		
 			
 	</graph>

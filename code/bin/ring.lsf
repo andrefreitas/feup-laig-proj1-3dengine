@@ -335,6 +335,7 @@
 		</node>
 		<node id="WrestlingRing">
 			<transforms>
+				<rotate axis="y" angle="20"/>
 			</transforms>
 			
 			<appearanceref id="inherit" />
@@ -352,7 +353,7 @@
 		<node id="Floor">
 		
 			<transforms>
-				<rotate axis="x" angle="90.0" />
+				<rotate axis="x" angle="-90" />
 			</transforms>
 			
 			<appearanceref id="floor" />
