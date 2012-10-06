@@ -28,8 +28,7 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 						glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
 						glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
 					glEnd();
-				break;
-			}
+			}break;
 			case cylinder:{
 				GLUquadric *a=gluNewQuadric();
 				gluQuadricNormals(a,GL_SMOOTH);
@@ -42,7 +41,7 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 			}break;
 			case torus:{
 				glutSolidTorus(primitive.attr["inner"],primitive.attr["outer"],primitive.attr["slices"],primitive.attr["loops"]);
-			}
+			} break;
 		}
 
 	}
