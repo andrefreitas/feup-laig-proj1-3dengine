@@ -46,7 +46,7 @@ void LSFscene::init()
 	// Get Global configurations
 	setGlobals();
 	vector<CGFcamera*> cameras;
-	vector<CGFappearance*> appearances;
+//	vector<CGFappearance*> appearances;
 	sceneParser->getCameras(cameras);
 	sceneParser->getAppearances(appearances);
 	sceneParser->getLightings();

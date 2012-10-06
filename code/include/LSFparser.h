@@ -27,7 +27,7 @@ class LSFparser{
 		void getGlobals(struct globalsData *globals);
 		void getCameras(vector<CGFcamera*> &cameras);
 		void getNodes(map<string,LSFnode*> &nodes,string &rootNode);
-		void getAppearances(vector<CGFappearance*> &appearances);
+		void getAppearances(map<const char*,CGFappearance*> &appearances);
 		void getLightings();
 
 
