@@ -16,11 +16,12 @@ LSFparser::LSFparser(char* a){
 
 	if(lsfFile->LoadFile()){
 		// Fetch main elements sections
-		lsfElement=lsfFile->FirstChildElement( "lsf" );
-		globalsElement=lsfElement->FirstChildElement( "globals" );
-		camerasElement=lsfElement->FirstChildElement( "cameras" );
-		graphElement=lsfElement->FirstChildElement( "graph" );
-		appearancesElement = lsfElement->FirstChildElement( "appearances");
+		lsfElement = lsfFile->FirstChildElement( "lsf" );
+		globalsElement = lsfElement->FirstChildElement( "globals" );
+		camerasElement = lsfElement->FirstChildElement( "cameras" );
+		graphElement = lsfElement->FirstChildElement( "graph" );
+		appearancesElement = lsfElement->FirstChildElement( "appearances" );
+		lightingsElement = lsfElement->FirstChildElement( "lighting" );
 	}
 	else
 		exit(1);
@@ -290,7 +291,7 @@ void LSFparser::getAppearances(vector<CGFappearance*> &appearances){
 	float specular_r, specular_g, specular_b, specular_a;
 	float shininess_value, texture_length_s, texture_length_t;
 	cout << "\n--- Aparencias  ---" << endl;
-	// Loop trough cameras
+	// Loop trough appearances
 	while(node){
 		counter++;
 
@@ -363,6 +364,118 @@ void LSFparser::getAppearances(vector<CGFappearance*> &appearances){
 				cout << "shininess value=" << shininess_value << endl;
 			if(texture != NULL)
 				cout << "texture file=" << texture->ValueTStr().c_str() << " length_s=" << texture_length_s << " length_t=" << texture_length_t << endl;
+
+			cout << endl;
+//			cin.get();
+		}
+
+		node=node->NextSiblingElement();
+	}
+}
+
+void LSFparser::getLightings(){
+	bool lighting_doublesided = lightingsElement->Attribute("doublesided");
+	bool lighting_local = lightingsElement->Attribute("local");
+	bool lighting_enabled = lightingsElement->Attribute("enabled");
+
+	int counter = 0;
+	const char *light_id, *light_enabled;
+	float scene_ambient_r, scene_ambient_g, scene_ambient_b, scene_ambient_a;
+	float location_x, location_y, location_z;
+	float ambient_r, ambient_g, ambient_b, ambient_a;
+	float diffuse_r, diffuse_g, diffuse_b, diffuse_a;
+	float specular_r, specular_g, specular_b, specular_a;
+	float spot_angle, spot_exponent, spot_dirx, spot_diry, spot_dirz;
+
+	if(DEBUGMODE){
+		cout << "\n--- Luzes  ---" << endl;
+		if(lighting_doublesided) cout << "doubleSided = true" << endl;
+		if(lighting_local) cout << "local = true" << endl;
+		if(lighting_enabled) cout << "enabled = true" << endl;
+	}
+
+	TiXmlElement *scene_ambient=lightingsElement->FirstChildElement("ambient");
+
+	if(scene_ambient != NULL){
+		scene_ambient->QueryFloatAttribute("r",&scene_ambient_r);
+		scene_ambient->QueryFloatAttribute("g",&scene_ambient_g);
+		scene_ambient->QueryFloatAttribute("b",&scene_ambient_b);
+		scene_ambient->QueryFloatAttribute("a",&scene_ambient_a);
+	}
+
+	if(DEBUGMODE && scene_ambient != NULL)
+		cout << "scene ambient r=" << scene_ambient_r << " g=" << scene_ambient_g << " b=" << scene_ambient_b << " a=" << scene_ambient_a << endl;
+
+	TiXmlElement *node_=lightingsElement->FirstChildElement("lights");
+
+	TiXmlElement * node = node_->FirstChildElement("light");
+
+	// Loop trough lights
+	while(node){
+		counter++;
+
+		light_id = node->Attribute("id");
+		light_enabled = node->Attribute("enabled");
+
+		TiXmlElement *location, *ambient, *diffuse, *specular, *spot;
+
+		location = node->FirstChildElement("location");
+		if(location != NULL)
+			if(strcmp(location->ValueTStr().c_str(),"location")==0){
+				location->QueryFloatAttribute("r",&location_x);
+				location->QueryFloatAttribute("g",&location_y);
+				location->QueryFloatAttribute("b",&location_z);
+			}
+
+		ambient = node->FirstChildElement("ambient");
+		if(ambient != NULL)
+			if(strcmp(ambient->ValueTStr().c_str(),"emissive")==0){
+				ambient->QueryFloatAttribute("r",&ambient_r);
+				ambient->QueryFloatAttribute("g",&ambient_g);
+				ambient->QueryFloatAttribute("b",&ambient_b);
+				ambient->QueryFloatAttribute("a",&ambient_a);
+			}
+
+		diffuse = node->FirstChildElement("diffuse");
+		if(diffuse != NULL)
+			if(strcmp(diffuse->ValueTStr().c_str(),"diffuse")==0){
+				diffuse->QueryFloatAttribute("r",&diffuse_r);
+				diffuse->QueryFloatAttribute("g",&diffuse_g);
+				diffuse->QueryFloatAttribute("b",&diffuse_b);
+				diffuse->QueryFloatAttribute("a",&diffuse_a);
+			}
+
+		specular = node->FirstChildElement("specular");
+		if(specular != NULL)
+			if(strcmp(specular->ValueTStr().c_str(),"specular")==0){
+				specular->QueryFloatAttribute("r",&specular_r);
+				specular->QueryFloatAttribute("g",&specular_g);
+				specular->QueryFloatAttribute("b",&specular_b);
+				specular->QueryFloatAttribute("a",&specular_a);
+			}
+
+		spot= node->FirstChildElement("spot");
+		if(spot != NULL)
+			if(strcmp(spot->ValueTStr().c_str(),"spot")==0){
+				spot->QueryFloatAttribute("angle",&spot_angle);
+				spot->QueryFloatAttribute("exponent",&spot_exponent);
+				spot->QueryFloatAttribute("dirx",&spot_dirx);
+				spot->QueryFloatAttribute("diry",&spot_diry);
+				spot->QueryFloatAttribute("dirz",&spot_dirz);
+			}
+
+		if(DEBUGMODE){
+			cout << "\n\tLuz: " << light_id << "  enabled=" << light_enabled << endl;
+			if(location != NULL)
+				cout << "location x=" << location_x << " y=" << location_y << " z="<< location_z << endl;
+			if(ambient != NULL)
+				cout << "ambient  r=" << ambient_r  << " g=" << ambient_g  << " b="<< ambient_b  << " a="<< ambient_a << endl;
+			if(diffuse != NULL)
+				cout << "diffuse  r=" << diffuse_r  << " g=" << diffuse_g  << " b="<< diffuse_b  << " a="<< diffuse_a << endl;
+			if(specular != NULL)
+				cout << "specular r=" << specular_r << " g=" << specular_g << " b="<< specular_b << " a="<< specular_a << endl;
+			if(spot != NULL)
+				cout << "spot angle=" << spot_angle << " exponent=" << spot_exponent << " dirx=" << spot_dirx << " diry=" <<spot_diry << " dirz=" << spot_dirz << endl;
 
 			cout << endl;
 //			cin.get();

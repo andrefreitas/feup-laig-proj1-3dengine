@@ -41,7 +41,6 @@ void LSFscene::init()
 	glNormal3f(0,0,1);
 
 	// Initializate the parser
-//	sceneParser = new lsfParser("teste.lsf");
 	sceneParser = new LSFparser(inputScene);
 
 	// Get Global configurations
@@ -50,6 +49,7 @@ void LSFscene::init()
 	vector<CGFappearance*> appearances;
 	sceneParser->getCameras(cameras);
 	sceneParser->getAppearances(appearances);
+	sceneParser->getLightings();
 	sceneParser->getNodes(nodes,rootNode);
 }
 
