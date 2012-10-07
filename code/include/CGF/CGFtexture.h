@@ -19,6 +19,10 @@ class CGFtexture
 		CGFtexture();					///< Basic contructor
 		CGFtexture(string);				///< Constructor for initializing the texture from a file (supports jpeg, png, bmp, among others, using stbi-1.33 - http://nothings.org/stb_image.c )
 
+		void setSize(int width, int height){
+			texWidth = width;
+			texHeight = height;
+		}
 		~CGFtexture();
 
 		void apply();					///< Applies the texture (makes it active for whatever is rendered next)

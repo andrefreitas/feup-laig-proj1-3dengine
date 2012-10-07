@@ -347,7 +347,6 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 			if(strcmp(texture->ValueTStr().c_str(), "texture")==0){
 				texture->QueryFloatAttribute("length_s", &texture_length_s);
 				texture->QueryFloatAttribute("length_t", &texture_length_t);
-
 			}
 
 		if(DEBUGMODE){
@@ -363,19 +362,27 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 			cout << endl;
 		}
 		// Add to the map
-		CGFappearance* pappearance= new CGFappearance;
+		CGFappearance* pappearance;
+
+		if(emissive != NULL)
+			pappearance = new CGFappearance(emissive_vec);
+		else
+			pappearance= new CGFappearance();
+
 		pappearance->setAmbient( ambient_vec);
 		pappearance->setDiffuse(diffuse_vec);
 		pappearance->setSpecular(specular_vec);
 		pappearance->setShininess(shininess_value);
 		if(texture != NULL){
-				string textureFile;
-				textureFile.assign(texture->Attribute("file"));
-				pappearance->setTexture(texture->Attribute("file"));
-				cout << "\nSettexture: " << textureFile << endl;
-				pappearance->setTextureWrap(texture_length_s,texture_length_t);
+			string textureFile;
+			textureFile.assign(texture->Attribute("file"));
+			CGFtexture *text = new CGFtexture(texture->Attribute("file"));
+			text->setSize(texture_length_s, texture_length_t);
+			pappearance->setTexture(text);
+			pappearance->setTextureWrap(GL_REPEAT,GL_REPEAT);
 
-					}
+			if(DEBUGMODE) cout << "\nSettexture: " << textureFile << endl;
+		}
 		string auxId;
 		auxId.assign(node->Attribute("id"));
 		appearances[auxId]=pappearance;
