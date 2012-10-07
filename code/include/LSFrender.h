@@ -4,9 +4,10 @@
 #include <string>
 #include "LSFnode.h"
 #include "CGFapplication.h"
+#include <stack>
 class LSFrender{
 	public:
-		static void render(map<string,LSFnode*> &nodes,string &rootNode);
+		static void render(map<string,LSFnode*> &nodes,string &rootNode,map<string,CGFappearance*> appearances,stack<CGFappearance*> &appearancesStack);
 };
 
 

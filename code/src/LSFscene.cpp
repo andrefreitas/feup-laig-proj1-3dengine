@@ -46,6 +46,14 @@ void LSFscene::init()
 	// Initializate the parser
 	sceneParser = new LSFparser(inputScene);
 
+	// Set the default appearance
+	defaultAppearance=new CGFappearance();
+	float color[4]={0.6,0.6,0.6,0.6};
+	defaultAppearance->setAmbient(color);
+	defaultAppearance->setDiffuse(color);
+	defaultAppearance->setSpecular(color);
+	defaultAppearance->setShininess(0.5);
+
 	// Get Global configurations
 	setGlobals();
 	vector<CGFcamera*> cameras;
@@ -53,6 +61,7 @@ void LSFscene::init()
 	sceneParser->getAppearances(appearances);
 	//sceneParser->getLightings();
 	sceneParser->getNodes(nodes,rootNode);
+
 }
 
 void LSFscene::display()
@@ -74,8 +83,9 @@ void LSFscene::display()
 	axis.draw();
 
 	// ---- END Background, camera and axis setup
-	appearances["floor"]->apply();
-	LSFrender::render(nodes,rootNode);
+	stack<CGFappearance*> appearancesStack;
+	appearancesStack.push(defaultAppearance);
+	LSFrender::render(nodes,rootNode,appearances,appearancesStack);
 
 	// ---- BEGIN Primitive drawing section
 	// ---- END Primitive drawing section

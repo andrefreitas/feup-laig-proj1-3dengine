@@ -2,7 +2,7 @@
 #include "LSFnode.h"
 #include <iostream>
 using namespace std;
-void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
+void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,CGFappearance*> appearances,stack<CGFappearance*> &appearancesStack){
 	if(nodes[rootNode]==0) {
 		//cout << "\nNo inexistente\n";
 		return;
@@ -11,6 +11,15 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 	glPushMatrix();
 	glMultMatrixf(nodes[rootNode]->transformMatrix);
 
+	// Appearances
+	if(nodes[rootNode]->appearance=="inherit"){
+		appearancesStack.top()->apply();
+		appearancesStack.push(appearancesStack.top()); // necessary because of the pop
+	}
+	else{
+		appearances[nodes[rootNode]->appearance]->apply();
+		appearancesStack.push(appearances[nodes[rootNode]->appearance]);
+	}
 	// Process the primitives
 	for (int unsigned i=0; i<nodes[rootNode]->childPrimitives.size();i++){
 
@@ -51,9 +60,9 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 
 	// Process the noderefs
 	for (int unsigned i=0; i<nodes[rootNode]->childNoderefs.size();i++){
-		render(nodes,nodes[rootNode]->childNoderefs[i]);
+		render(nodes,nodes[rootNode]->childNoderefs[i],appearances,appearancesStack);
 	}
-
+	appearancesStack.pop();
 	glPopMatrix();
 
 }

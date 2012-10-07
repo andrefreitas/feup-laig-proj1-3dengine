@@ -11,6 +11,7 @@ class LSFscene : public CGFscene
 	LSFparser *sceneParser;
 	map<string,CGFappearance*> appearances;
 	map<string,LSFnode*> nodes;
+	CGFappearance* defaultAppearance;
 	string rootNode;
 
 public:

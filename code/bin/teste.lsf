@@ -104,10 +104,54 @@
 			<shininess value="1" />
 			<texture file="floor.jpg" length_s="1.0" length_t="1.0" />
 		</appearance>
+		
+		<appearance id="wall">
+		   <emissive r="0.38" g="0.32" b="0.9" a="1" />
+			<ambient r="0.19" g="0.16" b="0.045" a="1" />
+			<diffuse r="0.76" g="0.64" b="0.18" a="1" />
+			<specular r="0.38" g="0.32" b="0.9" a="1" />
+			<shininess value="1" />
+			<texture file="wall.jpg" length_s="1.0" length_t="1.0" />
+		</appearance>
+		
+		<appearance id="door">
+		   <emissive r="0.38" g="0.32" b="0.9" a="1" />
+			<ambient r="0.19" g="0.16" b="0.045" a="1" />
+			<diffuse r="0.76" g="0.64" b="0.18" a="1" />
+			<specular r="0.38" g="0.32" b="0.9" a="1" />
+			<shininess value="1" />
+			<texture file="door.jpg" length_s="1.0" length_t="1.0" />
+		</appearance>
 	</appearances>
 	
 	<!-- graph information -->
-	<graph rootid="UnitCube">
+	<graph rootid="Scene">
+		<node id="Scene">
+			<transforms>
+			</transforms>
+			
+			<appearanceref id="inherit" />
+			
+			<children>
+				<noderef id="UnitCube" />
+				<noderef id="Door" />
+			
+	
+			</children>
+		</node>
+		
+		<node id="Door">
+			<transforms>
+			</transforms>
+			
+			<appearanceref id="door" />
+			
+			<children>
+				<rectangle x1="6" y1="0" x2="7" y2="5" /> 
+			
+	
+			</children>
+		</node>
 	
 	<node id="UnitCube">
 			<transforms>
@@ -115,7 +159,7 @@
 			<translate x="0" y="5" z="0"/>
 			</transforms>
 			
-			<appearanceref id="inherit" />
+			<appearanceref id="floor" />
 			
 			<children>
 				<noderef id="UC1" />
@@ -133,7 +177,7 @@
 				<translate x="0.0" y="0.0" z="0.5" />
 			</transforms>
 			
-			<appearanceref id="inherit" />
+			<appearanceref id="wall" />
 			
 			<children>
 				<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" /> 
