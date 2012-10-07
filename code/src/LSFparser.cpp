@@ -129,12 +129,15 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 	rootNode.assign(rootid);
 	if(DEBUGMODE) cout << "\n--- Graph: " << rootid << " ---"<< endl;
 	TiXmlElement *node=graphElement->FirstChildElement();
+	map<const char*,CGFappearance*> appearances;
+	getAppearances(appearances);
 
 	while(node){
 		LSFnode *pnode=new LSFnode();
 		pnode->id=new char[100];
 		strcpy(pnode->id,node->Attribute("id")); // save in the node
 		if(DEBUGMODE) cout << "\tNode: " << node->Attribute("id") << endl;
+
 		// (1) Transforms
 		TiXmlElement *transforms=node->FirstChildElement("transforms");
 		TiXmlElement *transform=transforms->FirstChildElement();
@@ -143,6 +146,8 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 		glPushMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		glEnable(GL_TEXTURE_2D);
+
 		stack<Transform> transfs;
 		// --->
 		while(transform){
@@ -186,8 +191,20 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 
 		// (2) Appearance
 		TiXmlElement *appearanceref=node->FirstChildElement("appearanceref");
-		const char *appearance=appearanceref->Attribute("id");
-		if(DEBUGMODE) cout << "\tAppearance: " << appearance<< endl;
+		if(DEBUGMODE) cout << "\tAppearance: " << appearanceref->Attribute("id") << endl;
+
+		if(strcmp(node->Attribute("id"), rootid)==0){
+			float vec[4] = {0.0, 0.0, 0.0, 1.0};
+			pnode->appearance = new CGFappearance(vec, vec, vec, 0.1);
+		}
+		else if(strcmp(appearanceref->Attribute("id"), "inherit")==0){
+//			float vec[4] = {0.0, 0.0, 0.0, 1.0};
+//			pnode->appearance = new CGFappearance(vec, vec, vec, 0.0);
+			pnode->appearance = appearances[appearanceref->Parent()->FirstChildElement("appearanceref")->Attribute("id")];
+		}
+		else
+			pnode->appearance = appearances[appearanceref->Attribute("id")];
+
 		//TODO: use appearances[appearanceref]
 
 		// (3) Children
@@ -286,15 +303,14 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 	TiXmlElement *node=appearancesElement->FirstChildElement();
 	int counter = 0;
-	const char *appearance_id;
 	float emissive_vec[4], ambient_vec[4], diffuse_vec[4], specular_vec[4];
 	float shininess_value, texture_length_s, texture_length_t;
 	cout << "\n--- Aparencias  ---" << endl;
+
 	// Loop trough appearances
 	while(node){
 		counter++;
 		CGFappearance *appearance = new CGFappearance();
-		appearance_id = node->Attribute("id");
 		TiXmlElement *emissive, *ambient, *diffuse, *specular, *shininess, *texture;
 
 		emissive = node->FirstChildElement("emissive");
@@ -348,19 +364,16 @@ void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 		texture = node->FirstChildElement("texture");
 		if(texture != NULL)
 			if(strcmp(texture->ValueTStr().c_str(), "texture")==0){
-//				texture->Attribute("file");
 				texture->QueryFloatAttribute("length_s", &texture_length_s);
 				texture->QueryFloatAttribute("length_t", &texture_length_t);
 
-//				CGFtexture *cgfTexture = new CGFtexture(texture->Attribute("file"));
-//				appearance->setTexture(cgfTexture);
+				CGFtexture *cgfTexture = new CGFtexture(texture->Attribute("file"));
+				appearance->setTexture(cgfTexture);
 				//todo: falta atribuir o comprimento e a largura da textura
 			}
 
-
-
 		if(DEBUGMODE){
-			cout << "\n\tAparencia: " << appearance_id << " " << endl;
+			cout << "\n\tAparencia: " << node->Attribute("id") << " " << endl;
 			if(emissive != NULL) for(int i=0; i < 4; i++) cout << "emissive " << emissive_vec[i] << endl;
 			if(ambient != NULL) for(int i=0; i < 4; i++) cout << "ambient " << ambient_vec[i] << endl;
 			if(diffuse != NULL) for(int i=0; i < 4; i++) cout << "diffuse " << diffuse_vec[i] << endl;
@@ -373,9 +386,10 @@ void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 //			cin.get();
 		}
 
-		appearances[appearance_id] = appearance;
+		appearances[node->Attribute("id")] = appearance;
 		node=node->NextSiblingElement();
 	}
+
 }
 
 void LSFparser::getLightings(){
@@ -413,7 +427,7 @@ void LSFparser::getLightings(){
 
 	TiXmlElement *node_=lightingsElement->FirstChildElement("lights");
 
-	TiXmlElement * node = node_->FirstChildElement("light");
+	TiXmlElement *node = node_->FirstChildElement("light");
 
 	// Loop trough lights
 	while(node){

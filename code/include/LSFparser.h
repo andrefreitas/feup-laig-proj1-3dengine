@@ -22,6 +22,7 @@ class LSFparser{
 		TiXmlElement* graphElement;
 		TiXmlElement* appearancesElement;
 		TiXmlElement* lightingsElement;
+
 	public:
 		LSFparser(char* a);
 		void getGlobals(struct globalsData *globals);

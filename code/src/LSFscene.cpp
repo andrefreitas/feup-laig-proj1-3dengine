@@ -28,6 +28,9 @@ void LSFscene::init()
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
 
+	// Enables textures
+	glEnable ( GL_TEXTURE_2D );
+
 	// Sets up some lighting parameters
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, CGFlight::background_ambient);  // Define ambient light
@@ -48,7 +51,7 @@ void LSFscene::init()
 	vector<CGFcamera*> cameras;
 //	vector<CGFappearance*> appearances;
 	sceneParser->getCameras(cameras);
-	sceneParser->getAppearances(appearances);
+//	sceneParser->getAppearances(appearances);
 	sceneParser->getLightings();
 	sceneParser->getNodes(nodes,rootNode);
 }

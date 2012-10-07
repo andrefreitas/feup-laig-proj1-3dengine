@@ -10,8 +10,10 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 	// Transforms
 	glPushMatrix();
 	glMultMatrixf(nodes[rootNode]->transformMatrix);
+
 	// Process the primitives
 	for (int unsigned i=0; i<nodes[rootNode]->childPrimitives.size();i++){
+
 		Primitive primitive=nodes[rootNode]->childPrimitives[i];
 		switch(primitive.type){
 			case rectangle:{
@@ -45,10 +47,14 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 		}
 
 	}
+
+//	nodes[rootNode]->appearance->apply();
+
 	// Process the noderefs
 	for (int unsigned i=0; i<nodes[rootNode]->childNoderefs.size();i++){
 		render(nodes,nodes[rootNode]->childNoderefs[i]);
 	}
+
 	glPopMatrix();
 
 }
