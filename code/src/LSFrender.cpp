@@ -48,8 +48,6 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode){
 
 	}
 
-//	nodes[rootNode]->appearance->apply();
-
 	// Process the noderefs
 	for (int unsigned i=0; i<nodes[rootNode]->childNoderefs.size();i++){
 		render(nodes,nodes[rootNode]->childNoderefs[i]);

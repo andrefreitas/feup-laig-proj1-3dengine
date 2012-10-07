@@ -129,8 +129,6 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 	rootNode.assign(rootid);
 	if(DEBUGMODE) cout << "\n--- Graph: " << rootid << " ---"<< endl;
 	TiXmlElement *node=graphElement->FirstChildElement();
-	map<const char*,CGFappearance*> appearances;
-	getAppearances(appearances);
 
 	while(node){
 		LSFnode *pnode=new LSFnode();
@@ -146,8 +144,6 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 		glPushMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		glEnable(GL_TEXTURE_2D);
-
 		stack<Transform> transfs;
 		// --->
 		while(transform){
@@ -190,21 +186,11 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 		glPopMatrix();
 
 		// (2) Appearance
+
 		TiXmlElement *appearanceref=node->FirstChildElement("appearanceref");
-		if(DEBUGMODE) cout << "\tAppearance: " << appearanceref->Attribute("id") << endl;
-
-		if(strcmp(node->Attribute("id"), rootid)==0){
-			float vec[4] = {0.0, 0.0, 0.0, 1.0};
-			pnode->appearance = new CGFappearance(vec, vec, vec, 0.1);
-		}
-		else if(strcmp(appearanceref->Attribute("id"), "inherit")==0){
-//			float vec[4] = {0.0, 0.0, 0.0, 1.0};
-//			pnode->appearance = new CGFappearance(vec, vec, vec, 0.0);
-			pnode->appearance = appearances[appearanceref->Parent()->FirstChildElement("appearanceref")->Attribute("id")];
-		}
-		else
-			pnode->appearance = appearances[appearanceref->Attribute("id")];
-
+		const char *appearance=appearanceref->Attribute("id");
+		pnode->appearance.assign(appearance);
+		if(DEBUGMODE) cout << "\tAppearance: " << pnode->appearance << endl;
 		//TODO: use appearances[appearanceref]
 
 		// (3) Children
@@ -300,17 +286,17 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 
 }
 
-void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
+void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 	TiXmlElement *node=appearancesElement->FirstChildElement();
 	int counter = 0;
 	float emissive_vec[4], ambient_vec[4], diffuse_vec[4], specular_vec[4];
 	float shininess_value, texture_length_s, texture_length_t;
+	const char *appearance_id;
 	cout << "\n--- Aparencias  ---" << endl;
-
 	// Loop trough appearances
 	while(node){
 		counter++;
-		CGFappearance *appearance = new CGFappearance();
+		appearance_id = node->Attribute("id");
 		TiXmlElement *emissive, *ambient, *diffuse, *specular, *shininess, *texture;
 
 		emissive = node->FirstChildElement("emissive");
@@ -320,7 +306,6 @@ void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 				emissive->QueryFloatAttribute("g",&emissive_vec[1]);
 				emissive->QueryFloatAttribute("b",&emissive_vec[2]);
 				emissive->QueryFloatAttribute("a",&emissive_vec[3]);
-				appearance = new CGFappearance(emissive_vec);
 			}
 
 		ambient = node->FirstChildElement("ambient");
@@ -330,7 +315,6 @@ void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 				ambient->QueryFloatAttribute("g",&ambient_vec[1]);
 				ambient->QueryFloatAttribute("b",&ambient_vec[2]);
 				ambient->QueryFloatAttribute("a",&ambient_vec[3]);
-				appearance->setAmbient(ambient_vec);
 			}
 
 		diffuse = node->FirstChildElement("diffuse");
@@ -340,7 +324,6 @@ void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 				diffuse->QueryFloatAttribute("g",&diffuse_vec[1]);
 				diffuse->QueryFloatAttribute("b",&diffuse_vec[2]);
 				diffuse->QueryFloatAttribute("a",&diffuse_vec[3]);
-				appearance->setDiffuse(diffuse_vec);
 			}
 
 		specular = node->FirstChildElement("specular");
@@ -350,14 +333,12 @@ void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 				specular->QueryFloatAttribute("g",&specular_vec[1]);
 				specular->QueryFloatAttribute("b",&specular_vec[2]);
 				specular->QueryFloatAttribute("a",&specular_vec[3]);
-				appearance->setSpecular(specular_vec);
 			}
 
 		shininess = node->FirstChildElement("shininess");
 		if(shininess != NULL)
 			if(strcmp(shininess->ValueTStr().c_str(), "shininess")==0){
 				shininess->QueryFloatAttribute("value", &shininess_value);
-				appearance->setShininess(shininess_value);
 			}
 
 
@@ -367,26 +348,36 @@ void LSFparser::getAppearances(map<const char*,CGFappearance*> &appearances){
 				texture->QueryFloatAttribute("length_s", &texture_length_s);
 				texture->QueryFloatAttribute("length_t", &texture_length_t);
 
-				CGFtexture *cgfTexture = new CGFtexture(texture->Attribute("file"));
-				appearance->setTexture(cgfTexture);
-				//todo: falta atribuir o comprimento e a largura da textura
 			}
 
 		if(DEBUGMODE){
 			cout << "\n\tAparencia: " << node->Attribute("id") << " " << endl;
-			if(emissive != NULL) for(int i=0; i < 4; i++) cout << "emissive " << emissive_vec[i] << endl;
-			if(ambient != NULL) for(int i=0; i < 4; i++) cout << "ambient " << ambient_vec[i] << endl;
-			if(diffuse != NULL) for(int i=0; i < 4; i++) cout << "diffuse " << diffuse_vec[i] << endl;
-			if(specular != NULL) for(int i=0; i < 4; i++) cout << "specular " << specular_vec[i] << endl;
+			if(emissive != NULL){ cout << "emissive "; for(int i=0; i < 4; i++) cout << emissive_vec[i] << " "; cout << endl;}
+			if(ambient != NULL) {cout << "ambient "; for(int i=0; i < 4; i++) cout << ambient_vec[i] << " "; cout << endl;}
+			if(diffuse != NULL) {cout << "diffuse "; for(int i=0; i < 4; i++) cout << diffuse_vec[i] << " "; cout << endl;}
+			if(specular != NULL){ cout << "specular "; for(int i=0; i < 4; i++) cout  << specular_vec[i] << " "; cout << endl;}
 			if(shininess != NULL) cout << "shininess value=" << shininess_value << endl;
 			if(texture != NULL)
 				cout << "texture file=" << texture->Attribute("file") << " length_s=" << texture_length_s << " length_t=" << texture_length_t << endl;
 
 			cout << endl;
-//			cin.get();
 		}
+		// Add to the map
+		CGFappearance* pappearance= new CGFappearance;
+		pappearance->setAmbient( ambient_vec);
+		pappearance->setDiffuse(diffuse_vec);
+		pappearance->setSpecular(specular_vec);
+		pappearance->setShininess(shininess_value);
+		if(texture != NULL){
+				string textureFile;
+				textureFile.assign(texture->Attribute("file"));
+				//pappearance->setTexture(textureFile); Tem-se que atualizar a CGFlib
+				//pappearance->setTextureWrap(texture_length_s,texture_length_t);
 
-		appearances[node->Attribute("id")] = appearance;
+					}
+		string auxId;
+		auxId.assign(node->Attribute("id"));
+		appearances[auxId]=pappearance;
 		node=node->NextSiblingElement();
 	}
 

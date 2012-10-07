@@ -28,7 +28,7 @@ class LSFnode{
 	public:
 		char *id;
 		float transformMatrix[16]; // When the node is parsed, the transformations are put in a stack
-		CGFappearance *appearance; // Fetches the loaded appearance pointer
+		string appearance; // Reference to the map of appearances
 		vector<Primitive> childPrimitives; // All the basic primitives
 		vector<string> childNoderefs; // All the child nodes
 
