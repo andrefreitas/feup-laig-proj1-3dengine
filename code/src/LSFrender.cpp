@@ -27,11 +27,11 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,C
 		switch(primitive.type){
 			case rectangle:{
 				glBegin(GL_QUADS);
-					glNormal3f(0,0,1);
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],0);
 					glTexCoord2d(1.0,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y1"],0);
 					glTexCoord2d(1.0,1.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],0);
 					glTexCoord2d(0.0,1.0); glVertex3d(primitive.attr["x1"],primitive.attr["y2"],0);
+					// Todo: é necessário depois calcular as normais com método de Newell
 				glEnd();
 			}break;
 			case triangle:{
@@ -39,7 +39,8 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,C
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
 					glTexCoord2d(1.0,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
 					glTexCoord2d(0.5,1.0); 	glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
-					glEnd();
+					// Todo: é necessário depois calcular as normais com método de Newell
+				glEnd();
 			}break;
 			case cylinder:{
 				GLUquadric *a=gluNewQuadric();
