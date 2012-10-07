@@ -14,7 +14,7 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,C
 	// Appearances
 	if(nodes[rootNode]->appearance=="inherit"){
 		appearancesStack.top()->apply();
-		appearancesStack.push(appearancesStack.top()); // necessary because of the pop
+		appearancesStack.push(appearancesStack.top()); // necessary because of the pop (imagine if the child pops)
 	}
 	else{
 		appearances[nodes[rootNode]->appearance]->apply();
@@ -44,14 +44,17 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,C
 			case cylinder:{
 				GLUquadric *a=gluNewQuadric();
 				gluQuadricNormals(a,GL_SMOOTH);
+				gluQuadricTexture(a,GL_TRUE);
 				gluCylinder(a, primitive.attr["base"], primitive.attr["top"], primitive.attr["height"], primitive.attr["slices"], primitive.attr["stacks"]);
 			} break;
 			case sphere:{
 				GLUquadric *a=gluNewQuadric();
 				gluQuadricNormals(a,GL_SMOOTH);
+				gluQuadricTexture(a,GL_TRUE);
 				gluSphere(a,primitive.attr["radius"],primitive.attr["slices"],primitive.attr["stacks"]);
 			}break;
 			case torus:{
+				// TODO: Como mapear texturas num torus? (é só isto que falta)
 				glutSolidTorus(primitive.attr["inner"],primitive.attr["outer"],primitive.attr["slices"],primitive.attr["loops"]);
 			} break;
 		}
