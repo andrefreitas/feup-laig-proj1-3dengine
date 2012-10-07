@@ -1,0 +1,1467 @@
+<!-- Os comentarios devem ter espacos no inicio e no fim, para -->
+<!-- separar dos hifens -->
+<!-- Nao devem ser usados caracteres especiais (p.ex. acentos) -->
+<!-- Todas as tags e atributos sao obrigatorios, exceto onde for -->
+<!-- referido o contrario -->
+
+<lsf>
+
+    <!-- configuracoes globais -->
+    <globals>
+
+        <!-- a declaração dos atributos deste bloco e' obrigatoria -->
+
+        <background r="0.1" g="0.2" b="0.3" a="0.9" />
+
+        <!-- Configuracao de desenho de poligonos e shading -->
+        <!-- Valores para mode: "fill", "line", "point" -->
+        <!-- Valores para shading: "flat", "gouraud") -->
+        <polygon mode="fill" shading="gouraud" />
+
+        <!-- Configuracao de culling -->
+        <!-- Valores para frontfaceorder: "CCW" ou "CW" -->
+        <!-- Valores para cullface: "back", "front" ou "both" -->
+        <culling frontfaceorder="CW" cullface="back" enabled="true" />
+    </globals>
+
+
+    <!-- informacao de camaras: o atributo "initial" identifica a camara/ponto de vista inicial -->
+    <cameras initial="cam1" >
+        <!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) -->
+
+      <perspective id="per1" near="2.0" far="9.0" angle="3.0">
+            <from x="2.0" y="3.0" z="4.0" />
+            <to x="5.0" y="6.0" z="7.0" />
+        </perspective>
+		
+        
+		<ortho id="cam1" near="1.0" far="10.0" left="5.0" right="5.0" top="5.0" bottom="5.0" />
+
+    </cameras>
+  
+
+    <!-- informacao geral de iluminacao; segue os parametros do OpenGL -->
+    <lighting doublesided="true" local="true" enabled="true" >
+        <!-- luz ambiente da cena  -->
+        <ambient r="0.3" g="0.7" b="0.4" a="0.9" />
+
+        <!-- informacao de fontes de luz -->
+        <lights>
+            <!-- Deve existir um ou mais blocos "light" -->
+            <!-- Os identificadores "id" nao podem ser repetidos -->
+            <light id="l1" enabled="true">
+                <location x="0.5" y="3.0" z="2.0" />
+                <ambient r="0.7" g="0.5" b="0.3" a="0.8" />
+                <diffuse r="0.9" g="0.4" b="0.2" a="0.4" />
+                <specular r="0.2" g="0.1" b="0.1" a="0.2" />
+
+                <!-- No caso de uma ser uma spotlight, incluir os dados abaixo; se for uma omnilight, omitir -->
+                <spot angle="0.5" exponent="2.3" dirx="1.2" diry="2.1" dirz="3.9" />
+            </light>
+
+            <light id="l2" enabled="false">
+                <location x="15" y="4.0" z="3.9" />
+                <ambient r="0.7" g="0.5" b="0.3" a="0.8" />
+                <diffuse r="0.9" g="0.4" b="0.2" a="0.4" />
+                <specular r="0.2" g="0.1" b="0.1" a="0.2" />
+
+                <!-- No caso de uma ser uma spotlight, incluir os dados abaixo; se for uma omnilight, omitir -->
+                <!-- <spot angle="0.5" exponent="2.3" dirx="1.2" diry="2.1" dirz="3.9" /> -->
+            </light>
+
+        </lights>
+
+    </lighting>
+
+    <!-- informacao de materiais; -->
+    <appearances>
+        <!-- deve existir um ou mais blocos "appearance" -->
+        <appearance id="normal" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <shininess value="2.0" />
+        </appearance>
+        
+        <appearance id="wall" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.74" g="0.58" b="0.37" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+            <shininess value="2.0" />
+        </appearance>
+        
+        <appearance id="floor" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="floor.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+        <appearance id="ceiling" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.9" g="0.9" b="0.9" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="ceiling.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+        <appearance id="wood" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="wood.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+        <appearance id="glass" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="glass.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+        <appearance id="metal" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="metal.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+        <appearance id="card" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="card.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+        <appearance id="paper" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="paper.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+        <appearance id="boxTop" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.47" g="0.2" b="0" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+            <shininess value="2.0" />
+        </appearance>
+        
+        <appearance id="tvFrame" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0" g="0" b="0" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+            <shininess value="2.0" />
+        </appearance>
+        
+        <appearance id="lamp" >
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
+            <diffuse r="1" g="1" b="1" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+            <shininess value="2.0" />
+        </appearance>
+        
+        <appearance id="tvScreen" >
+            <emissive r="1" g="1" b="1" a="1.0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
+            <diffuse r="1" g="1" b="1" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+            <shininess value="2.0" />
+            <texture file="MIB.png" length_s="1.0" length_t="1.0" />
+        </appearance>
+        
+    </appearances>
+
+    <!-- informacao do grafo; "rootid" identifica o no de raiz -->
+    <graph rootid="root">
+
+        <!-- tem de existir, pelo menos, um bloco "node" -->
+        <node id="root">
+            <!-- bloco "transforms" obrigatorio -->
+            <transforms>
+                <!-- deve conter transformacoes explicitas usando as instrucoes seguintes sem limite nem ordem -->
+                <!-- ex: bloco transforms pode ficar sem conteudo -->
+                <!-- ex: bloco transforms pode ser R,T (não tem S) -->
+                <!-- ex: bloco transforms pode ser R,S,T,S -->
+                <!-- <rotate axis="x" angle="30.0" />
+                <scale x="2.0" y="4.0" z="9.0" /> -->
+            </transforms>
+    
+            <!-- declaracao obrigatoria de aparencia a utilizar: -->
+            <!-- se id="inherit", mantem (herda) a aparencia recebida do "pai" -->
+            <!-- se não, a aparencia declarada sobrepoe a recebida do "pai" -->
+            <appearanceref id="normal" />
+                              
+            <!-- bloco "children" obrigatorio -->
+            <children>
+
+                <!-- deve existir no minimo uma primitiva, ou uma referencia a outros elementos previamente definidos -->
+                <!-- podem existir varias primitivas e/ou referencias a componentes previamente definidos -->
+
+                <!-- Primitivas : rectangle, triangle, cylinder, sphere, torus -->
+                <!--   Comandos a serem interpretados genericamente como em OpenGL/GLUT, exceto -->
+                <!--   o cilindro, que deve adicionalmente ter topos) -->
+				        <!--
+                <triangle x1="ff" y1="ff" z1="ff" x2="ff" y2="ff" z2="ff" x3="ff" y3="ff" z3="ff" />
+                <cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" /> -->      <!-- deve ter topos -->
+				        <!--
+				        <sphere radius="ff" slices="ii" stacks="ii" />
+                <torus inner="ff" outer="ff" slices="ii" loops="ii" /> -->
+               	
+                <!--  Referencia a outros elementos do grafo -->
+                <noderef id="room" />
+                <noderef id="table" />
+                <noderef id="deckCards" />
+                <noderef id="shelves" />
+                <noderef id="chairs" />
+                <noderef id="discoBalls" />
+                <noderef id="movel" />
+                <noderef id="tv" />
+                <noderef id="lamp" />
+                
+            </children>
+        </node>
+        
+        <!-- ####################################################
+         #                                                      #
+         #                       PRIMITIVES                     #
+         #                                                      #
+         ######################################################## -->
+        
+        <node id="unitCylinder">
+		    <transforms>
+                <translate x="0" y="0" z="-0.5" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <cylinder base="0.5" top="0.5" height="1.0" slices="30" stacks="5" />
+            </children>
+		</node>
+        
+        <node id="unit_square">
+		    <transforms> </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <rectangle x1="0.0" y1="0.0" x2="1.0" y2="1.0" />
+            </children>
+		</node>
+        
+        <node id="unit_sphere">
+            <transforms>
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <sphere radius="0.5" slices="16" stacks="16" />
+            </children>
+        </node>
+        
+        <!-- ####################################################
+         #                                                      #
+         #                     ROOM STRUCTURE                   #
+         #                                                      #
+         ######################################################## -->
+        
+        <node id="room">
+		    <transforms></transforms>
+			<appearanceref id="inherit" />
+			<children>
+                 <noderef id="right_wall" />
+                 <noderef id="left_wall" />
+                 <noderef id="floor" />
+                 <noderef id="ceiling" />
+            </children>
+		</node>
+        
+        <node id="right_wall">
+		    <transforms>
+                <scale x="30.0" y="15.0" z="1.0" />
+            </transforms>
+			<appearanceref id="wall" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="left_wall">
+		    <transforms>
+                <translate x="0.0" y="0.0" z="30.0" />
+                <rotate axis="y" angle="90.0" />
+                <scale x="30.0" y="15.0" z="1.0" />
+            </transforms>
+			<appearanceref id="wall" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="floor">
+		    <transforms>
+                <translate x="0.0" y="0.0" z="30.0" />
+                <rotate axis="x" angle="-90.0" />
+                <scale x="30.0" y="30.0" z="1.0" />
+            </transforms>
+			<appearanceref id="floor" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+		
+        <node id="ceiling">
+		    <transforms>
+                <translate x="0.0" y="15.0" z="0.0" />
+                <rotate axis="x" angle="90.0" />
+                <scale x="30.0" y="30.0" z="1.0" />
+            </transforms>
+			<appearanceref id="ceiling" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+         
+        <!-- ####################################################
+         #                                                      #
+         #                       UNIT CUBE                      #
+         #                                                      #
+         ######################################################## -->
+        
+        <node id="unitCube">
+		    <transforms></transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="cubeFace1" />
+                <noderef id="cubeFace2" />
+                <noderef id="cubeFace3" />
+                <noderef id="cubeFace4" />
+                <noderef id="cubeFace5" />
+                <noderef id="cubeFace6" />
+            </children>
+		</node>
+        
+        <node id="cubeFace1">
+		    <transforms>
+                <translate x="0.5" y="-0.5" z="0.5" />
+                <rotate axis="y" angle="90.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="cubeFace2">
+		    <transforms>
+                <translate x="-0.5" y="-0.5" z="0.5" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="cubeFace3">
+		    <transforms>
+                <translate x="-0.5" y="-0.5" z="-0.5" />
+                <rotate axis="y" angle="-90.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="cubeFace4">
+		    <transforms>
+                <translate x="0.5" y="-0.5" z="-0.5" />
+                <rotate axis="y" angle="180.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="cubeFace5">
+		    <transforms>
+                <translate x="-0.5" y="0.5" z="0.5" />
+                <rotate axis="x" angle="-90.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="cubeFace6">
+		    <transforms>
+                <translate x="-0.5" y="-0.5" z="-0.5" />
+                <rotate axis="x" angle="90.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <!-- #######################################################
+            #                                                      #
+            #                       TABLE                          #
+            #                                                      #
+            ######################################################## -->
+        
+        <node id="table">
+		    <transforms>
+                <translate x="18" y="0" z="15" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="tableLegs" />
+                <noderef id="tableCylinders" />
+                <noderef id="tableTop" />
+            </children>
+		</node>
+        
+        <node id="tableTop">
+		    <transforms>
+                <translate x="0" y="4.75" z="0" />
+                <scale x="12.0" y="0.1" z="6.0" />
+            </transforms>
+			<appearanceref id="glass" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="tableLegs">
+		    <transforms></transforms>
+			<appearanceref id="wood" />
+			<children>
+                <noderef id="tableLeg_1" />
+                <noderef id="tableLeg_2" />
+                <noderef id="tableLeg_3" />
+                <noderef id="tableLeg_4" />
+                <noderef id="tableConnector_1" />
+                <noderef id="tableConnector_2" />
+            </children>
+		</node>
+        
+        <node id="tableLeg_1">
+		    <transforms>
+                <translate x="-4.25" y="1.75" z="-2.4" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="vleg" />
+            </children>
+		</node>
+        
+        <node id="tableLeg_2">
+		    <transforms>
+                <translate x="-4.25" y="1.75" z="2.4" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="vleg" />
+            </children>
+		</node>
+        
+        <node id="tableLeg_3">
+		    <transforms>
+                <translate x="4.25" y="1.75" z="-2.4" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="vleg" />
+            </children>
+		</node>
+        
+        <node id="tableLeg_4">
+		    <transforms>
+                <translate x="4.25" y="1.75" z="2.4" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="vleg" />
+            </children>
+		</node>
+        
+        <node id="tableConnector_1">
+		    <transforms>
+                <translate x="-4.25" y="3.60" z="0" />
+                <rotate axis="x" angle="90.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="hleg" />
+            </children>
+		</node>
+        
+        <node id="tableConnector_2">
+		    <transforms>
+                <translate x="4.25" y="3.60" z="0" />
+                <rotate axis="x" angle="90.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="hleg" />
+            </children>
+		</node>
+        
+        <node id="tableCylinders">
+		    <transforms></transforms>
+			<appearanceref id="metal" />
+			<children>
+                <noderef id="tableCylinder_1" />
+                <noderef id="tableCylinder_2" />
+                <noderef id="tableCylinder_3" />
+                <noderef id="tableCylinder_4" />
+            </children>
+		</node>
+        
+        <node id="tableCylinder_1">
+		    <transforms>
+                <translate x="-4.25" y="3.6" z="-1.5" />
+                <rotate axis="x" angle="90" />
+                <scale x="0.6" y="0.6" z="2.2" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCylinder" />
+            </children>
+		</node>
+        
+        <node id="tableCylinder_2">
+		    <transforms>
+                <translate x="-4.25" y="3.6" z="1.5" />
+                <rotate axis="x" angle="90" />
+                <scale x="0.6" y="0.6" z="2.2" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCylinder" />
+            </children>
+		</node>
+        
+        <node id="tableCylinder_3">
+		    <transforms>
+                <translate x="4.25" y="3.6" z="-1.5" />
+                <rotate axis="x" angle="90" />
+                <scale x="0.6" y="0.6" z="2.2" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCylinder" />
+            </children>
+		</node>
+        
+        <node id="tableCylinder_4">
+		    <transforms>
+                <translate x="4.25" y="3.6" z="1.5" />
+                <rotate axis="x" angle="90" />
+                <scale x="0.6" y="0.6" z="2.2" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCylinder" />
+            </children>
+		</node>
+        
+        <node id="vleg">
+		    <transforms>
+                <scale x="1.5" y="3.5" z="0.2" />
+            </transforms>
+			<appearanceref id="wood" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="hleg">
+            <transforms>
+                <scale x="1.5" y="5" z="0.2" />
+            </transforms>
+			<appearanceref id="wood" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <!-- DECK OF CARDS -->
+        
+        <node id="deckCards">
+            <transforms>
+                <translate x="16" y="4.85" z="16.4" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="card_1" />
+                <noderef id="card_2" />
+                <noderef id="card_3" />
+                <noderef id="card_block_1" />
+            </children>
+		</node>
+        
+        <node id="card_1">
+		    <transforms>
+                <rotate axis="y" angle="30" />
+                <translate x="-0.25" y="0.0" z="0.4" />
+                <rotate axis="x" angle="-90.0" />
+                <scale x="0.5" y="0.8" z="1.0" />
+            </transforms>
+			<appearanceref id="card" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="card_2">
+		    <transforms>
+                <translate x="-0.25" y="0.06" z="0.4" />
+                <rotate axis="x" angle="-90.0" />
+                <scale x="0.5" y="0.8" z="1.0" />
+            </transforms>
+			<appearanceref id="card" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="card_3">
+		    <transforms>
+                <rotate axis="y" angle="-51" />
+                <translate x="-0.25" y="0.07" z="0.4" />
+                <rotate axis="x" angle="-90.0" />
+                <scale x="0.5" y="0.8" z="1.0" />
+            </transforms>
+			<appearanceref id="card" />
+			<children>
+                <noderef id="unit_square" />
+            </children>
+		</node>
+        
+        <node id="card_block_1">
+		    <transforms>
+                <rotate axis="x" angle="90" />
+                <scale x="0.5" y="0.8" z="0.1" />
+            </transforms>
+			<appearanceref id="paper" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <!-- ####################################################
+         #                                                      #
+         #                       SHELVES                        #
+         #                                                      #
+         ######################################################## -->
+        
+        <node id="shelves">
+		    <transforms></transforms>
+			<appearanceref id="wood" />
+			<children>
+                <noderef id="shelf_1" />
+                <noderef id="shelf_2" />
+                <noderef id="shelf_3" />
+                <noderef id="shelf_4" />
+                <noderef id="shelf_5" />
+                <noderef id="shelf_6" />
+            </children>
+		</node>
+        
+        <node id="shelf_1">
+		    <transforms>
+                <translate x="5" y="12" z="0.75" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="shelf" />
+                <noderef id="book_1" />
+                <noderef id="book_2" />
+            </children>
+		</node>
+        
+        <node id="shelf_2">
+		    <transforms>
+                <translate x="8" y="10" z="0.75" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="shelf" />
+            </children>
+		</node>
+        
+        <node id="shelf_3">
+		    <transforms>
+                <translate x="11" y="8" z="0.75" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="shelf" />
+            </children>
+		</node>
+        
+        <node id="shelf_4">
+		    <transforms>
+                <translate x="25" y="12" z="0.75" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="shelf" />
+            </children>
+		</node>
+        
+        <node id="shelf_5">
+		    <transforms>
+                <translate x="22" y="10" z="0.75" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="shelf" />
+            </children>
+		</node>
+        
+        <node id="shelf_6">
+		    <transforms>
+                <translate x="19" y="8" z="0.75" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="shelf" />
+            </children>
+		</node>
+        
+        <node id="shelf">
+		    <transforms></transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="shelf_top" />
+                <noderef id="shelf_bottom" />
+                <noderef id="shelf_left" />
+                <noderef id="shelf_right" />
+            </children>
+		</node>
+        
+        <node id="shelf_top">
+		    <transforms>
+                <translate x="0" y="1.1" z="0.0" />
+                <scale x="2.0" y="0.2" z="1.5" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="shelf_bottom">
+		    <transforms>
+                <translate x="0" y="-1.1" z="0.0" />
+                <scale x="2.0" y="0.2" z="1.5" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+
+        <node id="shelf_left">
+		    <transforms>
+                <translate x="-0.9" y="0.0" z="0.0" />
+                <rotate axis="z" angle="90" />
+                <scale x="2.0" y="0.2" z="1.5" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="shelf_right">
+		    <transforms>
+                <translate x="0.9" y="0.0" z="0.0" />
+                <rotate axis="z" angle="90" />
+                <scale x="2.0" y="0.2" z="1.5" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+
+        <!-- ####################################################
+         #                                                      #
+         #                       MOVEL                          #
+         #                                                      #
+         ########################################################-->
+        
+        <node id="movel">
+		    <transforms>
+                <translate x="2" y="0" z="15" />
+                <rotate axis="y" angle="90" />
+            </transforms>
+			<appearanceref id="wood" />
+			<children>
+                <noderef id="movelTop" />
+                <noderef id="movelBottom" />
+                <noderef id="movelMiddleH" />
+                <noderef id="movelLeftSide" />
+                <noderef id="movelRightSide" />
+                <noderef id="movelMiddleV_mid" />
+                <noderef id="movelMiddleV_left" />
+                <noderef id="movelMiddleV_right" />
+                <noderef id="box_1" />
+                <noderef id="box_2" />
+                <noderef id="box_3" />
+                <noderef id="box_4" />
+                <noderef id="dec_1" />
+                <noderef id="dec_2" />
+            </children>
+		</node>
+        
+        <node id="movelTop">
+		    <transforms>
+                <translate x="0.0" y="2.9" z="0.05" />
+                <scale x="14.0" y="0.2" z="4.1" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="movelBottom">
+		    <transforms>
+                <translate x="0" y="0.4" z="0" />
+                <scale x="13.4" y="0.2" z="4.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="movelMiddleH">
+		    <transforms>
+                <translate x="0" y="1.4" z="0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="movelBottom" />
+            </children>
+		</node>
+        
+        <node id="movelMiddleV_right">
+            <transforms>
+                <translate x="3.35" y="0" z="0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="movelMiddleV_mid" />
+            </children>
+		</node>
+        
+        <node id="movelMiddleV_left">
+            <transforms>
+                <translate x="-3.35" y="0" z="0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="movelMiddleV_mid" />
+            </children>
+		</node>
+        
+        <node id="movelMiddleV_mid">
+		    <transforms>
+                <translate x="0" y="1.65" z="0" />
+                <scale x="0.1" y="2.3" z="4" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="movelLeftSide">
+		    <transforms>
+                <translate x="-6.8" y="1.4" z="0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="movelSide" />
+            </children>
+		</node>
+        
+        <node id="movelRightSide">
+		    <transforms>
+                <translate x="6.8" y="1.4" z="0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="movelSide" />
+            </children>
+		</node>
+        
+        <node id="movelSide">
+		    <transforms>
+                <scale x="0.2" y="2.8" z="4" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <!-- Boxes -->
+        
+        <node id="box_1">
+            <transforms>
+                <translate x="1.6525" y="0.9" z="0" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="box_bottom" />
+                <noderef id="box_top" />
+            </children>
+        </node>
+        
+        <node id="box_2">
+            <transforms>
+                <translate x="5.1" y="0.9" z="0" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="box_bottom" />
+                <noderef id="box_top" />
+            </children>
+        </node>
+        
+        <node id="box_3">
+            <transforms>
+                <translate x="-1.6525" y="0.9" z="0" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="box_bottom" />
+                <noderef id="box_top" />
+            </children>
+        </node>
+        
+        <node id="box_4">
+            <transforms>
+                <translate x="-5.1" y="0.9" z="0" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="box_bottom" />
+                <noderef id="box_top" />
+            </children>
+        </node>
+        
+        <node id="box">
+            <transforms></transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="box_bottom" />
+                <noderef id="box_top" />
+            </children>
+        </node>
+        
+        <node id="box_bottom">
+		    <transforms>
+                <scale x="2.5" y="0.8" z="3" />
+            </transforms>
+			<appearanceref id="wall" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="box_top">
+		    <transforms>
+                <translate x="0" y="0.5" z="0.1" />
+                <scale x="2.7" y="0.2" z="3.2" />
+            </transforms>
+			<appearanceref id="boxTop" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <!-- Decoration -->
+        
+        <node id="dec_1">
+		    <transforms>
+                <translate x="-4.5" y="3.5" z="1" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="dec_1_bottom" />
+                <noderef id="dec_1_top" />
+            </children>
+		</node>
+        
+        <node id="dec_2">
+		    <transforms>
+                <translate x="-0.5" y="-2.9" z="-1.5" />
+                <scale x="1.2" y="2" z="1.2" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="dec_1" />
+            </children>
+		</node>
+        
+        <node id="dec_1_bottom">
+		    <transforms>
+                <scale x="1.1" y="1.3" z="1" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unit_sphere" />
+            </children>
+		</node>
+        
+        <node id="dec_1_top">
+		    <transforms>
+                <translate x="0" y="1" z="0" />
+                <scale x="0.2" y="0.6" z="0.2" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <cylinder base="1" top="0.5" height="1.0" slices="30" stacks="5" />
+            </children>
+		</node>
+        
+        <!-- ####################################################
+         #                                                      #
+         #                       TV                             #
+         #                                                      #
+         ######################################################## -->
+        
+        <node id="tv">
+		    <transforms>
+                <translate x="0.05" y="10" z="15" />
+                <rotate axis="y" angle="90.0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="tvFrame" />
+                <noderef id="tvScreen" />
+                <noderef id="tvMovie" />
+            </children>
+		</node>
+        
+        <node id="tvMovie">
+		    <transforms>
+                <translate x="-3.95" y="-2.25" z="0.009" />
+            </transforms>
+			<appearanceref id="tvScreen" />
+			<children>
+                <rectangle x1="0" y1="0" x2="7.9" y2="4.5" />
+            </children>
+		</node>
+        
+        <node id="tvFrame">
+		    <transforms></transforms>
+			<appearanceref id="metal" />
+			<children>
+                <noderef id="tvFrame_Up" />
+                <noderef id="tvFrame_Down" />
+                <noderef id="tvFrame_Left" />
+                <noderef id="tvFrame_Right" />
+            </children>
+		</node>
+        
+        <node id="tvScreen">
+		    <transforms>
+                <scale x="7.9" y="4.5" z="0.005" />
+            </transforms>
+			<appearanceref id="tvFrame" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="tvFrame_Up">
+		    <transforms>
+                <translate x="0" y="2.275" z="0" />
+                <scale x="8" y="0.05" z="0.1" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="tvFrame_Down">
+		    <transforms>
+                <translate x="0" y="-4.55" z="0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="tvFrame_Up" />
+            </children>
+		</node>
+        
+        <node id="tvFrame_Left">
+		    <transforms>
+                <translate x="-3.975" y="0" z="0" />
+                <rotate axis="z" angle="90" />
+                <scale x="4.5" y="0.05" z="0.1" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="unitCube" />
+            </children>
+		</node>
+        
+        <node id="tvFrame_Right">
+		    <transforms>
+                <translate x="7.95" y="0" z="0" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="tvFrame_Left" />
+            </children>
+		</node>
+        
+        <!-- ####################################################
+         #                                                      #
+         #                       CHAIRS                         #
+         #                                                      #
+         ######################################################## -->
+        
+        <node id="chairs">
+            <transforms></transforms>
+            <appearanceref id="wood" />
+            <children>
+                <noderef id="chair_1" />
+                <noderef id="chair_2" />
+                <noderef id="chair_3" />
+                <noderef id="chair_4" />
+            </children>
+        </node>
+        
+        <node id="chair_1">
+            <transforms>
+                <translate x="16" y="1.5" z="12"/>
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="legs" />
+                <noderef id="chairSit" />
+                <noderef id="chairBack" />
+            </children>
+        </node>
+        
+        <node id="chair_2">
+            <transforms>
+                <translate x="20" y="1.5" z="12"/>
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="legs" />
+                <noderef id="chairSit" />
+                <noderef id="chairBack" />
+            </children>
+        </node>
+        
+        <node id="chair_3">
+            <transforms>
+                <translate x="16" y="1.5" z="18"/>
+                <rotate axis="y" angle="180" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="legs" />
+                <noderef id="chairSit" />
+                <noderef id="chairBack" />
+            </children>
+        </node>
+        
+        <node id="chair_4">
+            <transforms>
+                <translate x="20" y="1.5" z="18"/>
+                <rotate axis="y" angle="180" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="legs" />
+                <noderef id="chairSit" />
+                <noderef id="chairBack" />
+            </children>
+        </node>
+        
+        <node id="legs">
+            <transforms></transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="leg1" />
+                <noderef id="leg2" />
+                <noderef id="leg3" />
+                <noderef id="leg4" />
+            </children>
+        </node>
+        
+        <node id="leg1">
+            <transforms>
+                <translate x="-0.85" y="0.0" z="-0.85"/>
+                <scale x="0.3" y="3" z="0.3" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <node id="leg2">
+            <transforms>
+                <translate x="0.85" y="0.0" z="0.85"/>
+                <scale x="0.3" y="3" z="0.3" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <node id="leg3">
+            <transforms>
+                <translate x="-0.85" y="0.0" z="0.85"/>
+                <scale x="0.3" y="3" z="0.3" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <node id="leg4">
+            <transforms>
+                <translate x="0.85" y="0.0" z="-0.85"/>
+                <scale x="0.3" y="3" z="0.3" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <node id="chairSit">
+            <transforms>
+                <translate x="0.0" y="1.5" z="0.0"/>
+                <scale x="2.0" y="0.5" z="2.0" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <node id="chairBack">
+            <transforms>
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="chair_pole1" />
+                <noderef id="chair_pole2" />
+                <noderef id="chair_support" />
+            </children>
+        </node>
+        
+        <node id="chair_pole1">
+            <transforms>
+                <translate x="-0.9" y="2.5" z="-0.9"/>
+                <scale x="0.2" y="3" z="0.2" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <node id="chair_pole2">
+            <transforms>
+                <translate x="0.9" y="2.5" z="-0.9"/>
+                <scale x="0.2" y="3" z="0.2" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <node id="chair_support">
+            <transforms>
+                <translate x="0.0" y="3.5" z="-0.9"/>
+                <scale x="1.6" y="1.0" z="0.2" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCube" />
+            </children>
+        </node>
+        
+        <!-- ####################################################
+         #                                                      #
+         #                       LAMP                           #
+         #                                                      #
+         ######################################################## -->
+        
+        <node id="lamp">
+            <transforms>
+                <translate x="18" y="10" z="15" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="lampRings" />
+                <noderef id="lampCenter" />
+                <noderef id="lampCenter_support" />
+                <noderef id="lamp_1" />
+                <noderef id="lamp_2" />
+                <noderef id="lamp1_support" />
+                <noderef id="lamp2_support" />
+            </children>
+		</node>
+        
+        <node id="lampCenter">
+		    <transforms>
+            </transforms>
+			<appearanceref id="lamp" />
+			<children>
+                <noderef id="unit_sphere" />
+            </children>
+		</node>
+        
+        <node id="lamp_1">
+		    <transforms>
+                <translate x="-1.5" y="-1" z="1" />
+                <scale x="0.3" y="0.3" z="0.3" />
+            </transforms>
+			<appearanceref id="lamp" />
+			<children>
+                <noderef id="unit_sphere" />
+            </children>
+		</node>
+        
+        <node id="lamp_2">
+		    <transforms>
+                <translate x="1.5" y="1" z="-1" />
+                <scale x="0.3" y="0.3" z="0.3" />
+            </transforms>
+			<appearanceref id="lamp" />
+			<children>
+                <noderef id="unit_sphere" />
+            </children>
+		</node>
+        
+        <node id="lampRings">
+            <transforms></transforms>
+			<appearanceref id="metal" />
+			<children>
+                <noderef id="lampRing" />
+                <noderef id="lampRing_2" />
+                <noderef id="lampRing_3" />
+                <noderef id="lampRing_4" />
+            </children>
+		</node>
+        
+        <node id="lampRing_2">
+		    <transforms>
+                <rotate axis="z" angle="45" />
+                <rotate axis="y" angle="90" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="lampRing" />
+            </children>
+		</node>
+        
+        <node id="lampRing_3">
+		    <transforms>
+                <rotate axis="z" angle="-45" />
+                <rotate axis="y" angle="90" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="lampRing" />
+            </children>
+		</node>
+        
+        <node id="lampRing_4">
+		    <transforms>
+                <rotate axis="z" angle="90" />
+                <rotate axis="y" angle="90" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <noderef id="lampRing" />
+            </children>
+		</node>
+        
+        <node id="lampRing">
+		    <transforms>
+                <scale x="1" y="1.7" z="1" />
+            </transforms>
+			<appearanceref id="inherit" />
+			<children>
+                <torus inner="0.03" outer="1" slices="20" loops="40" />
+            </children>
+		</node>
+        
+        <node id="lampCenter_support">
+            <transforms>
+                <translate x="0" y="2.75" z="0" />
+                <scale x="0.01" y="4.5" z="0.01" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCylinder" />
+            </children>
+        </node>
+        
+        <node id="lamp1_support">
+            <transforms>
+                <translate x="-1.5" y="2.15" z="1" />
+                <scale x="0.01" y="6.0" z="0.01" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCylinder" />
+            </children>
+        </node>
+        
+        <node id="lamp2_support">
+            <transforms>
+                <translate x="1.5" y="3" z="-1" />
+                <scale x="0.01" y="4.0" z="0.01" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+            <appearanceref id="inherit" />
+            <children>
+                <noderef id="unitCylinder" />
+            </children>
+        </node>
+
+    </graph>
+</lsf>

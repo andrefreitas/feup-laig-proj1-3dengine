@@ -371,8 +371,9 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 		if(texture != NULL){
 				string textureFile;
 				textureFile.assign(texture->Attribute("file"));
-				//pappearance->setTexture(textureFile); Tem-se que atualizar a CGFlib
-				//pappearance->setTextureWrap(texture_length_s,texture_length_t);
+				pappearance->setTexture(texture->Attribute("file"));
+				cout << "\nSettexture: " << textureFile << endl;
+				pappearance->setTextureWrap(texture_length_s,texture_length_t);
 
 					}
 		string auxId;
