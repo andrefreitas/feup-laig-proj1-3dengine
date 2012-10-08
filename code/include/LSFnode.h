@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 #include <CGFappearance.h>
-
+#include "CGFlight.h"
 // Class for saving the primitive params
 enum PrimitiveType{ rectangle,triangle,cylinder,sphere,torus};
 class Primitive{
@@ -21,6 +21,13 @@ class Transform{
 		map<string,float> attr;
 		Transform(TransformType type):type(type){};
 
+};
+
+class LSFlight {
+	public:
+		string id;
+		bool enabled;
+		CGFlight* light;
 };
 
 // The node in the graph
