@@ -5,6 +5,7 @@
 #include <vector>
 #include "CGFcamera.h"
 #include "LSFnode.h"
+#include "CGFlight.h"
 using namespace std;
 
 struct globalsData{
@@ -29,7 +30,7 @@ class LSFparser{
 		void getCameras(vector<CGFcamera*> &cameras);
 		void getNodes(map<string,LSFnode*> &nodes,string &rootNode);
 		void getAppearances(map<string,CGFappearance*> &appearances);
-		void getLightings();
+		void getLights(vector<CGFlight*> &lights, bool &enabled, bool &local, bool &doublesided,float *ambient);
 
 
 };

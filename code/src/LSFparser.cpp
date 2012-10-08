@@ -5,7 +5,7 @@
 #include <stack>
 #include <CGFapplication.h>
 #include <vector>
-
+#include "CGFlight.h"
 LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
@@ -391,7 +391,7 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 
 }
 
-void LSFparser::getLightings(){
+void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local, bool &doublesided, float *ambient){
 	bool lighting_doublesided = lightingsElement->Attribute("doublesided");
 	bool lighting_local = lightingsElement->Attribute("local");
 	bool lighting_enabled = lightingsElement->Attribute("enabled");
@@ -410,6 +410,10 @@ void LSFparser::getLightings(){
 		if(lighting_doublesided) cout << "doubleSided = true" << endl;
 		if(lighting_local) cout << "local = true" << endl;
 		if(lighting_enabled) cout << "enabled = true" << endl;
+		// Config params
+		enabled=lighting_enabled;
+		local=lighting_local;
+		doublesided=lighting_doublesided;
 	}
 
 	TiXmlElement *scene_ambient=lightingsElement->FirstChildElement("ambient");
@@ -419,6 +423,11 @@ void LSFparser::getLightings(){
 		scene_ambient->QueryFloatAttribute("g",&scene_ambient_g);
 		scene_ambient->QueryFloatAttribute("b",&scene_ambient_b);
 		scene_ambient->QueryFloatAttribute("a",&scene_ambient_a);
+		// Set the ambient
+		ambient[0]=scene_ambient_r;
+		ambient[1]=scene_ambient_g;
+		ambient[2]=scene_ambient_b;
+		ambient[3]=scene_ambient_a;
 	}
 
 	if(DEBUGMODE && scene_ambient != NULL)
@@ -430,6 +439,7 @@ void LSFparser::getLightings(){
 
 	// Loop trough lights
 	while(node){
+		CGFlight *plight;
 		counter++;
 
 		light_id = node->Attribute("id");
@@ -440,14 +450,14 @@ void LSFparser::getLightings(){
 		location = node->FirstChildElement("location");
 		if(location != NULL)
 			if(strcmp(location->ValueTStr().c_str(),"location")==0){
-				location->QueryFloatAttribute("r",&location_x);
-				location->QueryFloatAttribute("g",&location_y);
-				location->QueryFloatAttribute("b",&location_z);
+				location->QueryFloatAttribute("x",&location_x);
+				location->QueryFloatAttribute("y",&location_y);
+				location->QueryFloatAttribute("z",&location_z);
 			}
 
 		ambient = node->FirstChildElement("ambient");
 		if(ambient != NULL)
-			if(strcmp(ambient->ValueTStr().c_str(),"emissive")==0){
+			if(strcmp(ambient->ValueTStr().c_str(),"ambient")==0){
 				ambient->QueryFloatAttribute("r",&ambient_r);
 				ambient->QueryFloatAttribute("g",&ambient_g);
 				ambient->QueryFloatAttribute("b",&ambient_b);
@@ -496,9 +506,50 @@ void LSFparser::getLightings(){
 				cout << "spot angle=" << spot_angle << " exponent=" << spot_exponent << " dirx=" << spot_dirx << " diry=" <<spot_diry << " dirz=" << spot_dirz << endl;
 
 			cout << endl;
-//			cin.get();
-		}
 
+		}
+		// Add light to the vector
+		// Location
+		float * position= new float[3];
+		position[0]=location_x;
+		position[1]=location_y;
+		position[2]=location_z;
+		// Direction
+		float * direction=new float[3];
+		direction[0]=spot_dirx;
+		direction[1]=spot_diry;
+		direction[2]=spot_dirz;
+		if(spot == NULL) direction=NULL;
+		// Create
+		plight= new CGFlight(counter,position,direction);
+		// Angle and exponent for spotlight // Todo: Exponent?
+		if(spot != NULL) plight->setAngle(spot_angle);
+		// Ambient
+		float * ambientV=new float[4];
+		ambientV[0]=ambient_r;
+		ambientV[1]=ambient_g;
+		ambientV[2]=ambient_b;
+		ambientV[3]=ambient_a;
+		plight->setAmbient(ambientV);
+
+		// Diffuse
+		float * diffuseV=new float[4];
+		diffuseV[0]=diffuse_r;
+		diffuseV[1]=diffuse_g;
+		diffuseV[2]=diffuse_b;
+		diffuseV[3]=diffuse_a;
+		plight->setDiffuse(diffuseV);
+
+		// Specular
+		float * specularV=new float[4];
+		specularV[0]=specular_r;
+		specularV[1]=specular_g;
+		specularV[2]=specular_b;
+		specularV[3]=specular_a;
+		plight->setSpecular(specularV);
+
+		// Push back light
+		lights.push_back(plight);
 		node=node->NextSiblingElement();
 	}
 }

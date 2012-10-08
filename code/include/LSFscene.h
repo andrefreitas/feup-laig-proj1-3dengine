@@ -11,9 +11,11 @@ class LSFscene : public CGFscene
 	LSFparser *sceneParser;
 	map<string,CGFappearance*> appearances;
 	map<string,LSFnode*> nodes;
+	vector<CGFlight*> lights;
 	CGFappearance* defaultAppearance;
 	string rootNode;
-
+	bool lights_enabled, lights_local, lights_doublesided;
+	float ambient[4];
 public:
 	LSFscene(char* argv[]);
 	~LSFscene();

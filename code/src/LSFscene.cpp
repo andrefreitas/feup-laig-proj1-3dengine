@@ -59,7 +59,7 @@ void LSFscene::init()
 	vector<CGFcamera*> cameras;
 	//sceneParser->getCameras(cameras);
 	sceneParser->getAppearances(appearances);
-	//sceneParser->getLightings();
+	sceneParser->getLights(lights,lights_enabled, lights_local, lights_doublesided,ambient);
 	sceneParser->getNodes(nodes,rootNode);
 
 }
@@ -78,6 +78,14 @@ void LSFscene::display()
 
 	// Apply transformations corresponding to the camera position relative to the origin
 	CGFscene::activeCamera->applyView();
+
+	// ---- BEGIN lights section
+	for(int unsigned i=0; i<lights.size(); i++){
+		lights[i]->draw();
+		lights[i]->enable();
+	}
+
+	// ---- END lights section
 
 	// Draw axis
 	axis.draw();
