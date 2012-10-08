@@ -25,20 +25,15 @@ LSFscene::~LSFscene(){
 
 void LSFscene::init()
 {
-	// Enables lighting computations
-	glEnable(GL_LIGHTING);
+	// By default is false
+	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
 
 	// Enables textures
 	glEnable ( GL_TEXTURE_2D );
 
 	// Sets up some lighting parameters
-	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, CGFlight::background_ambient);  // Define ambient light
-	
-	// Declares and enables a light
-	float light0_pos[4] = {4.0, 6.0, 5.0, 1.0};
-	CGFlight* light0 = new CGFlight(GL_LIGHT0, light0_pos);
-	light0->enable();
+	 // Define ambient light
 
 	// Defines a default normal
 	glNormal3f(0,0,1);
@@ -56,10 +51,16 @@ void LSFscene::init()
 
 	// Get Global configurations
 	setGlobals();
-	vector<CGFcamera*> cameras;
-	//sceneParser->getCameras(cameras);
+	// Get the Appearances
 	sceneParser->getAppearances(appearances);
+	// Get the lights
 	sceneParser->getLights(lights,lights_enabled, lights_local, lights_doublesided,ambient);
+	// Lights config
+	if(lights_enabled) glEnable(GL_LIGHTING);
+	if(lights_doublesided) glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	if(lights_local) glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
+	// Get the nodes
 	sceneParser->getNodes(nodes,rootNode);
 
 }
@@ -94,6 +95,7 @@ void LSFscene::display()
 	stack<CGFappearance*> appearancesStack;
 	appearancesStack.push(defaultAppearance);
 	LSFrender::render(nodes,rootNode,appearances,appearancesStack);
+
 
 	// ---- BEGIN Primitive drawing section
 	// ---- END Primitive drawing section

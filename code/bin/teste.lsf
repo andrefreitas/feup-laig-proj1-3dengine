@@ -37,56 +37,18 @@
 	
 	
 	<!-- general lighting -->
-	<lighting doublesided="true" local="true" enabled="true" >
+	<lighting doublesided="true" local="false" enabled="true" >
 		<!-- scene ambient light -->
-		<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-		
-		<!-- scene lights -->
-		<lights>
-			<!-- top ring light -->
+		<ambient r="1.0" g="1.0" b="1.0" a="1.0" />
 			<light id="topLight" enabled="false">
 				<location x="0" y="4.5" z="0" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
 				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="0.0" exponent="1.0" dirx="0.0" diry="0.0" dirz="0.0" />
 			</light>
-			
-			<!-- spotlight 1 -->
-			<light id="spotLight1" enabled="false">
-				<location x="-9.9" y="4.5" z="9.9" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="0.0" diry="1.0" dirz="0.0" />
-			</light>
-			
-			<!-- spotlight 2 -->
-			<light id="spotLight2" enabled="false">
-				<location x="-9.9" y="4.5" z="-9.9" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="0.0" diry="1.0" dirz="0.0" />
-			</light>
-			
-			<!-- spotlight 3 -->
-			<light id="spotLight3" enabled="false">
-				<location x="9.9" y="4.5" z="-9.9" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="0.0" diry="1.0" dirz="0.0" />
-			</light>
-			
-			<!-- spotlight 4 -->
-			<light id="spotLight4" enabled="false">
-				<location x="9.9" y="4.5" z="9.9" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="0.0" diry="1.0" dirz="0.0" />
-			</light>
+		<!-- scene lights -->
+		<lights>
+
 		</lights>
 	</lighting>
 	

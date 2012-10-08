@@ -392,10 +392,9 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 }
 
 void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local, bool &doublesided, float *ambient){
-	bool lighting_doublesided = lightingsElement->Attribute("doublesided");
-	bool lighting_local = lightingsElement->Attribute("local");
-	bool lighting_enabled = lightingsElement->Attribute("enabled");
-
+	bool lighting_doublesided;
+	bool lighting_local;
+	bool lighting_enabled;
 	int counter = 0;
 	const char *light_id, *light_enabled;
 	float scene_ambient_r, scene_ambient_g, scene_ambient_b, scene_ambient_a;
@@ -404,18 +403,21 @@ void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local,
 	float diffuse_r, diffuse_g, diffuse_b, diffuse_a;
 	float specular_r, specular_g, specular_b, specular_a;
 	float spot_angle, spot_exponent, spot_dirx, spot_diry, spot_dirz;
-
+	int lightsId[]={GL_LIGHT0,GL_LIGHT1,GL_LIGHT2,GL_LIGHT3,GL_LIGHT4,GL_LIGHT5,GL_LIGHT6,GL_LIGHT7};
+	lightingsElement->QueryBoolAttribute("local",&lighting_local);
+	lightingsElement->QueryBoolAttribute("enabled",&lighting_enabled);
+	lightingsElement->QueryBoolAttribute("doublesided",&lighting_doublesided);
 	if(DEBUGMODE){
 		cout << "\n--- Luzes  ---" << endl;
 		if(lighting_doublesided) cout << "doubleSided = true" << endl;
 		if(lighting_local) cout << "local = true" << endl;
 		if(lighting_enabled) cout << "enabled = true" << endl;
-		// Config params
-		enabled=lighting_enabled;
-		local=lighting_local;
-		doublesided=lighting_doublesided;
-	}
 
+	}
+	// Config params
+	enabled=lighting_enabled;
+	local=lighting_local;
+	doublesided=lighting_doublesided;
 	TiXmlElement *scene_ambient=lightingsElement->FirstChildElement("ambient");
 
 	if(scene_ambient != NULL){
@@ -437,7 +439,7 @@ void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local,
 
 	TiXmlElement *node = node_->FirstChildElement("light");
 
-	// Loop trough lights
+	// Loop lights
 	while(node){
 		CGFlight *plight;
 		counter++;
@@ -510,18 +512,20 @@ void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local,
 		}
 		// Add light to the vector
 		// Location
-		float * position= new float[3];
+		float * position= new float[4];
 		position[0]=location_x;
 		position[1]=location_y;
 		position[2]=location_z;
+		position[3]=1;
 		// Direction
-		float * direction=new float[3];
+		float * direction=new float[4];
 		direction[0]=spot_dirx;
 		direction[1]=spot_diry;
 		direction[2]=spot_dirz;
+		direction[3]=1;
 		if(spot == NULL) direction=NULL;
 		// Create
-		plight= new CGFlight(counter,position,direction);
+		plight= new CGFlight(lightsId[counter],position,direction);
 		// Angle and exponent for spotlight // Todo: Exponent?
 		if(spot != NULL) plight->setAngle(spot_angle);
 		// Ambient
