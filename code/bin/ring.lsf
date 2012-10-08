@@ -181,7 +181,7 @@
 		
      <!-- ringLadder appearance -->
 		<appearance id="ringLadder">
-	 		<emissive r="0.78" g="0.78" b="0.78" a="1" />
+	 		<emissive r="0.2" g="0.2" b="0.2" a="1" />
 			<ambient r="0.2" g="0.2" b="0.2" a="1" />
 			<diffuse r="0.78" g="0.78" b="0.78" a="1" />
 			<specular r="0.4" g="0.4" b="0.4" a="1" />
@@ -190,11 +190,11 @@
 		
 		<!-- ringBanner appearance -->
 		<appearance id="ringBanner">
-	 		<emissive r="0.01" g="0.01" b="0.01" a="1" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1" />
-			<diffuse r="0.2" g="0.2" b="0.2" a="1" />
-			<specular r="0.3" g="0.3" b="0.3" a="1" />
-			<shininess value="5.0" />
+	 		<emissive r="0.3" g="0.3" b="0.3" a="1" />
+			<ambient r="1.0" g="1.0" b="1.0" a="1" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="1" />
+			<specular r="1.0" g="1.0" b="1.0" a="1" />
+			<shininess value="25.0" />
 			<texture file="ringImage.jpg" length_s="1.0" length_t="1.0" />
 		</appearance>
 		
