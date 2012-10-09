@@ -13,70 +13,10 @@ LSFinterface::LSFinterface()
 LSFinterface::~LSFinterface(){}
 
 
-//void LSFinterface::processKeyboard(unsigned char key, int x, int y)
-//{
-//	// Uncomment below if you would like to process the default keys (e.g. 's' for snapshot, 'Esc' for exiting, ...)
-//	 CGFinterface::processKeyboard(key, x, y);
-//
-//	switch(key)
-//	{
-//		case 'a':
-//		{
-//			// This is an example of accessing the associated scene
-//			// To test, create the function toggleSomething in your scene to activate/deactivate something
-//			((LSFscene *) scene)->toggleSomething();
-//			break;
-//		}
-//		case 'j':
-//		case 'J': ((LightingScene *) scene)->robot->rotate(5); break;
-//
-//		case 'l':
-//		case 'L': ((LightingScene *) scene)->robot->rotate(-5); break;
-//
-//		case 'i':
-//		case 'I': ((LightingScene *) scene)->robot->move(1); break;
-//
-//		case 'k':
-//		case 'K': ((LightingScene *) scene)->robot->move(-1); break;
-//	}
-//}
 
 void LSFinterface::initGUI()
 {
-	// Check CGFinterface.h and GLUI documentation for the types of controls available
-	//GLUI_Panel *varPanel= addPanel("Group", 1);
-	//addSpinnerToPanel(varPanel, "Val 1(interface)", 2, &testVar, 1);
-	GLUI_Panel *lightPanel= addPanel("Lights", 1);
-//	addColumn();
-//	GLUI_Panel *clockPanel= addPanel("Clock", 1);
-//	addColumn();
-//	GLUI_Panel *robotPanel= addPanel("Robot", 1);
 
-
-	addCheckboxToPanel(lightPanel, "Light0 ON/OFF", &light0, 0);
-	addCheckboxToPanel(lightPanel, "Light1 ON/OFF", &light1, 1);
-	addCheckboxToPanel(lightPanel, "Light2 ON/OFF", &light2, 2);
-	addCheckboxToPanel(lightPanel, "Light3 ON/OFF", &light3, 3);
-
-//	addCheckboxToPanel(clockPanel, "start/stop  ", &clock, 4);
-
-//	listbox_item_id = 3;
-////	Textures = addListboxToPanel(robotPanel, "Textures", &texturas, 5);
-//	Textures->add_item(0, "Textura 1");
-//	Textures->add_item(1, "Textura 2");
-//	Textures->add_item(2, "Textura 3");
-//	Textures->set_int_val (0);
-//
-//	GLUI_RadioGroup* mode= addRadioGroup(&robot, 6);
-//	mode->set_int_val(0);
-//	GLUI_RadioButton* textured = addRadioButtonToGroup(mode, "textured");
-//	GLUI_RadioButton* wireframe = addRadioButtonToGroup(mode, "wireframe");
-
-//	addRadioGroupToPanel(robotPanel, &modo, 6);
-
-
-	// You could also pass a reference to a variable from the scene class, if public
-	//addSpinnerToPanel(varPanel, "Val 2(scene)", 2, &(((LightingScene*) scene)->sceneVar), 2);
 
 
 }

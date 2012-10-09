@@ -14,8 +14,10 @@ float deg2rad=pi/180.0;
 CGFappearance *mat1;
 
 LSFscene::LSFscene(char* argv[]){
-	if(argv[1] == NULL)
-		inputScene = "teste.lsf";
+	if(argv[1] == NULL){
+		inputScene= new char [200];
+		strcpy(inputScene,"default.lsf" );
+	}
 	else
 		inputScene = argv[1];
 }

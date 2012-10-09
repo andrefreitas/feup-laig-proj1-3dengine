@@ -291,12 +291,11 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 	int counter = 0;
 	float emissive_vec[4], ambient_vec[4], diffuse_vec[4], specular_vec[4];
 	float shininess_value, texture_length_s, texture_length_t;
-	const char *appearance_id;
 	cout << "\n--- Aparencias  ---" << endl;
 	// Loop trough appearances
 	while(node){
 		counter++;
-		appearance_id = node->Attribute("id");
+
 		TiXmlElement *emissive, *ambient, *diffuse, *specular, *shininess, *texture;
 
 		emissive = node->FirstChildElement("emissive");
@@ -395,7 +394,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 	bool lighting_local;
 	bool lighting_enabled;
 	int counter = 0;
-	const char *light_id, *light_enabled;
+	const char *light_id;
 	float scene_ambient_r, scene_ambient_g, scene_ambient_b, scene_ambient_a;
 	float location_x, location_y, location_z;
 	float ambient_r, ambient_g, ambient_b, ambient_a;
@@ -494,7 +493,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 			}
 
 		if(DEBUGMODE){
-			cout << "\n\tLuz: " << light_id << "  enabled=" << light_enabled << endl;
+			cout << "\n\tLuz: " << light_id << "  enabled=" << lighting_enabled << endl;
 			if(location != NULL)
 				cout << "location x=" << location_x << " y=" << location_y << " z="<< location_z << endl;
 			if(ambient != NULL)
