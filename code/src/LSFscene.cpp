@@ -64,15 +64,58 @@ void LSFscene::init()
 	// Get the cameras info
 	sceneParser->getCameras(cameras);
 
+	initCameras();
+
 }
 
 void LSFscene::initCameras()
 {
+	for(unsigned int i = 0; i < cameras.size(); i++){
+		CGFcamera *camera = new CGFcamera();
+
+		camera->translate(0, cameras.at(i)->fromX);
+		camera->translate(1, cameras.at(i)->fromY);
+		camera->translate(2, cameras.at(i)->fromZ);
+
+
+		// - Código ainda em teste - inverter os comentários para vizualizar carregamento vindos o .lsf
+
+//		if((fabs(cameras.at(i)->fromX) - fabs(cameras.at(i)->toX)) != 0)
+//			camera->rotate(0, -cameras.at(i)->angle);
+//
+//		if((fabs(cameras.at(i)->fromY) - fabs(cameras.at(i)->toY)) != 0)
+//			camera->rotate(1, -cameras.at(i)->angle);
+//
+//		if((fabs(cameras.at(i)->fromZ) - fabs(cameras.at(i)->toZ)) != 0)
+//			camera->rotate(2, -cameras.at(i)->angle);
+
+
+		camera->rotate(0, 20);
+		camera->rotate(1, -45);
+
+		// - fim de código em teste
+
+
+//		if(cameras.at(i)->angle == 360)
+//			camera->setExamineMode();
+//		else
+//			camera->setWalkMode();
+
+
+		sceneCameras.push_back(camera);
+	}
+
+	//mudar aqui a camara até se criar a interface
+	activateCamera(1);
 
 }
 
 void LSFscene::activateCamera(int i)
 {
+	if(i>0 && i < sceneCameras.size())
+		activeCamera = sceneCameras.at(i);
+	else
+		activeCamera = sceneCameras.at(0);
 }
 
 void LSFscene::display()
@@ -89,7 +132,9 @@ void LSFscene::display()
 
 	// Apply transformations corresponding to the camera position relative to the origin
 
-	CGFscene::activeCamera->applyView();
+//	CGFscene::activeCamera->applyView();
+
+	activeCamera->applyView();
 
 
 	// ---- BEGIN lights section

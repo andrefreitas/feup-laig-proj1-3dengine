@@ -68,19 +68,19 @@ void LSFparser::getCameras(vector<Camera*> &cameras){
 	while(node){
 		counter++;
 		const char* val=node->Value();
-		Camera camera;
+		Camera *camera = new Camera;
 		// -->
 		if(strcmp(val,"ortho")==0){
 			camera_id=node->Attribute("id");
-			node->QueryFloatAttribute("near",&camera._near);
-			node->QueryFloatAttribute("far",&camera._far);
-			node->QueryFloatAttribute("left",&camera.left);
-			node->QueryFloatAttribute("right",&camera.right);
-			node->QueryFloatAttribute("top",&camera.top);
-			node->QueryFloatAttribute("bottom",&camera.bottom);
+			node->QueryFloatAttribute("near",&camera->_near);
+			node->QueryFloatAttribute("far",&camera->_far);
+			node->QueryFloatAttribute("left",&camera->left);
+			node->QueryFloatAttribute("right",&camera->right);
+			node->QueryFloatAttribute("top",&camera->top);
+			node->QueryFloatAttribute("bottom",&camera->bottom);
 
 			if(DEBUGMODE){
-				float attributes[]={camera._near,camera._far,camera.left,camera.right,camera.top,camera.bottom};
+				float attributes[]={camera->_near,camera->_far,camera->left,camera->right,camera->top,camera->bottom};
 				cout << "\n\tOrtho: " << camera_id << " ";
 				for(int unsigned i=0; i<6; i++) cout << attributes[i] << " ";
 				cout << endl;
@@ -88,36 +88,36 @@ void LSFparser::getCameras(vector<Camera*> &cameras){
 		}
 		else{
 			camera_id=node->Attribute("id");
-			node->QueryFloatAttribute("near",&camera._near);
-			node->QueryFloatAttribute("far",&camera._far);
-			node->QueryFloatAttribute("angle",&camera.angle);
+			node->QueryFloatAttribute("near",&camera->_near);
+			node->QueryFloatAttribute("far",&camera->_far);
+			node->QueryFloatAttribute("angle",&camera->angle);
 
 			// From
 			TiXmlElement *from, *to;
 			from=node->FirstChildElement("from");
-			from->QueryFloatAttribute("x",&camera.fromX);
-			from->QueryFloatAttribute("y",&camera.fromY);
-			from->QueryFloatAttribute("z",&camera.fromZ);
+			from->QueryFloatAttribute("x",&camera->fromX);
+			from->QueryFloatAttribute("y",&camera->fromY);
+			from->QueryFloatAttribute("z",&camera->fromZ);
 
 			// To
 			to=node->FirstChildElement("to");
-			to->QueryFloatAttribute("x",&camera.toX);
-			to->QueryFloatAttribute("y",&camera.toY);
-			to->QueryFloatAttribute("z",&camera.toZ);
+			to->QueryFloatAttribute("x",&camera->toX);
+			to->QueryFloatAttribute("y",&camera->toY);
+			to->QueryFloatAttribute("z",&camera->toZ);
 
 			if(DEBUGMODE){
-				float attributes[]={camera._near,camera._far,camera.angle};
+				float attributes[]={camera->_near,camera->_far,camera->angle};
 				cout << "\n\tPerspective: " << camera_id << " ";
 				for(int unsigned i=0; i<3; i++) cout << attributes[i] << " ";
 				cout << endl;
-				cout << "\t\t\tFrom: " << camera.fromX << " " << camera.fromY << " " << camera.fromZ << endl;
-				cout << "\t\t\tTo: " << camera.toX << " " << camera.toY << " " << camera.toZ << endl;
+				cout << "\t\t\tFrom: " << camera->fromX << " " << camera->fromY << " " << camera->fromZ << endl;
+				cout << "\t\t\tTo: " << camera->toX << " " << camera->toY << " " << camera->toZ << endl;
 
 			}
 
 		}
 
-		cameras.push_back(&camera);
+		cameras.push_back(camera);
 
 		// -->
 		node=node->NextSiblingElement();
