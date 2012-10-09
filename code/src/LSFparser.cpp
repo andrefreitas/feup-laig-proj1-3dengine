@@ -374,8 +374,13 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 		pappearance->setSpecular(specular_vec);
 		pappearance->setShininess(shininess_value);
 		if(texture != NULL){
-			pappearance->setTexture(texture->Attribute("file"));
-			if(DEBUGMODE) cout << "\nSettexture: " << texture->Attribute("file") << endl;
+			string textureFile;
+			textureFile.assign(texture->Attribute("file"));
+			CGFtexture *text = new CGFtexture(texture->Attribute("file"));
+			text->setSize(texture_length_s, texture_length_t);
+			pappearance->setTexture(text);
+			pappearance->setTextureWrap(GL_REPEAT,GL_REPEAT);
+			if(DEBUGMODE) cout << "\nSettexture: " << textureFile << endl;
 		}
 		string auxId;
 		auxId.assign(node->Attribute("id"));
