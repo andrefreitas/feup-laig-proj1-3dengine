@@ -2,6 +2,7 @@
 #include <exception>
 #include "CGFapplication.h"
 #include "LSFscene.h"
+#include "LSFinterface.h"
 #include "LSFnode.h"
 using std::cout;
 using std::exception;
@@ -14,7 +15,7 @@ int main(int argc, char* argv[]) {
 		app.init(&argc, argv);
 
 		app.setScene(new LSFscene(argv));
-		app.setInterface(new CGFinterface());
+		app.setInterface(new LSFinterface());
 		
 		app.run();
 	}
