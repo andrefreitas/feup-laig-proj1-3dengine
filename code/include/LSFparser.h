@@ -37,7 +37,7 @@ class LSFparser{
 		void getCameras(vector<Camera*> &cameras);
 		void getNodes(map<string,LSFnode*> &nodes,string &rootNode);
 		void getAppearances(map<string,CGFappearance*> &appearances);
-		void getLights(vector<CGFlight*> &lights, bool &enabled, bool &local, bool &doublesided,float *ambient);
+		void getLights(map<string,LSFlight*> &lights, bool &enabled, bool &local, bool &doublesided,float *ambient);
 
 
 };

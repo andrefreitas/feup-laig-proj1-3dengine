@@ -126,9 +126,15 @@ void LSFscene::display()
 
 
 	// ---- BEGIN lights section
-	for(int unsigned i=0; i<lights.size(); i++){
-		lights[i]->draw();
-		lights[i]->enable();
+	map<string,LSFlight*>::iterator it;
+	for (it=lights.begin();it!=lights.end(); it++){
+		if((*it).second->enabled){
+			(*it).second->light->enable();
+			(*it).second->light->draw();
+		}
+		else{
+			(*it).second->light->disable();
+		}
 	}
 
 	// ---- END lights section

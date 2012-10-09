@@ -11,7 +11,7 @@ class LSFscene : public CGFscene
 	LSFparser *sceneParser;
 	map<string,CGFappearance*> appearances;
 	map<string,LSFnode*> nodes;
-	vector<CGFlight*> lights;
+	map<string,LSFlight*> lights;
 	vector<Camera*> cameras;
 	CGFappearance* defaultAppearance;
 	string rootNode;

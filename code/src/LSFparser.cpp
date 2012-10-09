@@ -374,14 +374,8 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 		pappearance->setSpecular(specular_vec);
 		pappearance->setShininess(shininess_value);
 		if(texture != NULL){
-			string textureFile;
-			textureFile.assign(texture->Attribute("file"));
-			CGFtexture *text = new CGFtexture(texture->Attribute("file"));
-			text->setSize(texture_length_s, texture_length_t);
-			pappearance->setTexture(text);
-			pappearance->setTextureWrap(GL_REPEAT,GL_REPEAT);
-
-			if(DEBUGMODE) cout << "\nSettexture: " << textureFile << endl;
+			pappearance->setTexture(texture->Attribute("file"));
+			if(DEBUGMODE) cout << "\nSettexture: " << texture->Attribute("file") << endl;
 		}
 		string auxId;
 		auxId.assign(node->Attribute("id"));
@@ -391,7 +385,7 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 
 }
 
-void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local, bool &doublesided, float *ambient){
+void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &local, bool &doublesided, float *ambient){
 	bool lighting_doublesided;
 	bool lighting_local;
 	bool lighting_enabled;
@@ -445,7 +439,7 @@ void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local,
 		counter++;
 
 		light_id = node->Attribute("id");
-		light_enabled = node->Attribute("enabled");
+		node->QueryBoolAttribute("enabled",&lighting_enabled);
 
 		TiXmlElement *location, *ambient, *diffuse, *specular, *spot;
 
@@ -553,7 +547,12 @@ void LSFparser::getLights(vector<CGFlight*> &lights, bool &enabled, bool &local,
 		plight->setSpecular(specularV);
 
 		// Push back light
-		lights.push_back(plight);
+		LSFlight *pLSFlight=new LSFlight;
+		pLSFlight->light=plight;
+		pLSFlight->enabled=lighting_enabled;
+		pLSFlight->id=light_id;
+		lights[light_id]=pLSFlight;
+
 		node=node->NextSiblingElement();
 	}
 }
