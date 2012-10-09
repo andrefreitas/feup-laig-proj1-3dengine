@@ -70,42 +70,11 @@ void LSFscene::init()
 
 void LSFscene::initCameras()
 {
-	for(unsigned int i = 0; i < cameras.size(); i++){
-		CGFcamera *camera = new CGFcamera();
-//		camera->setX(cameras[i]->fromX);
-//		camera->setY(cameras[i]->fromY);
-//		camera->setZ(cameras[i]->fromZ);
-		camera->moveTo(25, 0, 0);
-		camera->rotate(0, 20);
-		camera->rotate(1, -45);
 
-		sceneCameras.push_back(camera);
-	}
-//	CGFcamera* first = new CGFcamera();
-//	CGFcamera* second = new CGFcamera();
-//	CGFcamera* third = new CGFcamera();
-//
-//	first->moveTo(25,0,0);
-//	first->rotate(0,20);
-//	first->rotate(1,-45);
-//
-//	second->moveTo(20,20,20);
-//
-//	third->moveTo(0,30,0);
-//
-//	sceneCameras.push_back(first);
-//	sceneCameras.push_back(second);
-//	sceneCameras.push_back(third);
-
-	activateCamera(0);
 }
 
 void LSFscene::activateCamera(int i)
 {
-	if(i<cameras.size() && i >=0)
-	{
-		activeCamera = sceneCameras.at(i);
-	}
 }
 
 void LSFscene::display()
