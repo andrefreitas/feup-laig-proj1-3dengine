@@ -66,8 +66,6 @@ void LSFscene::init()
 	// Get the cameras info
 	sceneParser->getCameras(cameras);
 
-	initCameras();
-
 }
 
 void LSFscene::initCameras()
@@ -124,8 +122,7 @@ void LSFscene::display()
 
 	// Apply transformations corresponding to the camera position relative to the origin
 
-//	CGFscene::activeCamera->applyView();
-	sceneCameras.at(active_camera)->applyView();
+	CGFscene::activeCamera->applyView();
 
 
 	// ---- BEGIN lights section
