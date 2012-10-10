@@ -78,6 +78,10 @@ map<string, LSFcamera*> * LSFscene::getCameras(){
 	return &cameras;
 }
 
+struct globalsData * LSFscene::getGlobals(){
+	return &globals;
+}
+
 void LSFscene::initCameras()
 {
 	map<string,LSFcamera*>::iterator it;
@@ -130,6 +134,9 @@ void LSFscene::display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	//polygonal mode
+	glPolygonMode(face, mode);
+
 	// Apply transformations corresponding to the camera position relative to the origin
 
 //	CGFscene::activeCamera->applyView();
@@ -168,8 +175,12 @@ void LSFscene::display()
 	glutSwapBuffers();
 }
 
+void LSFscene::setPolygonMode(unsigned int face, unsigned int mode){
+	this->face = face;
+	this->mode = mode;
+}
+
 void LSFscene::setGlobals(){
-	struct globalsData globals;
 	sceneParser->getGlobals(&globals);
 
 	// Set Background

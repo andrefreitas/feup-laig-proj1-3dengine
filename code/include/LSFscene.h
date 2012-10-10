@@ -9,6 +9,7 @@ class LSFscene : public CGFscene
 {
 	char* inputScene;
 	LSFparser *sceneParser;
+	struct globalsData globals;
 	map<string,CGFappearance*> appearances;
 	map<string,LSFnode*> nodes;
 	map<string,LSFlight*> lights;
@@ -18,6 +19,9 @@ class LSFscene : public CGFscene
 	bool lights_enabled, lights_local, lights_doublesided;
 	float ambient[4];
 	string activeCamera;
+
+	GLenum face;
+	GLenum mode;
 public:
 	LSFscene();
 	LSFscene(char* argv[]);
@@ -29,7 +33,9 @@ public:
 	void activateCamera(string id);
 	// -----
 	void setGlobals();
+	void setPolygonMode(unsigned int, unsigned int);
 
+	struct globalsData *getGlobals();
 	map<string, LSFlight*> * getLights();
 	map<string, LSFcamera*> * getCameras();
 };

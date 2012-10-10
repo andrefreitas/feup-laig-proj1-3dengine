@@ -8,12 +8,15 @@ class LSFinterface: public CGFinterface
 {
 	private:
 		LSFscene *scene;
+		struct globalsData *globals;
 		map<string,LSFlight*> *lights;
 		map<string, LSFcamera*> *cameras;
 
 		int camerasGroup;
-		int rotateAxis;
-		int translateAxis;
+		int polygonalMode;
+
+		GLenum face;
+		GLenum mode;
 
 	public:
 		LSFinterface(LSFscene *scene);
