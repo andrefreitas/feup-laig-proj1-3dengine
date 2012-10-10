@@ -11,6 +11,8 @@ class LSFinterface: public CGFinterface
 		map<string,LSFlight*> *lights;
 		map<string, LSFcamera*> *cameras;
 
+		int camerasGroup;
+
 	public:
 		LSFinterface(LSFscene *scene);
 		~LSFinterface();

@@ -107,7 +107,7 @@ void LSFscene::initCameras()
 void LSFscene::activateCamera(string id)
 {
 	activeCamera = cameras[id]->id;
-	cout << "activeCamera = " << id << endl;
+	if(DEBUGMODE) cout << "activeCamera = " << id << endl;
 }
 
 void LSFscene::display()

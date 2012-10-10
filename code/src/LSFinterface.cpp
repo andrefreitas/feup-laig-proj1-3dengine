@@ -21,28 +21,54 @@ void LSFinterface::initGUI()
 	addColumn();
 	GLUI_Panel *camerasPanel = addPanel("Cameras", 1);
 
+
+	//	GLUI_Checkbox* addCheckbox(char* name, int* value = (int*) 0, int id = -1);
+	//	GLUI_Checkbox* addCheckboxToPanel(GLUI_Panel *p,char* name, int* value= (int*) 0,int id = -1);
+	//
+	//	GLUI_Button* addButton(char* name,int id = -1);
+	//	GLUI_Button* addButtonToPanel(GLUI_Panel *p,char* name,int id = -1);
+	//
+	//	void addColumn();
+	//	void addColumnToPanel(GLUI_Panel *p);
+	//
+	//	GLUI_EditText* addEditText(char* name, char* var = (char*) 0,int id = -1);
+	//	GLUI_EditText* addEditText(char* name, int* var = (int*) 0,int id = -1);
+	//	GLUI_EditText* addEditText(char* name, float* var = (float*) 0,int id = -1);
+	//	GLUI_EditText* addEditTextToPanel(GLUI_Panel *p,char* name, char* var = (char*) 0,int id = -1);
+	//	GLUI_EditText* addEditTextToPanel(GLUI_Panel *p,char* name, int* var= (int*) 0,int id = -1);
+	//	GLUI_EditText* addEditTextToPanel(GLUI_Panel *p,char* name, float* var= (float*) 0,int id = -1);
+	//
+	//	GLUI_Listbox* addListbox(char* name, int* var= (int*) 0, int id = -1);
+	//	GLUI_Listbox* addListboxToPanel(GLUI_Panel *p,char* name, int* var= (int*) 0, int id = -1);
+	//
+	//	GLUI_Panel* addPanel(char* name, int type = 1);
+	//	GLUI_Panel* addPanelToPanel(GLUI_Panel *p,char* name, int type = 1);
+	//
+	//	GLUI_RadioButton* addRadioButtonToGroup(GLUI_RadioGroup * group, char * name);
+	//
+	//	GLUI_RadioGroup* addRadioGroup(int *var, int id=-1);
+	//	GLUI_RadioGroup* addRadioGroupToPanel(GLUI_Panel* p,int *var= (int*) 0, int id=-1);
+
+
 	//para numerar os elementos da interface
 	int i = 0;
 
 	map<string, LSFlight*>::iterator itL;
 	for(itL = lights->begin(); itL != lights->end(); itL++, i++){
-		addCheckboxToPanel(lightsPanel, (char*)(*itL).second->id.c_str(), &(*itL).second->isActivated, i);
+		addButtonToPanel(lightsPanel,(char*)(*itL).second->id.c_str(),i);
 		(*itL).second->lightNum = i;
-		cout << *(&(*itL).second->lightNum) << endl;
+		if(DEBUGMODE) cout << *(&(*itL).second->lightNum) << endl;
 	}
 
+	GLUI_RadioGroup* radioGroup = addRadioGroupToPanel(camerasPanel, &camerasGroup, lights->size());
 	map<string, LSFcamera*>::iterator itC;
-	for(itC = cameras->begin(); itC != cameras->end(); itC++, i++){
-		addCheckboxToPanel(camerasPanel, (char*)(*itC).second->id.c_str(), &(*itC).second->isActivated, i);
+	for(itC = cameras->begin(), i = 0; itC != cameras->end(); itC++, i++){
+		GLUI_RadioButton* button = addRadioButtonToGroup(radioGroup, (char*)(*itC).second->id.c_str());
+		button->init_live();
 		(*itC).second->cameraNum = i;
-		cout << *(&(*itC).second->cameraNum) << endl;
+		if(DEBUGMODE) cout << *(&(*itC).second->cameraNum) << endl;
 	}
 
-	map<string, LSFcamera*>::iterator itC2;
-	for(itC2 = cameras->begin(); itC2 != cameras->end(); itC2++){
-		cout << "-------------------" << endl;
-		cout << (*itC2).second->cameraNum << endl;
-	}
 }
 
 void LSFinterface::processGUI(GLUI_Control *ctrl)
@@ -56,19 +82,13 @@ void LSFinterface::processGUI(GLUI_Control *ctrl)
 				(*itL).second->enabled = false;
 			else
 				(*itL).second->enabled = true;
-
 		}
 	}
 
 	map<string, LSFcamera*>::iterator itC;
 	for(itC = cameras->begin(); itC != cameras->end(); itC++){
-		cout << (*itC).second->cameraNum << " - " << ctrl->user_id << endl;
-		if((*itC).second->cameraNum == ctrl->user_id && ctrl->user_id >= lights->size()){
+		if((*itC).second->cameraNum == camerasGroup)
 			scene->activateCamera((*itC).first);
-			scene->display();
-			cout << "camera=" << (*itC).second->cameraNum << endl;
-			cout << "GUI activeCamera = " << (*itC).first << endl;
-		}
 	}
 
 }

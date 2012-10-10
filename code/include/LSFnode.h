@@ -5,6 +5,7 @@
 #include <CGFappearance.h>
 #include "CGFlight.h"
 #include "CGFcamera.h"
+
 // Class for saving the primitive params
 enum PrimitiveType{ rectangle,triangle,cylinder,sphere,torus};
 class Primitive{
