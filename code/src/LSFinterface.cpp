@@ -26,14 +26,14 @@ void LSFinterface::initGUI()
 
 	map<string, LSFlight*>::iterator itL;
 	for(itL = lights->begin(); itL != lights->end(); itL++, i++){
-		addCheckboxToPanel(lightsPanel, (char*)(*itL).second->id.c_str(), &(*itL).second->lightNum, i);
+		addCheckboxToPanel(lightsPanel, (char*)(*itL).second->id.c_str(), &(*itL).second->isActivated, i);
 		(*itL).second->lightNum = i;
 		cout << *(&(*itL).second->lightNum) << endl;
 	}
 
 	map<string, LSFcamera*>::iterator itC;
 	for(itC = cameras->begin(); itC != cameras->end(); itC++, i++){
-		addCheckboxToPanel(camerasPanel, (char*)(*itC).second->id.c_str(), &(*itC).second->cameraNum, i);
+		addCheckboxToPanel(camerasPanel, (char*)(*itC).second->id.c_str(), &(*itC).second->isActivated, i);
 		(*itC).second->cameraNum = i;
 		cout << *(&(*itC).second->cameraNum) << endl;
 	}

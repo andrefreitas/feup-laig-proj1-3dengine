@@ -29,6 +29,7 @@ class LSFlight {
 		string id;
 		bool enabled;
 		int lightNum;
+		int isActivated;
 		CGFlight* light;
 };
 
@@ -42,6 +43,7 @@ class LSFcamera{
 		float toX, toY, toZ;
 
 		int cameraNum;
+		int isActivated;
 
 		CGFcamera* camera;
 };
