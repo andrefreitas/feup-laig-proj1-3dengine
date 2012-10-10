@@ -12,6 +12,8 @@ class LSFinterface: public CGFinterface
 		map<string, LSFcamera*> *cameras;
 
 		int camerasGroup;
+		int rotateAxis;
+		int translateAxis;
 
 	public:
 		LSFinterface(LSFscene *scene);

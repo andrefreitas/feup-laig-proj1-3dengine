@@ -20,34 +20,25 @@ void LSFinterface::initGUI()
 	GLUI_Panel *lightsPanel = addPanel("Lights", 1);
 	addColumn();
 	GLUI_Panel *camerasPanel = addPanel("Cameras", 1);
+	addColumn();
 
 
-	//	GLUI_Checkbox* addCheckbox(char* name, int* value = (int*) 0, int id = -1);
-	//	GLUI_Checkbox* addCheckboxToPanel(GLUI_Panel *p,char* name, int* value= (int*) 0,int id = -1);
-	//
-	//	GLUI_Button* addButton(char* name,int id = -1);
-	//	GLUI_Button* addButtonToPanel(GLUI_Panel *p,char* name,int id = -1);
-	//
-	//	void addColumn();
-	//	void addColumnToPanel(GLUI_Panel *p);
-	//
-	//	GLUI_EditText* addEditText(char* name, char* var = (char*) 0,int id = -1);
-	//	GLUI_EditText* addEditText(char* name, int* var = (int*) 0,int id = -1);
-	//	GLUI_EditText* addEditText(char* name, float* var = (float*) 0,int id = -1);
-	//	GLUI_EditText* addEditTextToPanel(GLUI_Panel *p,char* name, char* var = (char*) 0,int id = -1);
-	//	GLUI_EditText* addEditTextToPanel(GLUI_Panel *p,char* name, int* var= (int*) 0,int id = -1);
-	//	GLUI_EditText* addEditTextToPanel(GLUI_Panel *p,char* name, float* var= (float*) 0,int id = -1);
-	//
-	//	GLUI_Listbox* addListbox(char* name, int* var= (int*) 0, int id = -1);
-	//	GLUI_Listbox* addListboxToPanel(GLUI_Panel *p,char* name, int* var= (int*) 0, int id = -1);
-	//
-	//	GLUI_Panel* addPanel(char* name, int type = 1);
-	//	GLUI_Panel* addPanelToPanel(GLUI_Panel *p,char* name, int type = 1);
-	//
-	//	GLUI_RadioButton* addRadioButtonToGroup(GLUI_RadioGroup * group, char * name);
-	//
-	//	GLUI_RadioGroup* addRadioGroup(int *var, int id=-1);
-	//	GLUI_RadioGroup* addRadioGroupToPanel(GLUI_Panel* p,int *var= (int*) 0, int id=-1);
+	GLUI_Panel *movingCamera = addPanel("camera Control", 1);
+	addPanelToPanel(movingCamera, "rotate");
+	addColumnToPanel(movingCamera);
+	addPanelToPanel(movingCamera, "translate");
+
+	//fica dentro do painel camera control
+	GLUI_RadioGroup* rotate = addRadioGroupToPanel((GLUI_Panel*)movingCamera->first_child(), &rotateAxis, lights->size()+1);
+	addRadioButtonToGroup(rotate, "x");
+	addRadioButtonToGroup(rotate, "y");
+	addRadioButtonToGroup(rotate, "z");
+
+	//fica dentro do painel camera control
+	GLUI_RadioGroup* translate = addRadioGroupToPanel((GLUI_Panel*)movingCamera->last_child(), &translateAxis, lights->size()+2);
+	addRadioButtonToGroup(translate, "x");
+	addRadioButtonToGroup(translate, "y");
+	addRadioButtonToGroup(translate, "z");
 
 
 	//para numerar os elementos da interface
@@ -64,7 +55,6 @@ void LSFinterface::initGUI()
 	map<string, LSFcamera*>::iterator itC;
 	for(itC = cameras->begin(), i = 0; itC != cameras->end(); itC++, i++){
 		GLUI_RadioButton* button = addRadioButtonToGroup(radioGroup, (char*)(*itC).second->id.c_str());
-		button->init_live();
 		(*itC).second->cameraNum = i;
 		if(DEBUGMODE) cout << *(&(*itC).second->cameraNum) << endl;
 	}
