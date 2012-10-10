@@ -58,20 +58,22 @@ void LSFparser::getGlobals(struct globalsData *globals){
 	}
 }
 
-void LSFparser::getCameras(vector<Camera*> &cameras){
+void LSFparser::getCameras(map<string, LSFcamera*> &cameras){
 	TiXmlElement *node=camerasElement->FirstChildElement();
 	int counter=0;
-	const char *camera_id, *initial;
+	const char *initial;
 	initial=camerasElement->Attribute("initial");
 	if(DEBUGMODE) cout << "\n--- Cameras: " << initial << " ---";
 	// Loop trough cameras
 	while(node){
 		counter++;
-		const char* val=node->Value();
-		Camera *camera = new Camera;
+
+		LSFcamera *camera = new LSFcamera();
+		camera->view.assign(node->Value());
+
 		// -->
-		if(strcmp(val,"ortho")==0){
-			camera_id=node->Attribute("id");
+		if(strcmp(node->Value(), "ortho")==0){
+			camera->id=node->Attribute("id");
 			node->QueryFloatAttribute("near",&camera->_near);
 			node->QueryFloatAttribute("far",&camera->_far);
 			node->QueryFloatAttribute("left",&camera->left);
@@ -81,13 +83,13 @@ void LSFparser::getCameras(vector<Camera*> &cameras){
 
 			if(DEBUGMODE){
 				float attributes[]={camera->_near,camera->_far,camera->left,camera->right,camera->top,camera->bottom};
-				cout << "\n\tOrtho: " << camera_id << " ";
+				cout << "\n\tOrtho: " << camera->id << " ";
 				for(int unsigned i=0; i<6; i++) cout << attributes[i] << " ";
 				cout << endl;
 			}
 		}
 		else{
-			camera_id=node->Attribute("id");
+			camera->id=node->Attribute("id");
 			node->QueryFloatAttribute("near",&camera->_near);
 			node->QueryFloatAttribute("far",&camera->_far);
 			node->QueryFloatAttribute("angle",&camera->angle);
@@ -107,7 +109,7 @@ void LSFparser::getCameras(vector<Camera*> &cameras){
 
 			if(DEBUGMODE){
 				float attributes[]={camera->_near,camera->_far,camera->angle};
-				cout << "\n\tPerspective: " << camera_id << " ";
+				cout << "\n\tPerspective: " << camera->id << " ";
 				for(int unsigned i=0; i<3; i++) cout << attributes[i] << " ";
 				cout << endl;
 				cout << "\t\t\tFrom: " << camera->fromX << " " << camera->fromY << " " << camera->fromZ << endl;
@@ -117,7 +119,8 @@ void LSFparser::getCameras(vector<Camera*> &cameras){
 
 		}
 
-		cameras.push_back(camera);
+		cameras[camera->id] = camera;
+//		cameras.push_back(camera);
 
 		// -->
 		node=node->NextSiblingElement();

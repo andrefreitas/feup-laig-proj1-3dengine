@@ -12,7 +12,7 @@
 // forward declaration of scene
 class CGFscene;
 
-class CGFinterface 
+class CGFinterface
 /// This class is used to handle the visual interface as well as the keyboard and mouse handlers for CGF applications. It is mostly based on GLUI.
 {
 	public:

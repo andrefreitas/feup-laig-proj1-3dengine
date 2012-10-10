@@ -14,13 +14,6 @@ struct globalsData{
 	const char *culling__frontfaceorder, *culling_cullface; bool culling_enabled;
 };
 
-struct Camera{
-	float _near, _far, angle;
-	float left, right, top, bottom;
-	float fromX, fromY, fromZ;
-	float toX, toY, toZ;
-};
-
 class LSFparser{
 	private:
 		TiXmlDocument *lsfFile;
@@ -34,7 +27,7 @@ class LSFparser{
 	public:
 		LSFparser(char* a);
 		void getGlobals(struct globalsData *globals);
-		void getCameras(vector<Camera*> &cameras);
+		void getCameras(map<string, LSFcamera*> &cameras);
 		void getNodes(map<string,LSFnode*> &nodes,string &rootNode);
 		void getAppearances(map<string,CGFappearance*> &appearances);
 		void getLights(map<string,LSFlight*> &lights, bool &enabled, bool &local, bool &doublesided,float *ambient);

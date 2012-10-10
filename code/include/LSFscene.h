@@ -12,24 +12,26 @@ class LSFscene : public CGFscene
 	map<string,CGFappearance*> appearances;
 	map<string,LSFnode*> nodes;
 	map<string,LSFlight*> lights;
-	vector<Camera*> cameras;
+	map<string, LSFcamera*> cameras;
 	CGFappearance* defaultAppearance;
 	string rootNode;
 	bool lights_enabled, lights_local, lights_doublesided;
 	float ambient[4];
-	vector<CGFcamera*> sceneCameras;
-	int active_camera;
-	CGFcamera* activeCamera;
+	string activeCamera;
 public:
+	LSFscene();
 	LSFscene(char* argv[]);
 	~LSFscene();
 
 	void init();
 	void display();
 	virtual void initCameras();
-	void activateCamera(int i);
+	void activateCamera(string id);
 	// -----
 	void setGlobals();
+
+	map<string, LSFlight*> * getLights();
+	map<string, LSFcamera*> * getCameras();
 };
 
 #endif

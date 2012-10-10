@@ -10,12 +10,15 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
 	CGFapplication app = CGFapplication();
+	LSFscene *scene = new LSFscene(argv);
+	LSFinterface *interface = new LSFinterface(scene);
 
 	try {
 		app.init(&argc, argv);
 
-		app.setScene(new LSFscene(argv));
-		app.setInterface(new LSFinterface());
+//		app.setScene(new LSFscene(argv));
+		app.setScene(scene);
+		app.setInterface(interface);
 		
 		app.run();
 	}

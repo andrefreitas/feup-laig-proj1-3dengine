@@ -4,6 +4,7 @@
 #include <string>
 #include <CGFappearance.h>
 #include "CGFlight.h"
+#include "CGFcamera.h"
 // Class for saving the primitive params
 enum PrimitiveType{ rectangle,triangle,cylinder,sphere,torus};
 class Primitive{
@@ -27,7 +28,22 @@ class LSFlight {
 	public:
 		string id;
 		bool enabled;
+		int lightNum;
 		CGFlight* light;
+};
+
+class LSFcamera{
+	public:
+		string id;
+		string view;
+		float _near, _far, angle;
+		float left, right, top, bottom;
+		float fromX, fromY, fromZ;
+		float toX, toY, toZ;
+
+		int cameraNum;
+
+		CGFcamera* camera;
 };
 
 // The node in the graph

@@ -1,13 +1,9 @@
 #include "LSFinterface.h"
+#include <iostream>
 
-LSFinterface::LSFinterface()
+LSFinterface::LSFinterface(LSFscene *scene)
 {
-	testVar=0;
-	light0 = 1;
-    light1 = 1;
-    light2 = 1;
-    light3 = 1;
-    clock = 1;
+	this->scene = scene;
 }
 
 LSFinterface::~LSFinterface(){}
@@ -17,114 +13,64 @@ LSFinterface::~LSFinterface(){}
 void LSFinterface::initGUI()
 {
 
+	lights = scene->getLights();
+	cameras = scene->getCameras();
 
 
+	GLUI_Panel *lightsPanel = addPanel("Lights", 1);
+	addColumn();
+	GLUI_Panel *camerasPanel = addPanel("Cameras", 1);
+
+	//para numerar os elementos da interface
+	int i = 0;
+
+	map<string, LSFlight*>::iterator itL;
+	for(itL = lights->begin(); itL != lights->end(); itL++, i++){
+		addCheckboxToPanel(lightsPanel, (char*)(*itL).second->id.c_str(), &(*itL).second->lightNum, i);
+		(*itL).second->lightNum = i;
+		cout << *(&(*itL).second->lightNum) << endl;
+	}
+
+	map<string, LSFcamera*>::iterator itC;
+	for(itC = cameras->begin(); itC != cameras->end(); itC++, i++){
+		addCheckboxToPanel(camerasPanel, (char*)(*itC).second->id.c_str(), &(*itC).second->cameraNum, i);
+		(*itC).second->cameraNum = i;
+		cout << *(&(*itC).second->cameraNum) << endl;
+	}
+
+	map<string, LSFcamera*>::iterator itC2;
+	for(itC2 = cameras->begin(); itC2 != cameras->end(); itC2++){
+		cout << "-------------------" << endl;
+		cout << (*itC2).second->cameraNum << endl;
+	}
 }
 
 void LSFinterface::processGUI(GLUI_Control *ctrl)
 {
+	cout << "ctrl =" << ctrl->user_id << endl;
+	map<string, LSFlight*>::iterator itL;
+	for(itL = lights->begin(); itL != lights->end(); itL++){
+		cout << (*itL).second->lightNum << " - " << ctrl->user_id << endl;
+		if((*itL).second->lightNum == ctrl->user_id){
+			if((*itL).second->enabled)
+				(*itL).second->enabled = false;
+			else
+				(*itL).second->enabled = true;
 
-//	switch ()
-//	{
-//		case 0:
-//		{
-//			for(int)
-//			if(((LSFscene *) scene)->light0->light_ON)
-//			{
-//				((LightingScene *) scene)->light0->light_ON = false;
-//				((LightingScene *) scene)->light0->disable();
-//			}
-//			else{
-//				((LightingScene *) scene)->light0->light_ON = true;
-//				((LightingScene *) scene)->light0->enable();
-//			}
-//			break;
-//		}
-//
-//		case 1:
-//		{
-//			printf ("light1: %d\n", light1);
-//			if(((LightingScene *) scene)->light1->light_ON)
-//			{
-//				((LightingScene *) scene)->light1->light_ON = false;
-//				((LightingScene *) scene)->light1->disable();
-//			}
-//			else{
-//				((LightingScene *) scene)->light1->light_ON = true;
-//				((LightingScene *) scene)->light1->enable();
-//			}
-//			break;
-//		}
-//
-//		case 2:
-//		{
-//			printf ("light2: %d\n", light2);
-//			if(((LightingScene *) scene)->light2->light_ON)
-//			{
-//				((LightingScene *) scene)->light2->light_ON = false;
-//				((LightingScene *) scene)->light2->disable();
-//			}
-//			else{
-//				((LightingScene *) scene)->light2->light_ON = true;
-//				((LightingScene *) scene)->light2->enable();
-//			}
-//			break;
-//		}
-//
-//		case 3:
-//		{
-//			printf ("light3: %d\n", light3);
-//			if(((LightingScene *) scene)->light3->light_ON)
-//			{
-//				((LightingScene *) scene)->light3->light_ON = false;
-//				((LightingScene *) scene)->light3->disable();
-//			}
-//			else{
-//				((LightingScene *) scene)->light3->light_ON = true;
-//				((LightingScene *) scene)->light3->enable();
-//			}
-//			break;
-//		}
-//
-//		case 4:
-//		{
-//			printf ("clock: %d\n", clock);
-//			if(((LightingScene *) scene)->clock->getState())
-//			{
-//				((LightingScene *) scene)->clock->setState(false);
-//			}
-//			else{
-//				((LightingScene *) scene)->clock->setState(true);
-//			}
-//			break;
-//		}
-//		case 5:
-//		{
-//			printf ("robotTextura: %d\n", Textures->get_int_val());
-//			if(((LightingScene *) scene)->robot->isTextured())
-//			{
-//				switch (Textures->get_int_val())
-//				{
-//				case 0: ((LightingScene *) scene)->robot->setAppearanceOption(0); break;
-//				case 1: ((LightingScene *) scene)->robot->setAppearanceOption(1); break;
-//				case 2: ((LightingScene *) scene)->robot->setAppearanceOption(2); break;
-//				}
-//			}
-//			break;
-//		}
-//		case 6:
-//		{
-//			printf ("robotMode: %d\n", robot);
-//			if(((LightingScene *) scene)->robot->isTextured())
-//			{
-//				((LightingScene *) scene)->robot->setMode(false);
-//			}
-//			else{
-//				((LightingScene *) scene)->robot->setMode(true);
-//			}
-//			break;
-//		}
-//	};
+		}
+	}
+
+	map<string, LSFcamera*>::iterator itC;
+	for(itC = cameras->begin(); itC != cameras->end(); itC++){
+		cout << (*itC).second->cameraNum << " - " << ctrl->user_id << endl;
+		if((*itC).second->cameraNum == ctrl->user_id && ctrl->user_id >= lights->size()){
+			scene->activateCamera((*itC).first);
+			scene->display();
+			cout << "camera=" << (*itC).second->cameraNum << endl;
+			cout << "GUI activeCamera = " << (*itC).first << endl;
+		}
+	}
+
 }
 
 
