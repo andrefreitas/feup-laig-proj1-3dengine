@@ -23,12 +23,12 @@
   <cameras initial="CamaraGeral" >
         <!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) -->
 
-        <perspective id="CamaraGeral" near="0.1" far="500" angle="45">
+        <perspective id="CamaraGeral" near="0.1" far="50" angle="45">
             <from x="30" y="20" z="30" />
             <to x="0" y="0" z="0" />
         </perspective> 
 		
-        <ortho id="OrtoCamera" near="300" far="-100.0" left="-8.0" right="8.0" top="8.0" bottom="-8.0" />
+        <ortho id="OrtoCamera" near="300" far="10.0" left="-8.0" right="8.0" top="8.0" bottom="-8.0" />
 
     </cameras>
 

@@ -23,22 +23,22 @@ void LSFinterface::initGUI()
 	addColumn();
 
 
-	GLUI_Panel *movingCamera = addPanel("camera Control", 1);
-	addPanelToPanel(movingCamera, "rotate");
-	addColumnToPanel(movingCamera);
-	addPanelToPanel(movingCamera, "translate");
-
-	//fica dentro do painel camera control
-	GLUI_RadioGroup* rotate = addRadioGroupToPanel((GLUI_Panel*)movingCamera->first_child(), &rotateAxis, lights->size()+1);
-	addRadioButtonToGroup(rotate, "x");
-	addRadioButtonToGroup(rotate, "y");
-	addRadioButtonToGroup(rotate, "z");
-
-	//fica dentro do painel camera control
-	GLUI_RadioGroup* translate = addRadioGroupToPanel((GLUI_Panel*)movingCamera->last_child(), &translateAxis, lights->size()+2);
-	addRadioButtonToGroup(translate, "x");
-	addRadioButtonToGroup(translate, "y");
-	addRadioButtonToGroup(translate, "z");
+//	GLUI_Panel *movingCamera = addPanel("camera Control", 1);
+//	addPanelToPanel(movingCamera, "rotate");
+//	addColumnToPanel(movingCamera);
+//	addPanelToPanel(movingCamera, "translate");
+//
+//	//fica dentro do painel camera control
+//	GLUI_RadioGroup* rotate = addRadioGroupToPanel((GLUI_Panel*)movingCamera->first_child(), &rotateAxis, lights->size()+1);
+//	addRadioButtonToGroup(rotate, "x");
+//	addRadioButtonToGroup(rotate, "y");
+//	addRadioButtonToGroup(rotate, "z");
+//
+//	//fica dentro do painel camera control
+//	GLUI_RadioGroup* translate = addRadioGroupToPanel((GLUI_Panel*)movingCamera->last_child(), &translateAxis, lights->size()+2);
+//	addRadioButtonToGroup(translate, "x");
+//	addRadioButtonToGroup(translate, "y");
+//	addRadioButtonToGroup(translate, "z");
 
 
 	//para numerar os elementos da interface

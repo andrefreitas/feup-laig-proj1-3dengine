@@ -16,8 +16,8 @@
 	<cameras initial="userCam" >
 		<!-- user camera -->
 		<perspective id="userCam" near="0.0" far="15.0" angle="20.0">
-			<from x="10.0" y="2.0" z="10.0" />
-			<to x="0.0" y="0.0" z="0.0" />
+			<from x="-10.0" y="2.0" z="10.0" />
+			<to x="-10.0" y="0.0" z="0.0" />
 		</perspective>
 		
 		<!-- ring camera -->
@@ -27,10 +27,12 @@
 		</perspective>
 		
 		<!-- top camera -->
-		<perspective id="topCam" near="0.0" far="10.0" angle="0.0">
-			<from x="10.0" y="-10" z="5" />
-			<to x="10.0" y="0.0" z="5" />
+		<perspective id="topCam" near="0.0" far="20.0" angle="90.0">
+			<from x="-10.0" y="0.0" z="0" />
+			<to x="-10.0" y="0.0" z="0" />
 		</perspective>
+		
+		<ortho id="OrtoCamera" near="0" far="50.0" left="-10.0" right="10.0" top="2.0" bottom="-2.0" />
 	</cameras>
 	
 	

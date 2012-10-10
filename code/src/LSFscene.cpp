@@ -82,19 +82,27 @@ void LSFscene::initCameras()
 {
 	map<string,LSFcamera*>::iterator it;
 	for(it = cameras.begin(); it != cameras.end(); it++){
-
 		(*it).second->camera = new CGFcamera();
-		(*it).second->camera->translate(0, -(*it).second->fromX);
-		(*it).second->camera->translate(1, -(*it).second->fromY);
-		(*it).second->camera->translate(2, -(*it).second->_far);
 
+		if((*it).second->view != "ortho"){
+			(*it).second->camera->translate(0, -(fabs((*it).second->fromX)+fabs((*it).second->toX))/2);
+			(*it).second->camera->translate(1, -(fabs((*it).second->fromY)+fabs((*it).second->toY))/2);
+			(*it).second->camera->translate(2, -(*it).second->_far);
 
-		if((*it).second->fromY != (*it).second->toY && (*it).second->angle != 0){
-					(*it).second->camera->rotate(0, (*it).second->angle);
+//			if((*it).second->fromY != (*it).second->toY && (*it).second->angle != 0){
+//						(*it).second->camera->rotate(0, (*it).second->angle);
+//			}
+//			else if(fabs((*it).second->fromY - (*it).second->toY) >= 5){
+//				(*it).second->camera->translate(2, (*it).second->fromZ);
+//				(*it).second->camera->rotate(0, 90);
+//			}
+
+			(*it).second->camera->rotate(0, (*it).second->angle);
 		}
-		else if(fabs((*it).second->fromY - (*it).second->toY) >= 5){
-			(*it).second->camera->translate(2, (*it).second->fromZ);
-			(*it).second->camera->rotate(0, 90);
+		else{
+			(*it).second->camera->translate(0, -(fabs((*it).second->left)+fabs((*it).second->right))/2);
+			(*it).second->camera->translate(1, -(fabs((*it).second->top)+fabs((*it).second->bottom))/2);
+			(*it).second->camera->translate(2, -(fabs((*it).second->_far)+fabs((*it).second->_near))/2);
 		}
 	}
 
