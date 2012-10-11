@@ -10,11 +10,11 @@ class LSFscene : public CGFscene
 	char* inputScene;
 	LSFparser *sceneParser;
 	struct globalsData globals;
-	map<string,CGFappearance*> appearances;
+	map<string,LSFappearance*> appearances;
 	map<string,LSFnode*> nodes;
 	map<string,LSFlight*> lights;
 	map<string, LSFcamera*> cameras;
-	CGFappearance* defaultAppearance;
+	LSFappearance* defaultAppearance;
 	string rootNode;
 	bool lights_enabled, lights_local, lights_doublesided;
 	float ambient[4];

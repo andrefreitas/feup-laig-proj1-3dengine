@@ -289,7 +289,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 
 }
 
-void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
+void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
 	TiXmlElement *node=appearancesElement->FirstChildElement();
 	int counter = 0;
 	float emissive_vec[4], ambient_vec[4], diffuse_vec[4], specular_vec[4];
@@ -365,6 +365,7 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 		}
 		// Add to the map
 		CGFappearance* pappearance;
+		LSFappearance *pLSFappearance=new LSFappearance();
 
 		if(emissive != NULL)
 			pappearance = new CGFappearance(emissive_vec);
@@ -384,9 +385,25 @@ void LSFparser::getAppearances(map<string,CGFappearance*> &appearances){
 			pappearance->setTextureWrap(GL_REPEAT,GL_REPEAT);
 			if(DEBUGMODE) cout << "\nSettexture: " << textureFile << endl;
 		}
+		// -->
 		string auxId;
 		auxId.assign(node->Attribute("id"));
-		appearances[auxId]=pappearance;
+		// Attribute to LSFAppearance
+		pLSFappearance->appearance=pappearance;
+		pLSFappearance->emissive[0]=emissive_vec[0];
+		pLSFappearance->emissive[1]=emissive_vec[1];
+		pLSFappearance->emissive[2]=emissive_vec[2];
+		pLSFappearance->emissive[3]=emissive_vec[3];
+		pLSFappearance->id=auxId;
+		if(texture!=NULL){
+			pLSFappearance->length_s=texture_length_s;
+			pLSFappearance->length_t=texture_length_t;
+			pLSFappearance->haveTexture=true;
+		}
+		else {
+			pLSFappearance->haveTexture=false;
+		}
+		appearances[auxId]=pLSFappearance;
 		node=node->NextSiblingElement();
 	}
 

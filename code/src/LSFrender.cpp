@@ -2,7 +2,7 @@
 #include "LSFnode.h"
 #include <iostream>
 using namespace std;
-void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,CGFappearance*> appearances,stack<CGFappearance*> &appearancesStack){
+void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,LSFappearance*> appearances,stack<LSFappearance*> &appearancesStack){
 	if(nodes[rootNode]==0) {
 		//cout << "\nNo inexistente\n";
 		return;
@@ -13,11 +13,11 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,C
 
 	// Appearances
 	if(nodes[rootNode]->appearance=="inherit"){
-		appearancesStack.top()->apply();
+		appearancesStack.top()->appearance->apply();
 		appearancesStack.push(appearancesStack.top()); // necessary because of the pop (imagine if the child pops)
 	}
 	else{
-		appearances[nodes[rootNode]->appearance]->apply();
+		appearances[nodes[rootNode]->appearance]->appearance->apply();
 		appearancesStack.push(appearances[nodes[rootNode]->appearance]);
 	}
 	// Process the primitives

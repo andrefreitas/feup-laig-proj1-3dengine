@@ -43,12 +43,14 @@ void LSFscene::init()
 	sceneParser = new LSFparser(inputScene);
 
 	// Set the default appearance
-	defaultAppearance=new CGFappearance();
+	defaultAppearance=new LSFappearance();
+	defaultAppearance->appearance=new CGFappearance();
 	float color[4]={0.6,0.6,0.6,0.6};
-	defaultAppearance->setAmbient(color);
-	defaultAppearance->setDiffuse(color);
-	defaultAppearance->setSpecular(color);
-	defaultAppearance->setShininess(0.5);
+	defaultAppearance->appearance->setAmbient(color);
+	defaultAppearance->appearance->setDiffuse(color);
+	defaultAppearance->appearance->setSpecular(color);
+	defaultAppearance->appearance->setShininess(0.5);
+
 
 	// Get Global configurations
 	setGlobals();
@@ -168,7 +170,7 @@ void LSFscene::display()
 	axis.draw();
 
 	// ---- END Background, camera and axis setup
-	stack<CGFappearance*> appearancesStack;
+	stack<LSFappearance*> appearancesStack;
 	appearancesStack.push(defaultAppearance);
 	LSFrender::render(nodes,rootNode,appearances,appearancesStack);
 

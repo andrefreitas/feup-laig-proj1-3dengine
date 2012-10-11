@@ -7,7 +7,7 @@
 #include <stack>
 class LSFrender{
 	public:
-		static void render(map<string,LSFnode*> &nodes,string &rootNode,map<string,CGFappearance*> appearances,stack<CGFappearance*> &appearancesStack);
+		static void render(map<string,LSFnode*> &nodes,string &rootNode,map<string,LSFappearance*> appearances,stack<LSFappearance*> &appearancesStack);
 };
 
 

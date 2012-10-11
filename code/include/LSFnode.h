@@ -25,6 +25,7 @@ class Transform{
 
 };
 
+
 class LSFlight {
 	public:
 		string id;
@@ -61,5 +62,14 @@ class LSFnode{
 		vector<Primitive> childPrimitives; // All the basic primitives
 		vector<string> childNoderefs; // All the child nodes
 
+};
+
+class LSFappearance{
+	public:
+		string id;
+		float emissive[4];
+		float length_s,length_t;
+		CGFappearance* appearance;
+		bool haveTexture;
 };
 #endif

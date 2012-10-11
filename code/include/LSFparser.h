@@ -29,7 +29,7 @@ class LSFparser{
 		void getGlobals(struct globalsData *globals);
 		void getCameras(map<string, LSFcamera*> &cameras);
 		void getNodes(map<string,LSFnode*> &nodes,string &rootNode);
-		void getAppearances(map<string,CGFappearance*> &appearances);
+		void getAppearances(map<string,LSFappearance*> &appearances);
 		void getLights(map<string,LSFlight*> &lights, bool &enabled, bool &local, bool &doublesided,float *ambient);
 
 
