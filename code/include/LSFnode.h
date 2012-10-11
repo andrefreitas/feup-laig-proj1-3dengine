@@ -47,6 +47,9 @@ class LSFcamera{
 		int isActivated;
 
 		CGFcamera* camera;
+
+		void updateProjectionMatrix(int width, int height);
+		void applyView(); //usar lookat para as perspective
 };
 
 // The node in the graph

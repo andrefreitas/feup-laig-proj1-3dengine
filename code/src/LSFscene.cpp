@@ -127,30 +127,26 @@ void LSFscene::display()
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	// Initialize Model-View matrix as identity (no transformation
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 
 	//polygonal mode
 	glPolygonMode(face, mode);
 
 	// Apply transformations corresponding to the camera position relative to the origin
 
-//	glMatrixMode(GL_PROJECTION);
-
-//	if(cameras[activeCamera]->view == "ortho"){
-//		glOrtho(cameras[activeCamera]->left,  cameras[activeCamera]->right,
-//				cameras[activeCamera]->bottom,  cameras[activeCamera]->top,
-//				cameras[activeCamera]->_near,  cameras[activeCamera]->_far);
-//
-//		cameras[activeCamera]->camera->updateProjectionMatrix(CGFapplication::width, CGFapplication::height);
-//	}
-
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
 	//cameras aplyView
 	if(activeCamera == "freeMove")
+	{
+		CGFscene::activeCamera->updateProjectionMatrix(CGFapplication::width, CGFapplication::height);
+		glMatrixMode(GL_MODELVIEW);
 		CGFscene::activeCamera->applyView();
-	else
+	}
+	else{
+		cameras[activeCamera]->updateProjectionMatrix(CGFapplication::width, CGFapplication::height);
 		cameras[activeCamera]->camera->applyView();
+	}
 
 
 
