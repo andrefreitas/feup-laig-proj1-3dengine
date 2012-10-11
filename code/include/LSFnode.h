@@ -34,6 +34,7 @@ class LSFlight {
 		int lightNum;
 		int isActivated;
 		CGFlight* light;
+		float spotExponent;
 };
 
 class LSFcamera{

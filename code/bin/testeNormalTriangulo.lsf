@@ -1,0 +1,361 @@
+<lsf>
+
+    <!-- configuracoes globais -->
+    <globals>
+
+        <!-- a declaração dos atributos deste bloco e' obrigatoria -->
+
+        <background r="0.0" g="0.0" b="0.0" a="0.0" />
+
+        <!-- Configuracao de desenho de poligonos e shading -->
+        <!-- Valores para mode: "fill", "line", "point" -->
+        <!-- Valores para shading: "flat", "gouraud") -->
+        <polygon mode="fill" shading="gouraud" /> 
+
+        <!-- Configuracao de culling -->
+        <!-- Valores para frontfaceorder: "CCW") ou "CW" -->
+        <!-- Valores para cullface: "back", "front" ou "both" -->
+        <culling frontfaceorder="CCW" cullface="back" enabled="true" />
+    </globals>
+
+
+    <!-- informacao de camaras: o atributo "initial" identifica a camara/ponto de vista inicial -->
+    <cameras initial="Camera" >
+        <!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) -->
+
+         <perspective id="Camara" near="0.1" far="500" angle="45">
+            <from x="30" y="20" z="30" />
+            <to x="0" y="0" z="0" />
+        </perspective> 
+		
+
+    </cameras>
+   
+
+    <!-- informacao geral de iluminacao; segue os parametros do OpenGL -->
+   <lighting doublesided="false" local="true" enabled="true" >
+       <!--   luz ambiente da cena-->
+        <ambient r="0" g="0" b="0" a="0" />
+
+        <!-- informacao de fontes de luz -->
+        <lights>
+            <!-- Deve existir um ou mais blocos "light" -->
+            <!-- Os identificadores "id" nao podem ser repetidos -->
+            <light id="luz" enabled="true">
+                <location x="20" y="19" z="20" />
+                <ambient r="0.6" g="0.6" b="0.6" a="1" />
+                <diffuse r="0.5" g="0.5" b="0.5" a="0.5" />
+                <specular r="0.5" g="0.5" b="0.5" a="0.5" />
+
+                <!-- No caso de uma ser uma spotlight, incluir os dados abaixo; se for uma omnilight, omitir -->
+             
+            </light>
+			
+			 <light id="luz2" enabled="true">
+                <location x="5" y="41.9" z="92" />
+                <ambient r="0.6" g="0.6" b="0.6" a="1" />
+                <diffuse r="0.5" g="0.5" b="0.5" a="0.5" />
+                <specular r="0.5" g="0.5" b="0.5" a="0.5" />
+
+                <!-- No caso de uma ser uma spotlight, incluir os dados abaixo; se for uma omnilight, omitir -->
+             
+            </light>
+			
+			 <light id="luz3" enabled="true">
+                <location x="80" y="41.9" z="92" />
+                <ambient r="0.6" g="0.6" b="0.6" a="1" />
+                <diffuse r="0.5" g="0.5" b="0.5" a="0.5" />
+                <specular r="0.5" g="0.5" b="0.5" a="0.5" />
+
+                <!-- No caso de uma ser uma spotlight, incluir os dados abaixo; se for uma omnilight, omitir -->
+             
+            </light>
+
+        </lights>
+
+    </lighting>
+
+      <!-- informacao de materiais; -->
+     <appearances>
+		
+		<appearance id="madeira_telhado" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="roofwood.jpg" length_s="4" length_t="1" />
+        </appearance>
+		
+		<appearance id="madeira_parede" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="wallwood.jpg" length_s="4" length_t="1" /> 
+        </appearance>
+		
+		<appearance id="madeira_parede2" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="wallwood.jpg" length_s="1.6" length_t="0.2" /> 
+        </appearance>
+		
+		<appearance id="madeira_rodape" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="wallinsidewood.jpg" length_s="0.25" length_t="1" /> 
+        </appearance>
+		
+		<appearance id="madeira_porta" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="door.jpg" length_s="-1" length_t="1" /> 
+        </appearance>
+		
+		<appearance id="madeira_porta2" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="door.jpg" length_s="-1" length_t="-1" /> 
+        </appearance>
+		
+		<appearance id="telha_telhado" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="rooftop.jpg" length_s="4" length_t="1" /> 
+        </appearance>
+		
+		<appearance id="generic" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+        </appearance>
+		
+		<appearance id="wall" >
+            <emissive r="0.5" g="0.5" b="0.4" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.4" a="1" />
+            <diffuse r="1" g="1" b="0.8" a="1" />
+            <specular r="0" g="0" b="0" a="1" />
+            <shininess value="100" />
+            <!--><texture file="wall.jpg" length_s="-1" length_t="1" /> <-->
+        </appearance>
+		
+		<appearance id="relva-text" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="grass_texture.jpg" length_s="10" length_t="10" /> 
+  
+        </appearance>
+		
+		<appearance id="madeira-arvore" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="tree-wood.jpg" length_s="-1" length_t="1" /> 
+  
+        </appearance>
+		
+		<appearance id="arvore-topo" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="tree-top.jpg" length_s="-1" length_t="1" /> 
+  
+        </appearance>
+		
+		<appearance id="route" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="route.jpg" length_s="4" length_t="20" /> 
+  
+        </appearance>
+		
+		<appearance id="agua-piscina" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="water.jpg" length_s="4" length_t="4" /> 
+  
+        </appearance>
+		
+		<appearance id="azulejo" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="azulejo.jpg" length_s="4" length_t="4" /> 
+  
+        </appearance>
+		
+		<appearance id="float" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="float.jpg" length_s="-1" length_t="1" /> 
+  
+        </appearance>
+		
+		<appearance id="ball" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="ball.gif" length_s="-1" length_t="1" /> 
+  
+        </appearance>
+		
+		
+		<appearance id="out-wall" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="out-wall.jpg" length_s="3" length_t="1" /> 
+  
+        </appearance>
+		
+		<appearance id="out-wall-up" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="out-wall.jpg" length_s="2" length_t="0.3" /> 
+  
+        </appearance>
+		
+		<appearance id="sidewalk" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="sidewalk.jpg" length_s="8" length_t="1" /> 
+  
+        </appearance>
+		
+		<appearance id="asfalt" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="asfalt.jpg" length_s="8" length_t="1" /> 
+  
+        </appearance>
+		
+		<appearance id="gate" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="gate.jpg" length_s="1" length_t="1" /> 
+  
+        </appearance>
+		<appearance id="areia" >
+            <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <shininess value="60" />
+
+            <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
+            <texture file="sand.jpg" length_s="4" length_t="4" /> 
+  
+        </appearance>
+		
+    </appearances>
+
+     <!-- informacao do grafo; "rootid" identifica o no de raiz -->
+    <graph rootid="Scene">
+
+		<node id="Scene">
+            <transforms>
+            </transforms>
+            <appearanceref id="inherit" />              
+            <children>
+				<triangle x1="0.0" y1="0.0" z1="0.0" x2="5.0" y2="0.0" z2="0.0" x3="2.5" y3="0.0" z3="-5.0" /> 
+			</children>
+		</node>
+		
+		
+		
+			
+    </graph>
+</lsf>
