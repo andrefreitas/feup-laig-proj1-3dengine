@@ -12,14 +12,14 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 	glMultMatrixf(nodes[rootNode]->transformMatrix);
 
 	// Appearances
-	if(nodes[rootNode]->appearance=="inherit"){
-		appearancesStack.top()->appearance->apply();
-		appearancesStack.push(appearancesStack.top()); // necessary because of the pop (imagine if the child pops)
-	}
-	else{
-		appearances[nodes[rootNode]->appearance]->appearance->apply();
-		appearancesStack.push(appearances[nodes[rootNode]->appearance]);
-	}
+	LSFappearance *currentAppearance;
+	if(nodes[rootNode]->appearance=="inherit") currentAppearance=appearancesStack.top();
+	else currentAppearance=appearances[nodes[rootNode]->appearance];
+	appearancesStack.push(currentAppearance);
+	currentAppearance->appearance->apply();
+	// Emissive
+	glMaterialfv(GL_EMISSION,GL_FRONT_AND_BACK,currentAppearance->emissive);
+
 	// Process the primitives
 	for (int unsigned i=0; i<nodes[rootNode]->childPrimitives.size();i++){
 
