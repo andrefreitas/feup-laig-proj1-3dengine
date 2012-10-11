@@ -66,6 +66,10 @@ void LSFscene::init()
 	// Get the cameras info
 	sceneParser->getCameras(cameras);
 
+	LSFcamera *freeCamera = new LSFcamera;
+	freeCamera->id = "freeMove";
+	cameras["freeMove"] = freeCamera;
+
 	initCameras();
 
 }
@@ -92,14 +96,6 @@ void LSFscene::initCameras()
 			(*it).second->camera->translate(0, -(fabs((*it).second->fromX)+fabs((*it).second->toX))/2);
 			(*it).second->camera->translate(1, -(fabs((*it).second->fromY)+fabs((*it).second->toY))/2);
 			(*it).second->camera->translate(2, -(*it).second->_far);
-
-//			if((*it).second->fromY != (*it).second->toY && (*it).second->angle != 0){
-//						(*it).second->camera->rotate(0, (*it).second->angle);
-//			}
-//			else if(fabs((*it).second->fromY - (*it).second->toY) >= 5){
-//				(*it).second->camera->translate(2, (*it).second->fromZ);
-//				(*it).second->camera->rotate(0, 90);
-//			}
 
 			(*it).second->camera->rotate(0, (*it).second->angle);
 		}
@@ -139,8 +135,23 @@ void LSFscene::display()
 
 	// Apply transformations corresponding to the camera position relative to the origin
 
-//	CGFscene::activeCamera->applyView();
-	cameras[activeCamera]->camera->applyView();
+//	glMatrixMode(GL_PROJECTION);
+
+//	if(cameras[activeCamera]->view == "ortho"){
+//		glOrtho(cameras[activeCamera]->left,  cameras[activeCamera]->right,
+//				cameras[activeCamera]->bottom,  cameras[activeCamera]->top,
+//				cameras[activeCamera]->_near,  cameras[activeCamera]->_far);
+//
+//		cameras[activeCamera]->camera->updateProjectionMatrix(CGFapplication::width, CGFapplication::height);
+//	}
+
+
+	//cameras aplyView
+	if(activeCamera == "freeMove")
+		CGFscene::activeCamera->applyView();
+	else
+		cameras[activeCamera]->camera->applyView();
+
 
 
 	// ---- BEGIN lights section
