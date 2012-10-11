@@ -19,7 +19,10 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 	currentAppearance->appearance->apply();
 	// Emissive
 	glMaterialfv(GL_EMISSION,GL_FRONT_AND_BACK,currentAppearance->emissive);
-
+	// Compute UV coords by ST length
+	float u,v;
+	u=1/(float)currentAppearance->length_s;
+	v=1/(float)currentAppearance->length_t;
 	// Process the primitives
 	for (int unsigned i=0; i<nodes[rootNode]->childPrimitives.size();i++){
 
@@ -28,17 +31,17 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 			case rectangle:{
 				glBegin(GL_QUADS);
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],0);
-					glTexCoord2d(1.0,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y1"],0);
-					glTexCoord2d(1.0,1.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],0);
-					glTexCoord2d(0.0,1.0); glVertex3d(primitive.attr["x1"],primitive.attr["y2"],0);
+					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y1"],0);
+					glTexCoord2d(u,v); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],0);
+					glTexCoord2d(0.0,v); glVertex3d(primitive.attr["x1"],primitive.attr["y2"],0);
 					// Todo: é necessário depois calcular as normais com método de Newell
 				glEnd();
 			}break;
 			case triangle:{
 				glBegin(GL_TRIANGLES);
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
-					glTexCoord2d(1.0,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
-					glTexCoord2d(0.5,1.0); glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
+					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
+					glTexCoord2d(u/2.0,v); glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
 					// Todo: é necessário depois calcular as normais com método de Newell
 				glEnd();
 			}break;

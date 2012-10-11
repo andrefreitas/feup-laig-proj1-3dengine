@@ -46,7 +46,7 @@
 		<!-- scene lights -->
 		<lights>
 			<!-- top ring light -->
-			<light id="topLight" enabled="false">
+			<light id="topLight" enabled="true">
 				<location x="10.0" y="4.5" z="10.0" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -54,7 +54,7 @@
 			</light>
 			
 			<!-- spotlight 1 -->
-			<light id="spotLight1" enabled="false">
+			<light id="spotLight1" enabled="true">
 				<location x="0.5" y="4.5" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -63,7 +63,7 @@
 			</light>
 			
 			<!-- spotlight 2 -->
-			<light id="spotLight2" enabled="false">
+			<light id="spotLight2" enabled="true">
 				<location x="0.5" y="4.5" z="0.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -72,7 +72,7 @@
 			</light>
 			
 			<!-- spotlight 3 -->
-			<light id="spotLight3" enabled="false">
+			<light id="spotLight3" enabled="true">
 				<location x="19.5" y="4.5" z="0.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -81,7 +81,7 @@
 			</light>
 			
 			<!-- spotlight 4 -->
-			<light id="spotLight4" enabled="false">
+			<light id="spotLight4" enabled="true">
 				<location x="19.5" y="4.5" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -103,7 +103,7 @@
 			<diffuse r="0.76" g="0.64" b="0.18" a="1" />
 			<specular r="0.38" g="0.32" b="0.9" a="1" />
 			<shininess value="1" />
-			<texture file="floor.jpg" length_s="10.0" length_t="10.0" />
+			<texture file="floor.jpg" length_s="0.1" length_t="0.1" />
 		</appearance>
 		
 		<!-- wall appearance -->
@@ -113,7 +113,7 @@
 			<diffuse r="0.6" g="0.6" b="0.6" a="1" />
 			<specular r="0.3" g="0.3" b="0.3" a="1" />
 			<shininess value="0.3" />
-			<texture file="wall.jpg" length_s="7.0" length_t="7.0" />
+			<texture file="wall.jpg" length_s="0.2" length_t="1.0" />
 		</appearance>
 		
 		<!-- door appearance -->
