@@ -1,6 +1,7 @@
 #include "LSFrender.h"
 #include "LSFnode.h"
 #include <iostream>
+#include "LSFvertex.h"
 using namespace std;
 void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,LSFappearance*> appearances,stack<LSFappearance*> &appearancesStack){
 	if(nodes[rootNode]==0) {
@@ -29,6 +30,7 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 		Primitive primitive=nodes[rootNode]->childPrimitives[i];
 		switch(primitive.type){
 			case rectangle:{
+				glNormal3f(0,0,1);
 				glBegin(GL_QUADS);
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],0);
 					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y1"],0);
@@ -38,6 +40,8 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 				glEnd();
 			}break;
 			case triangle:{
+				glNormal3f(primitive.normal.x/primitive.normal.x,primitive.normal.y/primitive.normal.y,primitive.normal.z/primitive.normal.z);
+				//cout << primitive.normal.x <<  " " << primitive.normal.y <<  " " << primitive.normal.z << endl;
 				glBegin(GL_TRIANGLES);
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
 					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);

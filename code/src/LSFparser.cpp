@@ -6,6 +6,7 @@
 #include <CGFapplication.h>
 #include <vector>
 #include "CGFlight.h"
+#include "LSFvertex.h"
 LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
@@ -229,6 +230,17 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 				    << prim.attr["x2"] << " " << prim.attr["y2"] << " " << prim.attr["z2"] << ""
 				    << prim.attr["x3"] << " " << prim.attr["y3"] << " " << prim.attr["z3"]
 				     << endl;
+				// Compute the normal
+				LSFvertex v1(prim.attr["x1"],prim.attr["y1"],prim.attr["z1"]);
+				LSFvertex v2(prim.attr["x2"],prim.attr["y2"],prim.attr["z2"]);
+				LSFvertex v3(prim.attr["x3"],prim.attr["y3"],prim.attr["z3"]);
+				vector<LSFvertex> vertexs;
+				vertexs.push_back(v3); // Need to be in this order
+				vertexs.push_back(v2);
+				vertexs.push_back(v1);
+
+				prim.normal=computeNormalNewel(vertexs);
+				// -->
 				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"cylinder")==0){
