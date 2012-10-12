@@ -93,18 +93,15 @@ void LSFscene::initCameras()
 	map<string,LSFcamera*>::iterator it;
 	for(it = cameras.begin(); it != cameras.end(); it++){
 		(*it).second->camera = new CGFcamera();
-
-		if((*it).second->view != "ortho"){
-			(*it).second->camera->translate(0, -(fabs((*it).second->fromX)+fabs((*it).second->toX))/2);
-			(*it).second->camera->translate(1, -(fabs((*it).second->fromY)+fabs((*it).second->toY))/2);
-			(*it).second->camera->translate(2, -(*it).second->_far);
-
-			(*it).second->camera->rotate(0, (*it).second->angle);
+		if((*it).second->view == "perspective"){
+			(*it).second->setPosition((*it).second->fromX, (*it).second->fromY, (*it).second->fromZ);
+			(*it).second->setTarget((*it).second->toX, (*it).second->toY, (*it).second->toZ);
+			(*it).second->setStartRotation();
 		}
-		else{
-			(*it).second->camera->translate(0, -(fabs((*it).second->left)+fabs((*it).second->right))/2);
-			(*it).second->camera->translate(1, -(fabs((*it).second->top)+fabs((*it).second->bottom))/2);
-			(*it).second->camera->translate(2, -(fabs((*it).second->_far)+fabs((*it).second->_near))/2);
+		else if((*it).second->view == "ortho"){
+			(*it).second->setPosition((*it).second->left, (*it).second->top, (*it).second->_far);
+			(*it).second->setTarget((*it).second->right, (*it).second->bottom, (*it).second->_near);
+			(*it).second->setStartRotation();
 		}
 	}
 
@@ -112,6 +109,11 @@ void LSFscene::initCameras()
 	it = cameras.begin();
 	activeCamera = (*it).second->id;
 	if(DEBUGMODE) cout << activeCamera << endl;
+}
+
+void LSFscene::positionView(string activeCam, int axis, float newPosition){
+	if (axis==0 || axis==1 || axis==2)
+		cameras[activeCam]->camera->translate(axis, newPosition);
 }
 
 void LSFscene::activateCamera(string id)
@@ -147,7 +149,7 @@ void LSFscene::display()
 	}
 	else{
 		cameras[activeCamera]->updateProjectionMatrix(CGFapplication::width, CGFapplication::height);
-		cameras[activeCamera]->camera->applyView();
+		cameras[activeCamera]->applyView();
 	}
 
 

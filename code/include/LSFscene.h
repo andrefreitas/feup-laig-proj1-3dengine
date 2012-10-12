@@ -34,6 +34,7 @@ public:
 	// -----
 	void setGlobals();
 	void setPolygonMode(unsigned int, unsigned int);
+	void positionView(string activeCamera, int axis, float newPosition);
 
 	struct globalsData *getGlobals();
 	map<string, LSFlight*> * getLights();

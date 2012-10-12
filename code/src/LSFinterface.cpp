@@ -12,7 +12,6 @@ LSFinterface::LSFinterface(LSFscene *scene)
 LSFinterface::~LSFinterface(){}
 
 
-
 void LSFinterface::initGUI()
 {
 
@@ -28,7 +27,6 @@ void LSFinterface::initGUI()
 	GLUI_Panel *polygonalModePanel = addPanel("Polygonal Mode", 1);
 	addColumn();
 
-
 	//para numerar os elementos da interface
 	int i = 0;
 
@@ -42,15 +40,15 @@ void LSFinterface::initGUI()
 	GLUI_RadioGroup* radioGroup = addRadioGroupToPanel(camerasPanel, &camerasGroup, lights->size());
 	map<string, LSFcamera*>::iterator itC;
 	for(itC = cameras->begin(), i = 0; itC != cameras->end(); itC++, i++){
-		GLUI_RadioButton* button = addRadioButtonToGroup(radioGroup, (char*)(*itC).second->id.c_str());
+		addRadioButtonToGroup(radioGroup, (char*)(*itC).second->id.c_str());
 		(*itC).second->cameraNum = i;
 		if(DEBUGMODE) cout << *(&(*itC).second->cameraNum) << endl;
 	}
 
 	GLUI_RadioGroup* polygonalRadioGroup = addRadioGroupToPanel(polygonalModePanel, &polygonalMode, lights->size()+1);
-	GLUI_RadioButton* fillButton = addRadioButtonToGroup(polygonalRadioGroup, "fill");
-	GLUI_RadioButton* linesButton = addRadioButtonToGroup(polygonalRadioGroup, "lines");
-	GLUI_RadioButton* pointsButton = addRadioButtonToGroup(polygonalRadioGroup, "points");
+	addRadioButtonToGroup(polygonalRadioGroup, "fill");
+	addRadioButtonToGroup(polygonalRadioGroup, "lines");
+	addRadioButtonToGroup(polygonalRadioGroup, "points");
 
 	if(strcmp(globals->polygon_mode, "fill") == 0){
 		mode = GL_FILL; polygonalMode = 0;
@@ -61,7 +59,6 @@ void LSFinterface::initGUI()
 	else if(strcmp(globals->polygon_mode, "point") == 0){
 		mode = GL_POINT;  polygonalMode = 2;
 	}
-
 }
 
 void LSFinterface::processGUI(GLUI_Control *ctrl)
@@ -80,8 +77,9 @@ void LSFinterface::processGUI(GLUI_Control *ctrl)
 
 	map<string, LSFcamera*>::iterator itC;
 	for(itC = cameras->begin(); itC != cameras->end(); itC++){
-		if((*itC).second->cameraNum == camerasGroup)
+		if((*itC).second->cameraNum == camerasGroup){
 			scene->activateCamera((*itC).first);
+		}
 	}
 
 	if(ctrl->user_id == lights->size()+1)

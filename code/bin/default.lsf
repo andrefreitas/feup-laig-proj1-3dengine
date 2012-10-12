@@ -15,24 +15,24 @@
 	<!-- scene cameras -->
 	<cameras initial="userCam" >
 		<!-- user camera -->
-		<perspective id="userCam" near="0.1" far="50.0" angle="20.0">
-			<from x="-10.0" y="2.0" z="10.0" />
-			<to x="-10.0" y="0.0" z="0.0" />
+		<perspective id="userCam" near="0.1" far="100.0" angle="60.0">
+			<from x="12.5" y="4.0" z="20.0" />
+			<to x="12.5" y="0.0" z="0.0" />
 		</perspective>
 		
 		<!-- ring camera -->
-		<perspective id="ringCam" near="0.1" far="20" angle="0.0">
-			<from x="10" y="2.0" z="12.5" />
-			<to x="10" y="2.0" z="12.5" />
+		<perspective id="ringCam" near="0.1" far="15" angle="90.0">
+			<from x="10" y="2.0" z="10" />
+			<to x="10" y="2.0" z="0.0" />
 		</perspective>
 		
 		<!-- top camera -->
-		<perspective id="topCam" near="0.1" far="20.0" angle="90.0">
-			<from x="-10.0" y="0.0" z="0" />
-			<to x="-10.0" y="0.0" z="0" />
+		<perspective id="topCam" near="0.1" far="100.0" angle="90.0">
+			<from x="12.5" y="15.0" z="12" />
+			<to x="12.5" y="0.0" z="12" />
 		</perspective>
 		
-		<ortho id="OrtoCamera" near="0" far="50.0" left="-10.0" right="10.0" top="5.0" bottom="0.0" />
+		<ortho id="OrtoCamera" near="0.1" far="500.0" left="0.5" right="19.5" top="4.5" bottom="0.5" />
 	</cameras>
 	
 	

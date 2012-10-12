@@ -38,6 +38,15 @@ class LSFlight {
 };
 
 class LSFcamera{
+	private:
+		float position[3]; //= {0.0,0.0,-25.0};
+		float target[3]; //= {0.0,0.0,0.0};
+		float rotation[3];// = {0.0,0.0,0.0};
+
+		enum CAMERA_MODE { EXAMINE_MODE, WALK_MODE, TARGET_MODE };
+
+		CAMERA_MODE mode;
+
 	public:
 		string id;
 		string view;
@@ -50,6 +59,16 @@ class LSFcamera{
 		int isActivated;
 
 		CGFcamera* camera;
+
+		void setPosition(float x, float y, float z);
+		void setTarget(float x, float y, float z);
+		void setStartRotation();
+
+		void translate(int axis, float value);
+
+//		void setX(float value);		///< Sets camera X coordinate
+//		void setY(float value);		///< Sets camera Y coordinate
+//		void setZ(float value);		///< Sets camera Z coordinate
 
 		void updateProjectionMatrix(int width, int height);
 		void applyView(); //usar lookat para as perspective
