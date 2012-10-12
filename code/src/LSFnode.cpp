@@ -6,15 +6,8 @@
 void LSFcamera::updateProjectionMatrix(int width, int height){
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
-	float aspectRatio = (width/(float)height);
 	float xScale = 1;
 	float yScale = 1;
-
-	if(aspectRatio < 1)
-		xScale = aspectRatio;
-	else if(aspectRatio > 1)
-		yScale = aspectRatio;
 
 	if(view == "ortho"){
 		glOrtho(left*xScale, right*xScale, bottom*yScale, top*yScale, _near, _far);
@@ -60,9 +53,6 @@ void LSFcamera::applyView(){
 		xScale = aspectRatio;
 	else if(aspectRatio > 1)
 		yScale = aspectRatio;
-
-	if(view == "ortho")
-		glOrtho(left*xScale, right*xScale, bottom*yScale, top*yScale, _near, _far);
 
 
 	if(view == "perspective")
