@@ -9,6 +9,13 @@ void LSFcamera::updateProjectionMatrix(int width, int height){
 	float xScale = 1;
 	float yScale = 1;
 
+//	float ratio=(width/height);
+//	if(ratio>1){
+//		xScale=ratio;
+//	}else{
+//		yScale=ratio;
+//	}
+
 	if(view == "ortho"){
 		glOrtho(left*xScale, right*xScale, bottom*yScale, top*yScale, _near, _far);
 	}

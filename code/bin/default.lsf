@@ -32,7 +32,7 @@
 			<to x="12.5" y="0.0" z="12" />
 		</perspective>
 		
-		<ortho id="OrtoCamera" near="0.4" far="1" left="-2" right="2" top="1" bottom="-1" />
+		<ortho id="OrtoCamera" near="-1" far="1" left="-1" right="22" top="10" bottom="-2" />
 	</cameras>
 	
 	
@@ -89,38 +89,6 @@
 				<spot angle="10.0" exponent="1.0" dirx="-10.0" diry="-3.0" dirz="-10.0" />
 			</light>
 			
-			<light id="spotLight111" enabled="true">
-				<location x="0.5" y="4.5" z="19.5" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
-			</light>
-			
-			
-			<light id="spotLight55" enabled="true">
-				<location x="0.5" y="4.5" z="19.5" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
-			</light>
-			
-			<light id="spotLight66" enabled="true">
-				<location x="0.5" y="4.5" z="19.5" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
-			</light>
-			
-			<light id="spotLight677" enabled="true">
-				<location x="0.5" y="4.5" z="19.5" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
-			</light>
 		</lights>
 	</lighting>
 	
