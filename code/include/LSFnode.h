@@ -13,6 +13,7 @@ class Primitive{
 		PrimitiveType type;
 		map<string,float> attr;
 		LSFvertex normal;
+		LSFvertex uvCoords; // for triangle
 		Primitive(PrimitiveType type):type(type){};
 
 };

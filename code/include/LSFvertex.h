@@ -70,4 +70,6 @@ class mySemiRect {
  * @return a LSFvertex object that is the normal
  */
 LSFvertex computeNormalNewel(vector<LSFvertex> vertexList);
+
+vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList);
 #endif /* MYVERTEX_H_ */

@@ -61,4 +61,38 @@ LSFvertex computeNormalNewel(vector<LSFvertex> vertexList) {
 
 }
 
+vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList){
+	LSFvertex vectorA; float normA;
+	// Compute A
+	vectorA.x=vertexList[1].x-vertexList[0].x;
+	vectorA.y=vertexList[1].y-vertexList[0].y;
+	vectorA.z=vertexList[1].z-vertexList[0].z;
+	normA=sqrt(vectorA.x*vectorA.x + vectorA.y*vectorA.y + vectorA.z*vectorA.z);
+
+	LSFvertex vectorB; float normB;
+	// Compute B
+	vectorB.x=vertexList[2].x-vertexList[1].x;
+	vectorB.y=vertexList[2].y-vertexList[1].y;
+	vectorB.z=vertexList[2].z-vertexList[1].z;
+	normB=sqrt(vectorB.x*vectorB.x + vectorB.y*vectorB.y + vectorB.z*vectorB.z);
+
+	LSFvertex vectorC; float normC;
+	// Compute C
+	vectorC.x=vertexList[2].x-vertexList[0].x;
+	vectorC.y=vertexList[2].y-vertexList[0].y;
+	vectorC.z=vertexList[2].z-vertexList[0].z;
+	normC=sqrt(vectorC.x*vectorC.x + vectorC.y*vectorC.y + vectorC.z*vectorC.z);
+
+	// Compute scale factor
+	float sideA, sideB,sideC;
+	float scale=1/(float)normA;
+	sideA=1.0;
+	sideB=scale*normB;
+	sideC=scale*normC;
+
+	// UV
+	LSFvertex uv1(0,0,0);
+	LSFvertex uv2(1,0,0);
+
+}
 

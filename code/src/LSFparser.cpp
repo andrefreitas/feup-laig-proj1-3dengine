@@ -589,7 +589,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 			pLSFlight->spotExponent= spot_exponent;
 		}
 		else{
-			pLSFlight->spotExponent= -1;
+			pLSFlight->spotExponent= -1; // Maybe usefull later
 		}
 		pLSFlight->light=plight;
 		pLSFlight->enabled=lighting_enabled;

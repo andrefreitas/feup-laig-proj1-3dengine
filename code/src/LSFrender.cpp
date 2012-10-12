@@ -36,17 +36,23 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y1"],0);
 					glTexCoord2d(u,v); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],0);
 					glTexCoord2d(0.0,v); glVertex3d(primitive.attr["x1"],primitive.attr["y2"],0);
-					// Todo: é necessário depois calcular as normais com método de Newell
+
 				glEnd();
 			}break;
 			case triangle:{
 				glNormal3f(primitive.normal.x/primitive.normal.x,primitive.normal.y/primitive.normal.y,primitive.normal.z/primitive.normal.z);
-				//cout << primitive.normal.x <<  " " << primitive.normal.y <<  " " << primitive.normal.z << endl;
+				// UV coords
+				vector<LSFvertex> uvCoords;
+				uvCoords.push_back(LSFvertex(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]));
+				uvCoords.push_back(LSFvertex(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]));
+				uvCoords.push_back(LSFvertex(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]));
+				computeTriangleUV(uvCoords);
+				// -->
+
 				glBegin(GL_TRIANGLES);
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
 					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
 					glTexCoord2d(u/2.0,v); glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
-					// Todo: é necessário depois calcular as normais com método de Newell
 				glEnd();
 			}break;
 			case cylinder:{
@@ -62,7 +68,7 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 				gluSphere(a,primitive.attr["radius"],primitive.attr["slices"],primitive.attr["stacks"]);
 			}break;
 			case torus:{
-				// TODO: Como mapear texturas num torus? (é só isto que falta)
+
 				glutSolidTorus(primitive.attr["inner"],primitive.attr["outer"],primitive.attr["slices"],primitive.attr["loops"]);
 			} break;
 		}
