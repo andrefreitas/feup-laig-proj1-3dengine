@@ -3,7 +3,7 @@
 #include "CGFapplication.h"
 #include "LSFscene.h"
 #include "LSFinterface.h"
-#include "LSFnode.h"
+#include "LSFobjects.h"
 using std::cout;
 using std::exception;
 using namespace std;

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "LSFParser.h"
-#include "LSFnode.h"
+#include "LSFobjects.h"
 #include <map>
 #include <stack>
 #include <CGFapplication.h>
@@ -481,7 +481,12 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 	while(node){
 		CGFlight *plight;
 		counter++;
-
+		// Detect if there are more than 8 lights
+		if(counter>8){
+			cout << "\n\n\n\n ERROR: YOU HAVE MORE THAN 8 LIGHTS! Press to exit \n\n\n";
+			getchar(); // wait feedback
+			exit(-1);
+		}
 		light_id = node->Attribute("id");
 		node->QueryBoolAttribute("enabled",&lighting_enabled);
 
@@ -563,7 +568,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 		direction[3]=1;
 		if(spot == NULL) direction=NULL;
 		// Create
-		plight= new CGFlight(lightsId[counter],position,direction);
+		plight= new CGFlight(lightsId[counter-1],position,direction);
 		// Angle and exponent for spotlight // Todo: Exponent?
 		if(spot != NULL) plight->setAngle(spot_angle);
 		// Ambient

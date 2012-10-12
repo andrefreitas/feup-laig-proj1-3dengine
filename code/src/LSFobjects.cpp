@@ -1,4 +1,4 @@
-#include "LSFnode.h"
+#include "LSFobjects.h"
 #include <iostream>
 #include "CGFapplication.h"
 

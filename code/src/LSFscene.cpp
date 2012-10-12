@@ -105,7 +105,7 @@ void LSFscene::initCameras()
 		}
 	}
 
-	//mudar aqui a camara até se criar a interface
+
 	it = cameras.begin();
 	activeCamera = (*it).second->id;
 	if(DEBUGMODE) cout << activeCamera << endl;

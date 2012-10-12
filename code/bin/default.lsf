@@ -88,6 +88,39 @@
 				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
 				<spot angle="10.0" exponent="1.0" dirx="-10.0" diry="-3.0" dirz="-10.0" />
 			</light>
+			
+			<light id="spotLight111" enabled="true">
+				<location x="0.5" y="4.5" z="19.5" />
+				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
+			</light>
+			
+			
+			<light id="spotLight55" enabled="true">
+				<location x="0.5" y="4.5" z="19.5" />
+				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
+			</light>
+			
+			<light id="spotLight66" enabled="true">
+				<location x="0.5" y="4.5" z="19.5" />
+				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
+			</light>
+			
+			<light id="spotLight677" enabled="true">
+				<location x="0.5" y="4.5" z="19.5" />
+				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
+			</light>
 		</lights>
 	</lighting>
 	

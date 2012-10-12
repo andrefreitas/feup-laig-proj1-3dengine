@@ -4,7 +4,7 @@
 #include "tinyxml.h"
 #include <vector>
 #include "CGFcamera.h"
-#include "LSFnode.h"
+#include "LSFobjects.h"
 #include "CGFlight.h"
 using namespace std;
 
