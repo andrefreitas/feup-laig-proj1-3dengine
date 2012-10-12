@@ -328,7 +328,7 @@
             <texture file="gate.jpg" length_s="1" length_t="1" /> 
   
         </appearance>
-		<appearance id="areia" >
+		<appearance id="triangle" >
             <emissive r="0.5" g="0.5" b="0.5" a="0.5" />
             <ambient r="0.5" g="0.5" b="0.5" a="1" />
             <diffuse r="0.8" g="0.8" b="0.8" a="1" />
@@ -336,7 +336,7 @@
             <shininess value="60" />
 
             <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
-            <texture file="sand.jpg" length_s="4" length_t="4" /> 
+            <texture file="pizzaSlice.jpg" length_s="1" length_t="1" /> 
   
         </appearance>
 		
@@ -348,9 +348,9 @@
 		<node id="Scene">
             <transforms>
             </transforms>
-            <appearanceref id="inherit" />              
+            <appearanceref id="triangle" />              
             <children>
-				<triangle x1="0.0" y1="0.0" z1="0.0" x2="5.0" y2="0.0" z2="0.0" x3="2.5" y3="0.0" z3="-5.0" /> 
+				<triangle x1="0.0" y1="0.0" z1="0.0" x2="5.0" y2="0.0" z2="0.0" x3="2.5" y3="0.0" z3="-3.0" /> 
 			</children>
 		</node>
 		

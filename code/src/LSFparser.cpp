@@ -240,6 +240,14 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 				vertexs.push_back(v1);
 
 				prim.normal=computeNormalNewel(vertexs);
+
+				// UV coords
+				vector<LSFvertex> uvCoords;
+				uvCoords.push_back(LSFvertex(prim.attr["x1"],prim.attr["y1"],prim.attr["z1"]));
+				uvCoords.push_back(LSFvertex(prim.attr["x2"],prim.attr["y2"],prim.attr["z2"]));
+				uvCoords.push_back(LSFvertex(prim.attr["x3"],prim.attr["y3"],prim.attr["z3"]));
+				uvCoords=computeTriangleUV(uvCoords);
+				prim.uvCoords=uvCoords;
 				// -->
 				pnode->childPrimitives.push_back(prim);
 

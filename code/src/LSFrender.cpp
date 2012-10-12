@@ -41,18 +41,13 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 			}break;
 			case triangle:{
 				glNormal3f(primitive.normal.x/primitive.normal.x,primitive.normal.y/primitive.normal.y,primitive.normal.z/primitive.normal.z);
-				// UV coords
-				vector<LSFvertex> uvCoords;
-				uvCoords.push_back(LSFvertex(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]));
-				uvCoords.push_back(LSFvertex(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]));
-				uvCoords.push_back(LSFvertex(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]));
-				computeTriangleUV(uvCoords);
-				// -->
-
 				glBegin(GL_TRIANGLES);
-					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
-					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
-					glTexCoord2d(u/2.0,v); glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
+					glTexCoord2d(0,0); // don't need s and t in the first coord
+					glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
+					glTexCoord2d(primitive.uvCoords[1].x/(float)currentAppearance->length_s,primitive.uvCoords[1].y/(float)currentAppearance->length_t);
+					glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
+					glTexCoord2d(primitive.uvCoords[2].x/(float)currentAppearance->length_s,primitive.uvCoords[2].y/(float)currentAppearance->length_t);
+					glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
 				glEnd();
 			}break;
 			case cylinder:{

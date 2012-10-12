@@ -62,6 +62,7 @@ LSFvertex computeNormalNewel(vector<LSFvertex> vertexList) {
 }
 
 vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList){
+	// Explanation: the algorithm forces the base to be 1. But, if the height exceeds 1, it reduces the others sides.
 	LSFvertex vectorA; float normA;
 	// Compute A
 	vectorA.x=vertexList[1].x-vertexList[0].x;
@@ -83,7 +84,7 @@ vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList){
 	vectorC.z=vertexList[2].z-vertexList[0].z;
 	normC=sqrt(vectorC.x*vectorC.x + vectorC.y*vectorC.y + vectorC.z*vectorC.z);
 
-	// Compute scale factor
+	// Compute scale factor(base is 1)
 	float sideA, sideB,sideC;
 	float scale=1/(float)normA;
 	sideA=1.0;
@@ -93,6 +94,33 @@ vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList){
 	// UV
 	LSFvertex uv1(0,0,0);
 	LSFvertex uv2(1,0,0);
+	LSFvertex uv3(0,0,0); // To compute bellow
 
+	// Compute the angle between vector A and C
+	//cos(t) = (v.w) / (|v|.|w|)
+
+	float cosT=(vectorA.x*vectorC.x + vectorA.y*vectorC.y + vectorA.z*vectorC.z)/(normA*normC);
+	float angle=acos(cosT);
+
+	// soo the uv3 coordinates is
+	float height=sideC*sin(angle);
+	float semiBase=sideC*cos(angle);
+
+	if(height>1){
+		float scaleFactor=1/(float)height;
+		height=1;
+		semiBase=scaleFactor*semiBase;
+		uv2.x=scaleFactor; // The triangle base was 1 unit before
+
+	}
+	uv3.x=semiBase;
+	uv3.y=height;
+
+	// Push Back the UV coords
+	vector<LSFvertex> uvCoords;
+	uvCoords.push_back(uv1);
+	uvCoords.push_back(uv2);
+	uvCoords.push_back(uv3);
+	return uvCoords;
 }
 
