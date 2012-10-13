@@ -568,7 +568,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 		direction[3]=1;
 		if(spot == NULL) direction=NULL;
 		// Create
-		plight= new CGFlight(lightsId[counter-1],position,direction);
+		plight= new CGFlight(lightsId[counter-1],position);
 		// Angle and exponent for spotlight // Todo: Exponent?
 		if(spot != NULL) plight->setAngle(spot_angle);
 		// Ambient
