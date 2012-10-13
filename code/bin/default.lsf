@@ -46,7 +46,7 @@
 		<!-- scene lights -->
 		<lights>
 			<!-- top ring light -->
-			<light id="topLight" enabled="true">
+			<light id="topLight" enabled="false">
 				<location x="10.0" y="4.5" z="10.0" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -54,7 +54,7 @@
 			</light>
 			
 			<!-- spotlight 1 -->
-			<light id="spotLight1" enabled="true">
+			<light id="spotLight1" enabled="false">
 				<location x="0.5" y="4.5" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -63,7 +63,7 @@
 			</light>
 			
 			<!-- spotlight 2 -->
-			<light id="spotLight2" enabled="true">
+			<light id="spotLight2" enabled="false">
 				<location x="0.5" y="4.5" z="0.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -72,7 +72,7 @@
 			</light>
 			
 			<!-- spotlight 3 -->
-			<light id="spotLight3" enabled="true">
+			<light id="spotLight3" enabled="false">
 				<location x="19.5" y="4.5" z="0.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -81,12 +81,21 @@
 			</light>
 			
 			<!-- spotlight 4 -->
-			<light id="spotLight4" enabled="true">
+			<light id="spotLight4" enabled="false">
 				<location x="19.5" y="4.5" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
 				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="-10.0" diry="-3.0" dirz="-10.0" />
+				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
+			</light>
+			
+			<!-- spotlight 4 -->
+			<light id="bannerLight" enabled="false">
+				<location x="10.5" y="4.5" z="19.5" />
+				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
 			</light>
 			
 		</lights>
@@ -207,7 +216,7 @@
 			<diffuse r="1.0" g="1.0" b="1.0" a="1" />
 			<specular r="1.0" g="1.0" b="1.0" a="1" />
 			<shininess value="25.0" />
-			<texture file="ringImage.jpg" length_s="1.0" length_t="1.8" />
+			<texture file="ringImage.jpg" length_s="1.0" length_t="1.0" />
 		</appearance>
 		
 		<!-- ringSide appearance -->
