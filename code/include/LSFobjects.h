@@ -32,6 +32,7 @@ class LSFlight {
 	public:
 		string id;
 		bool enabled;
+		bool isspotLight;
 		int lightNum;
 		int isActivated;
 		CGFlight* light;

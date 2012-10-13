@@ -16,8 +16,8 @@
 	<cameras initial="userCam" >
 		<!-- user camera -->
 		<perspective id="userCam" near="0.1" far="100.0" angle="60.0">
-			<from x="12.5" y="4.0" z="20.0" />
-			<to x="12.5" y="0.0" z="0.0" />
+			<from x="10" y="4.0" z="20.0" />
+			<to x="10" y="0.0" z="0.0" />
 		</perspective>
 		
 		<!-- ring camera -->
@@ -46,9 +46,9 @@
 		<!-- scene lights -->
 		<lights>
 			<!-- top ring light -->
-			<light id="topLight" enabled="true">
+			<light id="topLight" enabled="false">
 				<location x="10.0" y="4.5" z="10.0" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+				<ambient r="0.2" g="0.2" b="0.2" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
 				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
 			</light>
@@ -81,26 +81,26 @@
 			</light>
 			
 			<!-- spotlight 4 -->
-			<light id="rightCorner2" enabled="true">
+			<light id="rightCorner2" enabled="false">
 				<location x="19.5" y="4.5" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
 				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="-10.0" diry="-3.0" dirz="-10.0" />
+				<spot angle="20.0" exponent="1.0" dirx="-10.0" diry="-3.0" dirz="-10.0" />
 			</light>
 			
 			
 			<!-- bbannerLight -->
 			<light id="bannerLight" enabled="true">
-				<location x="10.5" y="4.5" z="19.5" />
+				<location x="10.5" y="3.0" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
 				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="80.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
+				<spot angle="80.0" exponent="1.0" dirx="10.0" diry="-3" dirz="-7.5" />
 			</light>
 			
 			<!-- table light -->
-			<light id="tableLight" enabled="true">
+			<light id="tableLight" enabled="false">
 				<location x="16.5" y="3.0" z="9.0" />
 				<ambient r="0.4" g="0.4" b="0.4" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />

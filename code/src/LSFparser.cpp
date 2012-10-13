@@ -432,49 +432,33 @@ void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
 
 }
 
-void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &local, bool &doublesided, float *ambient){
-	bool lighting_doublesided;
-	bool lighting_local;
-	bool lighting_enabled;
+void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &local, bool &doublesided, float *sceneAmbient){
 	int counter = 0;
 	const char *light_id;
-	float scene_ambient_r, scene_ambient_g, scene_ambient_b, scene_ambient_a;
-	float location_x, location_y, location_z;
-	float ambient_r, ambient_g, ambient_b, ambient_a;
-	float diffuse_r, diffuse_g, diffuse_b, diffuse_a;
-	float specular_r, specular_g, specular_b, specular_a;
-	float spot_angle, spot_exponent, spot_dirx, spot_diry, spot_dirz;
 	int lightsId[]={GL_LIGHT0,GL_LIGHT1,GL_LIGHT2,GL_LIGHT3,GL_LIGHT4,GL_LIGHT5,GL_LIGHT6,GL_LIGHT7};
-	lightingsElement->QueryBoolAttribute("local",&lighting_local);
-	lightingsElement->QueryBoolAttribute("enabled",&lighting_enabled);
-	lightingsElement->QueryBoolAttribute("doublesided",&lighting_doublesided);
+	lightingsElement->QueryBoolAttribute("local",&local);
+	lightingsElement->QueryBoolAttribute("enabled",&enabled);
+	lightingsElement->QueryBoolAttribute("doublesided",&doublesided);
 	if(DEBUGMODE){
 		cout << "\n--- Luzes  ---" << endl;
-		if(lighting_doublesided) cout << "doubleSided = true" << endl;
-		if(lighting_local) cout << "local = true" << endl;
-		if(lighting_enabled) cout << "enabled = true" << endl;
+		if(doublesided) cout << "doubleSided = true" << endl;
+		if(local) cout << "local = true" << endl;
+		if(enabled) cout << "enabled = true" << endl;
 
 	}
-	// Config params
-	enabled=lighting_enabled;
-	local=lighting_local;
-	doublesided=lighting_doublesided;
+
 	TiXmlElement *scene_ambient=lightingsElement->FirstChildElement("ambient");
 
+	//ambiente global
 	if(scene_ambient != NULL){
-		scene_ambient->QueryFloatAttribute("r",&scene_ambient_r);
-		scene_ambient->QueryFloatAttribute("g",&scene_ambient_g);
-		scene_ambient->QueryFloatAttribute("b",&scene_ambient_b);
-		scene_ambient->QueryFloatAttribute("a",&scene_ambient_a);
-		// Set the ambient
-		ambient[0]=scene_ambient_r;
-		ambient[1]=scene_ambient_g;
-		ambient[2]=scene_ambient_b;
-		ambient[3]=scene_ambient_a;
+		scene_ambient->QueryFloatAttribute("r",&sceneAmbient[0]);
+		scene_ambient->QueryFloatAttribute("g",&sceneAmbient[1]);
+		scene_ambient->QueryFloatAttribute("b",&sceneAmbient[2]);
+		scene_ambient->QueryFloatAttribute("a",&sceneAmbient[3]);
 	}
 
 	if(DEBUGMODE && scene_ambient != NULL)
-		cout << "scene ambient r=" << scene_ambient_r << " g=" << scene_ambient_g << " b=" << scene_ambient_b << " a=" << scene_ambient_a << endl;
+		cout << "scene ambient r=" << sceneAmbient[0] << " g=" << sceneAmbient[1] << " b=" << sceneAmbient[2] << " a=" << sceneAmbient[3] << endl;
 
 	TiXmlElement *node_=lightingsElement->FirstChildElement("lights");
 
@@ -490,129 +474,119 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 			getchar(); // wait feedback
 			exit(-1);
 		}
+
+		// new light
+		LSFlight *pLSFlight=new LSFlight;
+
+		float * positionV = new float[4];
+		float * directionV= new float[3];
+		float * ambientV  = new float[4]; //ambiente de cada luz
+		float * diffuseV  = new float[4];
+		float * specularV = new float[4];
+
+		float spot_angle, spot_exponent;
+
 		light_id = node->Attribute("id");
-		node->QueryBoolAttribute("enabled",&lighting_enabled);
+		pLSFlight->id=light_id;
+
+		node->QueryBoolAttribute("enabled",&pLSFlight->enabled);
 
 		TiXmlElement *location, *ambient, *diffuse, *specular, *spot;
 
 		location = node->FirstChildElement("location");
 		if(location != NULL)
 			if(strcmp(location->ValueTStr().c_str(),"location")==0){
-				location->QueryFloatAttribute("x",&location_x);
-				location->QueryFloatAttribute("y",&location_y);
-				location->QueryFloatAttribute("z",&location_z);
+				location->QueryFloatAttribute("x",&positionV[0]);
+				location->QueryFloatAttribute("y",&positionV[1]);
+				location->QueryFloatAttribute("z",&positionV[2]);
+				positionV[3] = 1;
 			}
 
 		ambient = node->FirstChildElement("ambient");
 		if(ambient != NULL)
 			if(strcmp(ambient->ValueTStr().c_str(),"ambient")==0){
-				ambient->QueryFloatAttribute("r",&ambient_r);
-				ambient->QueryFloatAttribute("g",&ambient_g);
-				ambient->QueryFloatAttribute("b",&ambient_b);
-				ambient->QueryFloatAttribute("a",&ambient_a);
+				ambient->QueryFloatAttribute("r",&ambientV[0]);
+				ambient->QueryFloatAttribute("g",&ambientV[1]);
+				ambient->QueryFloatAttribute("b",&ambientV[2]);
+				ambient->QueryFloatAttribute("a",&ambientV[3]);
 			}
 
 		diffuse = node->FirstChildElement("diffuse");
 		if(diffuse != NULL)
 			if(strcmp(diffuse->ValueTStr().c_str(),"diffuse")==0){
-				diffuse->QueryFloatAttribute("r",&diffuse_r);
-				diffuse->QueryFloatAttribute("g",&diffuse_g);
-				diffuse->QueryFloatAttribute("b",&diffuse_b);
-				diffuse->QueryFloatAttribute("a",&diffuse_a);
+				diffuse->QueryFloatAttribute("r",&diffuseV[0]);
+				diffuse->QueryFloatAttribute("g",&diffuseV[1]);
+				diffuse->QueryFloatAttribute("b",&diffuseV[2]);
+				diffuse->QueryFloatAttribute("a",&diffuseV[3]);
 			}
 
 		specular = node->FirstChildElement("specular");
 		if(specular != NULL)
 			if(strcmp(specular->ValueTStr().c_str(),"specular")==0){
-				specular->QueryFloatAttribute("r",&specular_r);
-				specular->QueryFloatAttribute("g",&specular_g);
-				specular->QueryFloatAttribute("b",&specular_b);
-				specular->QueryFloatAttribute("a",&specular_a);
+				specular->QueryFloatAttribute("r",&specularV[0]);
+				specular->QueryFloatAttribute("g",&specularV[1]);
+				specular->QueryFloatAttribute("b",&specularV[2]);
+				specular->QueryFloatAttribute("a",&specularV[3]);
 			}
 
 		spot= node->FirstChildElement("spot");
-		if(spot != NULL)
+		if(spot != NULL){
 			if(strcmp(spot->ValueTStr().c_str(),"spot")==0){
 				spot->QueryFloatAttribute("angle",&spot_angle);
 				spot->QueryFloatAttribute("exponent",&spot_exponent);
-				spot->QueryFloatAttribute("dirx",&spot_dirx);
-				spot->QueryFloatAttribute("diry",&spot_diry);
-				spot->QueryFloatAttribute("dirz",&spot_dirz);
+				spot->QueryFloatAttribute("dirx",&directionV[0]);
+				spot->QueryFloatAttribute("diry",&directionV[1]);
+				spot->QueryFloatAttribute("dirz",&directionV[2]);
 			}
-
-		if(DEBUGMODE){
-			cout << "\n\tLuz: " << light_id << "  enabled=" << lighting_enabled << endl;
-			if(location != NULL)
-				cout << "location x=" << location_x << " y=" << location_y << " z="<< location_z << endl;
-			if(ambient != NULL)
-				cout << "ambient  r=" << ambient_r  << " g=" << ambient_g  << " b="<< ambient_b  << " a="<< ambient_a << endl;
-			if(diffuse != NULL)
-				cout << "diffuse  r=" << diffuse_r  << " g=" << diffuse_g  << " b="<< diffuse_b  << " a="<< diffuse_a << endl;
-			if(specular != NULL)
-				cout << "specular r=" << specular_r << " g=" << specular_g << " b="<< specular_b << " a="<< specular_a << endl;
-			if(spot != NULL)
-				cout << "spot angle=" << spot_angle << " exponent=" << spot_exponent << " dirx=" << spot_dirx << " diry=" <<spot_diry << " dirz=" << spot_dirz << endl;
-
-			cout << endl;
-
+			pLSFlight->isspotLight = true;
 		}
+		else{
+			directionV = NULL;
+			pLSFlight->isspotLight = false;
+		}
+
 		// Add light to the vector
-		// Location
-		float * position= new float[4];
-		position[0]=location_x;
-		position[1]=location_y;
-		position[2]=location_z;
-		position[3]=1;
-		// Direction
-		float * direction=new float[4];
-		direction[0]=spot_dirx;
-		direction[1]=spot_diry;
-		direction[2]=spot_dirz;
-		direction[3]=1;
-		if(spot == NULL) direction=NULL;
 		// Create
-		plight= new CGFlight(lightsId[counter-1],position);
-		// Angle and exponent for spotlight // Todo: Exponent?
+		plight= new CGFlight(lightsId[counter-1],positionV);
+		// Angle for spotlight
 		if(spot != NULL) plight->setAngle(spot_angle);
 		// Ambient
-		float * ambientV=new float[4];
-		ambientV[0]=ambient_r;
-		ambientV[1]=ambient_g;
-		ambientV[2]=ambient_b;
-		ambientV[3]=ambient_a;
 		plight->setAmbient(ambientV);
-
 		// Diffuse
-		float * diffuseV=new float[4];
-		diffuseV[0]=diffuse_r;
-		diffuseV[1]=diffuse_g;
-		diffuseV[2]=diffuse_b;
-		diffuseV[3]=diffuse_a;
 		plight->setDiffuse(diffuseV);
-
 		// Specular
-		float * specularV=new float[4];
-		specularV[0]=specular_r;
-		specularV[1]=specular_g;
-		specularV[2]=specular_b;
-		specularV[3]=specular_a;
 		plight->setSpecular(specularV);
 
-		// Push back light
-		LSFlight *pLSFlight=new LSFlight;
 		if(spot != NULL) {
 			glLightf( lightsId[counter-1], GL_SPOT_EXPONENT, spot_exponent);
 			pLSFlight->spotExponent= spot_exponent;
 			glLightf(lightsId[counter-1], GL_SPOT_CUTOFF, spot_angle);
-			glLightfv(lightsId[counter-1], GL_SPOT_DIRECTION, direction);
+			glLightfv(lightsId[counter-1], GL_SPOT_DIRECTION, directionV);
 		}
 		else{
 			pLSFlight->spotExponent= -1; // Maybe usefull later
 		}
+
 		pLSFlight->light=plight;
-		pLSFlight->enabled=lighting_enabled;
-		pLSFlight->id=light_id;
+
 		lights[light_id]=pLSFlight;
+
+		if(DEBUGMODE){
+			cout << "\n\tLuz: " << light_id << "  enabled=" << pLSFlight->enabled << endl;
+			if(location != NULL)
+				cout << "location x=" << positionV[0] << " y=" << positionV[1] << " z="<< positionV[2] << endl;
+			if(ambient != NULL)
+				cout << "ambient  r=" << ambientV[0]  << " g=" << ambientV[1] << " b="<< ambientV[2]  << " a="<< ambientV[3] << endl;
+			if(diffuse != NULL)
+				cout << "diffuse  r=" << diffuseV[0]  << " g=" << diffuseV[1]  << " b="<< diffuseV[2]  << " a="<< diffuseV[3] << endl;
+			if(specular != NULL)
+				cout << "specular r=" << specularV[0] << " g=" << specularV[1] << " b="<< specularV[2] << " a="<< specular[4] << endl;
+			if(spot != NULL){
+				cout << "spot angle=" << spot_angle << " exponent=" << spot_exponent;
+			    cout << " dirx=" << directionV[0] << " diry=" << directionV[1] << " dirz=" << directionV[2] << endl;
+			}
+			cout << endl;
+		}
 
 		node=node->NextSiblingElement();
 	}
