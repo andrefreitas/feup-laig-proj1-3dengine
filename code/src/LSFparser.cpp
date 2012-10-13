@@ -119,9 +119,12 @@ void LSFparser::getCameras(map<string, LSFcamera*> &cameras){
 			}
 
 		}
+		if(camera->id == initial)
+			camera->initial = true;
+		else
+			camera->initial = false;
 
 		cameras[camera->id] = camera;
-//		cameras.push_back(camera);
 
 		// -->
 		node=node->NextSiblingElement();

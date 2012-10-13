@@ -42,8 +42,13 @@ void LSFinterface::initGUI()
 	for(itC = cameras->begin(), i = 0; itC != cameras->end(); itC++, i++){
 		addRadioButtonToGroup(radioGroup, (char*)(*itC).second->id.c_str());
 		(*itC).second->cameraNum = i;
+		if((*itC).second->initial){
+			initialCamera = i;
+			scene->activateCamera((*itC).first);
+		}
 		if(DEBUGMODE) cout << *(&(*itC).second->cameraNum) << endl;
 	}
+	camerasGroup = initialCamera;
 
 	GLUI_RadioGroup* polygonalRadioGroup = addRadioGroupToPanel(polygonalModePanel, &polygonalMode, lights->size()+1);
 	addRadioButtonToGroup(polygonalRadioGroup, "fill");

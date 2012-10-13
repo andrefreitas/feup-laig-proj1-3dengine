@@ -51,6 +51,7 @@ class LSFcamera{
 	public:
 		string id;
 		string view;
+		bool initial;
 		float _near, _far, angle;
 		float left, right, top, bottom;
 		float fromX, fromY, fromZ;
@@ -67,12 +68,8 @@ class LSFcamera{
 
 		void translate(int axis, float value);
 
-//		void setX(float value);		///< Sets camera X coordinate
-//		void setY(float value);		///< Sets camera Y coordinate
-//		void setZ(float value);		///< Sets camera Z coordinate
-
 		void updateProjectionMatrix(int width, int height);
-		void applyView(); //usar lookat para as perspective
+		void applyView();
 };
 
 // The node in the graph
