@@ -46,7 +46,7 @@
 		<!-- scene lights -->
 		<lights>
 			<!-- top ring light -->
-			<light id="topLight" enabled="false">
+			<light id="topLight" enabled="true">
 				<location x="10.0" y="4.5" z="10.0" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -54,7 +54,7 @@
 			</light>
 			
 			<!-- spotlight 1 -->
-			<light id="spotLight1" enabled="false">
+			<light id="leftCorner1" enabled="false">
 				<location x="0.5" y="4.5" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -63,7 +63,7 @@
 			</light>
 			
 			<!-- spotlight 2 -->
-			<light id="spotLight2" enabled="false">
+			<light id="leftCorner2" enabled="false">
 				<location x="0.5" y="4.5" z="0.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -72,7 +72,7 @@
 			</light>
 			
 			<!-- spotlight 3 -->
-			<light id="spotLight3" enabled="false">
+			<light id="rightCorner" enabled="false">
 				<location x="19.5" y="4.5" z="0.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -80,22 +80,14 @@
 				<spot angle="10.0" exponent="1.0" dirx="-10.0" diry="-3.0" dirz="10.0" />
 			</light>
 			
-			<!-- spotlight 4 -->
-			<light id="spotLight4" enabled="false">
-				<location x="19.5" y="4.5" z="19.5" />
-				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
-			</light>
 			
-			<!-- spotlight 4 -->
-			<light id="bannerLight" enabled="false">
+			<!-- bbannerLight -->
+			<light id="bannerLight" enabled="true">
 				<location x="10.5" y="4.5" z="19.5" />
 				<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
 				<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
 				<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-				<spot angle="10.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
+				<spot angle="80.0" exponent="1.0" dirx="10.0" diry="-3.0" dirz="-10.0" />
 			</light>
 			
 		</lights>
@@ -123,7 +115,7 @@
 			<diffuse r="0.6" g="0.6" b="0.6" a="1" />
 			<specular r="0.3" g="0.3" b="0.3" a="1" />
 			<shininess value="0.3" />
-			<texture file="wall.jpg" length_s="0.2" length_t="1.0" />
+			<texture file="wall.jpg" length_s="0.17" length_t="0.5" />
 		</appearance>
 		
 		<!-- door appearance -->
@@ -538,7 +530,7 @@
 		
 		<node id="wweBanner">
 			<transforms>
-				<translate x="-9.9" y="1.3" z="0.0" />
+				<translate x="-9.9" y="2" z="0.0" />
 				<rotate axis="y" angle="90.0" />
 			</transforms>
 			
@@ -558,7 +550,7 @@
 			<appearanceref id="inherit" />
 			
 			<children>
-				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="5.0" />
+				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="7.0" />
 			</children>
 		</node>
 		
@@ -571,7 +563,7 @@
 			<appearanceref id="inherit" />
 			
 			<children>
-				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="5.0" />
+				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="7.0" />
 			</children>
 		</node>
 		
@@ -583,7 +575,7 @@
 			<appearanceref id="inherit" />
 			
 			<children>
-				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="5.0" />
+				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="7.0" />
 			</children>
 		</node>
 		
@@ -597,7 +589,7 @@
 			<appearanceref id="inherit" />
 			
 			<children>
-				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="5.0" />
+				<rectangle x1="-10.0" y1="0.0" x2="10.0" y2="7.0" />
 			</children>
 		</node>
 		
