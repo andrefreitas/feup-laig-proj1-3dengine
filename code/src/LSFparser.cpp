@@ -580,7 +580,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 			if(diffuse != NULL)
 				cout << "diffuse  r=" << diffuseV[0]  << " g=" << diffuseV[1]  << " b="<< diffuseV[2]  << " a="<< diffuseV[3] << endl;
 			if(specular != NULL)
-				cout << "specular r=" << specularV[0] << " g=" << specularV[1] << " b="<< specularV[2] << " a="<< specular[4] << endl;
+				cout << "specular r=" << specularV[0] << " g=" << specularV[1] << " b="<< specularV[2] << " a="<< specularV[4] << endl;
 			if(spot != NULL){
 				cout << "spot angle=" << spot_angle << " exponent=" << spot_exponent;
 			    cout << " dirx=" << directionV[0] << " diry=" << directionV[1] << " dirz=" << directionV[2] << endl;

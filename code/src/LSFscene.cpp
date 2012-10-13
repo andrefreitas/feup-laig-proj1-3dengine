@@ -5,6 +5,7 @@
 #include "LSFrender.h"
 #include "LSFinterface.h"
 #include <iostream>
+#include "CGFlight.h"
 using namespace std;
 float pi = acos(-1.0);
 float deg2rad=pi/180.0;
