@@ -479,12 +479,10 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 		LSFlight *pLSFlight=new LSFlight;
 
 		float * positionV = new float[4];
-		float * directionV= new float[3];
+		float * directionV= new float[4];
 		float * ambientV  = new float[4]; //ambiente de cada luz
 		float * diffuseV  = new float[4];
 		float * specularV = new float[4];
-
-		float spot_angle, spot_exponent;
 
 		light_id = node->Attribute("id");
 		pLSFlight->id=light_id;
@@ -532,11 +530,12 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 		spot= node->FirstChildElement("spot");
 		if(spot != NULL){
 			if(strcmp(spot->ValueTStr().c_str(),"spot")==0){
-				spot->QueryFloatAttribute("angle",&spot_angle);
-				spot->QueryFloatAttribute("exponent",&spot_exponent);
+				spot->QueryFloatAttribute("angle",&pLSFlight->angle);
+				spot->QueryFloatAttribute("exponent",&pLSFlight->spotExponent);
 				spot->QueryFloatAttribute("dirx",&directionV[0]);
 				spot->QueryFloatAttribute("diry",&directionV[1]);
 				spot->QueryFloatAttribute("dirz",&directionV[2]);
+				directionV[3]=0;
 			}
 			pLSFlight->isspotLight = true;
 		}
@@ -549,7 +548,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 		// Create
 		plight= new CGFlight(lightsId[counter-1],positionV);
 		// Angle for spotlight
-		if(spot != NULL) plight->setAngle(spot_angle);
+		if(spot != NULL) plight->setAngle(pLSFlight->angle);
 		// Ambient
 		plight->setAmbient(ambientV);
 		// Diffuse
@@ -558,9 +557,8 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 		plight->setSpecular(specularV);
 
 		if(spot != NULL) {
-			glLightf( lightsId[counter-1], GL_SPOT_EXPONENT, spot_exponent);
-			pLSFlight->spotExponent= spot_exponent;
-			glLightf(lightsId[counter-1], GL_SPOT_CUTOFF, spot_angle);
+			glLightf( lightsId[counter-1], GL_SPOT_EXPONENT,pLSFlight->spotExponent);
+			glLightf(lightsId[counter-1], GL_SPOT_CUTOFF, pLSFlight->angle);
 			glLightfv(lightsId[counter-1], GL_SPOT_DIRECTION, directionV);
 		}
 		else{
@@ -582,7 +580,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 			if(specular != NULL)
 				cout << "specular r=" << specularV[0] << " g=" << specularV[1] << " b="<< specularV[2] << " a="<< specularV[4] << endl;
 			if(spot != NULL){
-				cout << "spot angle=" << spot_angle << " exponent=" << spot_exponent;
+				cout << "spot angle=" << pLSFlight->angle << " exponent=" << pLSFlight->spotExponent;
 			    cout << " dirx=" << directionV[0] << " diry=" << directionV[1] << " dirz=" << directionV[2] << endl;
 			}
 			cout << endl;
