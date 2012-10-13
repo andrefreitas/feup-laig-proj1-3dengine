@@ -598,7 +598,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 		// Push back light
 		LSFlight *pLSFlight=new LSFlight;
 		if(spot != NULL) {
-			//glLightf( lightsId[counter-1], GL_SPOT_EXPONENT, spot_exponent);
+			glLightf( lightsId[counter-1], GL_SPOT_EXPONENT, spot_exponent);
 			pLSFlight->spotExponent= spot_exponent;
 		}
 		else{
