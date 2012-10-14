@@ -40,3 +40,5 @@
 	About the transformations, in the getNodes add a new "if" and, by the new attributes, call the correct openGL functions inside
 	the "if" body. 
 	
+===== THE OBJECTS APPEAR DARK, WHY? =====
+	If the angle of the spotlights isn't enough, the light will not reach the objects. The other cause might be the "emissividade" that is 0.
