@@ -133,3 +133,55 @@ float computeNormBetween(LSFvertex p1,LSFvertex p2){
 	vectorA.z=p2.z-p1.z;
 	return sqrt(vectorA.x*vectorA.x + vectorA.y*vectorA.y + vectorA.z*vectorA.z);
 }
+
+float computeTriangleHeight(LSFvertex p1,LSFvertex p2,LSFvertex p3){
+	// Explanation: the algorithm forces the base to be 1. But, if the height exceeds 1, it reduces the others sides.
+		vector<LSFvertex> vertexList;
+		vertexList.push_back(p1);
+		vertexList.push_back(p2);
+		vertexList.push_back(p3);
+		LSFvertex vectorA; float normA;
+		// Compute A
+		vectorA.x=vertexList[1].x-vertexList[0].x;
+		vectorA.y=vertexList[1].y-vertexList[0].y;
+		vectorA.z=vertexList[1].z-vertexList[0].z;
+		normA=sqrt(vectorA.x*vectorA.x + vectorA.y*vectorA.y + vectorA.z*vectorA.z);
+
+		LSFvertex vectorB; //float normB;
+		// Compute B
+		vectorB.x=vertexList[2].x-vertexList[1].x;
+		vectorB.y=vertexList[2].y-vertexList[1].y;
+		vectorB.z=vertexList[2].z-vertexList[1].z;
+		//normB=sqrt(vectorB.x*vectorB.x + vectorB.y*vectorB.y + vectorB.z*vectorB.z);
+
+		LSFvertex vectorC; float normC;
+		// Compute C
+		vectorC.x=vertexList[2].x-vertexList[0].x;
+		vectorC.y=vertexList[2].y-vertexList[0].y;
+		vectorC.z=vertexList[2].z-vertexList[0].z;
+		normC=sqrt(vectorC.x*vectorC.x + vectorC.y*vectorC.y + vectorC.z*vectorC.z);
+
+		// Compute scale factor(base is 1)
+		//float sideA;
+		//float sideB;
+		float sideC;
+		float scale=1/(float)normA;
+		//sideA=1.0;
+		//sideB=scale*normB;
+		sideC=scale*normC;
+
+		// UV
+		LSFvertex uv1(0,0,0);
+		LSFvertex uv2(1,0,0);
+		LSFvertex uv3(0,0,0); // To compute bellow
+
+		// Compute the angle between vector A and C
+		//cos(t) = (v.w) / (|v|.|w|)
+
+		float cosT=(vectorA.x*vectorC.x + vectorA.y*vectorC.y + vectorA.z*vectorC.z)/(normA*normC);
+		float angle=acos(cosT);
+
+		// soo the uv3 coordinates is
+		float height=sideC*sin(angle);
+		return height;
+}

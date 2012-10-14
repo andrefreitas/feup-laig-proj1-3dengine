@@ -463,6 +463,7 @@ void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
 	TiXmlElement *node=appearancesElement->FirstChildElement();
 	int counter = 0;
 	float emissive_vec[4], ambient_vec[4], diffuse_vec[4], specular_vec[4];
+
 	float shininess_value, texture_length_s, texture_length_t;
 	if(DEBUGMODE) cout << "\n--- Aparencias  ---" << endl;
 	// Loop trough appearances

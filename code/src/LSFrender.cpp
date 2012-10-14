@@ -17,9 +17,9 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 	if(nodes[rootNode]->appearance=="inherit") currentAppearance=appearancesStack.top();
 	else currentAppearance=appearances[nodes[rootNode]->appearance];
 	appearancesStack.push(currentAppearance);
+	glMaterialfv(GL_EMISSION,GL_FRONT_AND_BACK,currentAppearance->emissive);
 	currentAppearance->appearance->apply();
 	// Emissive
-	glMaterialfv(GL_EMISSION,GL_FRONT_AND_BACK,currentAppearance->emissive);
 	// Compute UV coords by ST length
 
 	// Process the primitives
@@ -45,13 +45,24 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 			case triangle:{
 				glNormal3f(primitive.normal.x/primitive.normal.x,primitive.normal.y/primitive.normal.y,primitive.normal.z/primitive.normal.z);
 				glBegin(GL_TRIANGLES);
+
+					// Compute the height and width of the triangle
+					LSFvertex p1,p2,p3;
+					p1=LSFvertex(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
+					p2=LSFvertex(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
+					p3=LSFvertex(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
+					float width=computeNormBetween(p1,p2);
+					float sFactor=(width/currentAppearance->length_s);
+					float height=computeTriangleHeight(p1,p2,p3);
+					float tFactor=(height/currentAppearance->length_t);
+					// -->
 					glTexCoord2d(0,0); // don't need s and t in the first coord
 					glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
 
-					glTexCoord2d(primitive.uvCoords[1].x/(float)currentAppearance->length_s,primitive.uvCoords[1].y/(float)currentAppearance->length_t);
+					glTexCoord2d(primitive.uvCoords[1].x*sFactor,primitive.uvCoords[1].y*tFactor);
 					glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
 
-					glTexCoord2d(primitive.uvCoords[2].x/(float)currentAppearance->length_s,primitive.uvCoords[2].y/(float)currentAppearance->length_t);
+					glTexCoord2d(primitive.uvCoords[2].x*sFactor,primitive.uvCoords[2].y*tFactor);
 					glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
 				glEnd();
 			}break;

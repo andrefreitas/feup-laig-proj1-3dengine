@@ -79,4 +79,5 @@ LSFvertex computeNormalNewel(vector<LSFvertex> vertexList);
 vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList);
 
 float computeNormBetween(LSFvertex p1,LSFvertex p2);
+float computeTriangleHeight(LSFvertex p1,LSFvertex p2,LSFvertex p3);
 #endif /* LSFVERTEX_H_ */
