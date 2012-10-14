@@ -16,6 +16,7 @@ void exit_(string str, int error = 0){
 	cout << "   " << str; if( error != 0) cout << " Row " << error; cout <<  endl;
 	cout << ">>                                                                     <<" << endl;
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+	getchar(); // wait feedback
 	exit(-1);
 }
 
