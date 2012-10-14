@@ -30,10 +30,15 @@ void LSFinterface::initGUI()
 	//para numerar os elementos da interface
 	int i = 0;
 
+	bool divided = false;
 	map<string, LSFlight*>::iterator itL;
 	for(itL = lights->begin(); itL != lights->end(); itL++, i++){
 		addButtonToPanel(lightsPanel,(char*)(*itL).second->id.c_str(),i);
 		(*itL).second->lightNum = i;
+		if(i==3 && !divided){
+			addColumnToPanel(lightsPanel);
+			divided = true;
+		}
 		if(DEBUGMODE) cout << *(&(*itL).second->lightNum) << endl;
 	}
 
