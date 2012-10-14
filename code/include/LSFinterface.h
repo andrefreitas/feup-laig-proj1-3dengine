@@ -8,7 +8,9 @@
 
 #include "CGFinterface.h"
 #include "LSFscene.h"
-
+/**
+ * LSFinterface - a class that implements a CGFinterface
+ */
 class LSFinterface: public CGFinterface
 {
 	private:
@@ -16,19 +18,15 @@ class LSFinterface: public CGFinterface
 		struct globalsData *globals;
 		map<string,LSFlight*> *lights;
 		map<string, LSFcamera*> *cameras;
-
 		int initialCamera;
-
 		int camerasGroup;
 		int polygonalMode;
-
 		GLenum face;
 		GLenum mode;
 
 	public:
 		LSFinterface(LSFscene *scene);
 		~LSFinterface();
-
 		virtual void initGUI();
 		virtual void processGUI(GLUI_Control *ctrl);
 

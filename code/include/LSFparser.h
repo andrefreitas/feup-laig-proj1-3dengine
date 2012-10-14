@@ -5,7 +5,6 @@
  ****************************************************************************/
 #ifndef LSFPARSER_H
 #define LSFPARSER_H
-
 #define DEBUGMODE 0
 
 #include "tinyxml.h"
@@ -15,13 +14,19 @@
 #include "CGFlight.h"
 
 using namespace std;
-
+/**
+ * globalsData is a struct that holds the globals configuration variables.
+ */
 struct globalsData{
 	float background[4];
 	const char *polygon_mode, *polygon_shading;
 	const char *culling__frontfaceorder, *culling_cullface; bool culling_enabled;
 };
 
+/**
+ * LSFparser: is the core class of the project. It parses the LSF scenes and put in know data structures,
+ * like maps of LSF objects.
+ */
 class LSFparser{
 	private:
 		TiXmlDocument *lsfFile;
@@ -31,9 +36,7 @@ class LSFparser{
 		TiXmlElement* graphElement;
 		TiXmlElement* appearancesElement;
 		TiXmlElement* lightingsElement;
-
 		int queryResult;
-
 	public:
 		LSFparser(char* a);
 		void getGlobals(struct globalsData *globals);
@@ -41,10 +44,5 @@ class LSFparser{
 		void getNodes(map<string,LSFnode*> &nodes,string &rootNode);
 		void getAppearances(map<string,LSFappearance*> &appearances);
 		void getLights(map<string,LSFlight*> &lights, bool &enabled, bool &local, bool &doublesided,float *ambient);
-
-
 };
-
-
-
 #endif

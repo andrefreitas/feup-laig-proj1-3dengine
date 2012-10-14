@@ -5,12 +5,16 @@
  ****************************************************************************/
 #ifndef LSFSCENE_H
 #define LSFSCENE_H
+
 #include "LSFParser.h"
 #include "CGFscene.h"
 #include "CGFappearance.h"
 #include <vector>
 #include <map>
 
+/**
+ * LSFscene defines the scene parsed from the LSF file.
+ */
 class LSFscene : public CGFscene
 {
 	char* inputScene;
@@ -32,7 +36,7 @@ public:
 	LSFscene();
 	LSFscene(char* argv[]);
 	~LSFscene();
-
+	// --
 	void init();
 	void display();
 	virtual void initCameras();
@@ -41,7 +45,7 @@ public:
 	void setGlobals();
 	void setPolygonMode(unsigned int, unsigned int);
 	void positionView(string activeCamera, int axis, float newPosition);
-
+	// --
 	struct globalsData *getGlobals();
 	map<string, LSFlight*> * getLights();
 	map<string, LSFcamera*> * getCameras();

@@ -32,7 +32,7 @@
 			<to x="12.5" y="0.0" z="12" />
 		</perspective>
 		
-		<ortho id="OrtoCamera" near="-19.0" far="1" left="-1" right="22" top="10" bottom="-2" />
+		<ortho id="OrtoCamera" near="-19.0" far="1" left="-1" right="22" top="15" bottom="-2" />
 	</cameras>
 	
 	
