@@ -126,3 +126,10 @@ vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList){
 	return uvCoords;
 }
 
+float computeNormBetween(LSFvertex p1,LSFvertex p2){
+	LSFvertex vectorA;
+	vectorA.x=p2.x-p1.x;
+	vectorA.y=p2.y-p1.y;
+	vectorA.z=p2.z-p1.z;
+	return sqrt(vectorA.x*vectorA.x + vectorA.y*vectorA.y + vectorA.z*vectorA.z);
+}

@@ -21,9 +21,7 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 	// Emissive
 	glMaterialfv(GL_EMISSION,GL_FRONT_AND_BACK,currentAppearance->emissive);
 	// Compute UV coords by ST length
-	float u,v;
-	u=1/(float)currentAppearance->length_s;
-	v=1/(float)currentAppearance->length_t;
+
 	// Process the primitives
 	for (int unsigned i=0; i<nodes[rootNode]->childPrimitives.size();i++){
 
@@ -32,6 +30,11 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 			case rectangle:{
 				glNormal3f(0,0,1);
 				glBegin(GL_QUADS);
+					float width=primitive.attr["x2"]-primitive.attr["x1"];
+					float height=primitive.attr["y2"]-primitive.attr["y1"];
+					float u,v;
+					u=width/(float)currentAppearance->length_s;
+					v=height/(float)currentAppearance->length_t;
 					glTexCoord2d(0.0,0.0); glVertex3d(primitive.attr["x1"],primitive.attr["y1"],0);
 					glTexCoord2d(u,0.0); glVertex3d(primitive.attr["x2"],primitive.attr["y1"],0);
 					glTexCoord2d(u,v); glVertex3d(primitive.attr["x2"],primitive.attr["y2"],0);
@@ -44,8 +47,10 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 				glBegin(GL_TRIANGLES);
 					glTexCoord2d(0,0); // don't need s and t in the first coord
 					glVertex3d(primitive.attr["x1"],primitive.attr["y1"],primitive.attr["z1"]);
+
 					glTexCoord2d(primitive.uvCoords[1].x/(float)currentAppearance->length_s,primitive.uvCoords[1].y/(float)currentAppearance->length_t);
 					glVertex3d(primitive.attr["x2"],primitive.attr["y2"],primitive.attr["z2"]);
+
 					glTexCoord2d(primitive.uvCoords[2].x/(float)currentAppearance->length_s,primitive.uvCoords[2].y/(float)currentAppearance->length_t);
 					glVertex3d(primitive.attr["x3"],primitive.attr["y3"],primitive.attr["z3"]);
 				glEnd();

@@ -77,4 +77,6 @@ class mySemiRect {
 LSFvertex computeNormalNewel(vector<LSFvertex> vertexList);
 
 vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList);
+
+float computeNormBetween(LSFvertex p1,LSFvertex p2);
 #endif /* LSFVERTEX_H_ */

@@ -738,7 +738,7 @@ void LSFparser::getLights(map<string,LSFlight*>&lights, bool &enabled, bool &loc
 				queryResult |= spot->QueryFloatAttribute("dirx",&directionV[0]);
 				queryResult |= spot->QueryFloatAttribute("diry",&directionV[1]);
 				queryResult |= spot->QueryFloatAttribute("dirz",&directionV[2]);
-				directionV[3]=0;
+				directionV[3]=1;
 				if(queryResult != TIXML_SUCCESS)
 					exit_("There is an error in spot values at light " +(string)lbuffer+ ".");
 			}
