@@ -52,16 +52,6 @@ void LSFcamera::translate(int axis, float value)
 }
 
 void LSFcamera::applyView(){
-	float aspectRatio = (CGFapplication::height/(float)CGFapplication::width);
-	float xScale = 1;
-	float yScale = 1;
-
-	if(aspectRatio < 1)
-		xScale = aspectRatio;
-	else if(aspectRatio > 1)
-		yScale = aspectRatio;
-
-
 	if(view == "perspective")
 		gluLookAt(fromX, fromY, fromZ, toX, toY, toZ, 0, 1, 1);
 

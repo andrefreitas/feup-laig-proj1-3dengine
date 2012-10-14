@@ -20,11 +20,11 @@ void LSFinterface::initGUI()
 	cameras = scene->getCameras();
 
 
-	GLUI_Panel *lightsPanel = addPanel("Lights", 1);
+	GLUI_Panel *lightsPanel = addPanel((char*)"Lights", 1);
 	addColumn();
-	GLUI_Panel *camerasPanel = addPanel("Cameras", 1);
+	GLUI_Panel *camerasPanel = addPanel((char*)"Cameras", 1);
 	addColumn();
-	GLUI_Panel *polygonalModePanel = addPanel("Polygonal Mode", 1);
+	GLUI_Panel *polygonalModePanel = addPanel((char*)"Polygonal Mode", 1);
 	addColumn();
 
 	//para numerar os elementos da interface
@@ -56,9 +56,9 @@ void LSFinterface::initGUI()
 	camerasGroup = initialCamera;
 
 	GLUI_RadioGroup* polygonalRadioGroup = addRadioGroupToPanel(polygonalModePanel, &polygonalMode, lights->size()+1);
-	addRadioButtonToGroup(polygonalRadioGroup, "fill");
-	addRadioButtonToGroup(polygonalRadioGroup, "lines");
-	addRadioButtonToGroup(polygonalRadioGroup, "points");
+	addRadioButtonToGroup(polygonalRadioGroup,(char*) "fill");
+	addRadioButtonToGroup(polygonalRadioGroup, (char*)"lines");
+	addRadioButtonToGroup(polygonalRadioGroup, (char*)"points");
 
 	if(strcmp(globals->polygon_mode, "fill") == 0){
 		mode = GL_FILL; polygonalMode = 0;
@@ -92,7 +92,7 @@ void LSFinterface::processGUI(GLUI_Control *ctrl)
 		}
 	}
 
-	if(ctrl->user_id == lights->size()+1)
+	if((unsigned int)ctrl->user_id == lights->size()+1)
 		switch(polygonalMode){
 		case 0: scene->setPolygonMode(face, mode=GL_FILL); break;
 		case 1: scene->setPolygonMode(face, mode=GL_LINE); break;

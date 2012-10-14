@@ -1,5 +1,10 @@
-#ifndef TPSCENE_H
-#define TPSCENE_H
+/****************************************************************************
+ * Author:      - André Freitas, p.andrefreitas@gmail.com
+ * Author:      - Paulo Araújo, paulojmaraujo@gmail.com
+ * Copyright:   - 14/10/2012, LAIG, FEUP
+ ****************************************************************************/
+#ifndef LSFSCENE_H
+#define LSFSCENE_H
 #include "LSFParser.h"
 #include "CGFscene.h"
 #include "CGFappearance.h"

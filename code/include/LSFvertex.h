@@ -1,3 +1,8 @@
+/****************************************************************************
+ * Author:      - André Freitas, p.andrefreitas@gmail.com
+ * Author:      - Paulo Araújo, paulojmaraujo@gmail.com
+ * Copyright:   - 14/10/2012, LAIG, FEUP
+ ****************************************************************************/
 #ifndef LSFVERTEX_H_
 #define LSFVERTEX_H_
 #include <vector>

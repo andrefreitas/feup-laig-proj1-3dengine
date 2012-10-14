@@ -1,3 +1,8 @@
+/****************************************************************************
+ * Author:      - André Freitas, p.andrefreitas@gmail.com
+ * Author:      - Paulo Araújo, paulojmaraujo@gmail.com
+ * Copyright:   - 14/10/2012, LAIG, FEUP
+ ****************************************************************************/
 #ifndef LSFINTERFACE_H_
 #define LSFINTERFACE_H_
 
