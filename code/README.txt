@@ -7,6 +7,9 @@
 	André Freitas - p.andrefreitas@gmail.com
 	Paulo Araújo - paulojmaraujo@gmail.com
 
+===== HOW TO COMPILE? =====
+	Import the Project in the Eclipse or use the Makefile.
+
 ===== WHAT THE PARSER ACCEPTS? =====
 	The parser accepts primitives like Triangle, Rectangle, Cylinder, Torus and Sphere. Regarding
 	about the Lights, it accepts until 8 Omnilights or Spotlights. About the cameras, accepts Ortho
