@@ -218,11 +218,15 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 		glLoadIdentity();
 		stack<Transform> transfs;
 		// --->
+		int existingTransforms = 0;
+		int existingValidTransforms = 0;
 		while(transform){
+			existingTransforms++;
 			float x,y,z,angle;
 			char axis;
 			const char* transVal=transform->Value();
 			if(strcmp(transVal,"translate")==0){
+				existingValidTransforms++;
 				queryResult = transform->QueryFloatAttribute("x",&x);
 				queryResult |= transform->QueryFloatAttribute("y",&y);
 				queryResult |= transform->QueryFloatAttribute("z",&z);
@@ -235,6 +239,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 
 			}
 			else if (strcmp(transVal,"rotate")==0){
+				existingValidTransforms++;
 				if(transform->QueryFloatAttribute("angle",&angle) != TIXML_SUCCESS)
 					exit_("There is an error in rotate values at node " +(string)pnode->id+ ".");
 				axis = *transform->Attribute("axis");
@@ -250,6 +255,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 
 			}
 			else if (strcmp(transVal,"scale")==0){
+				existingValidTransforms++;
 				queryResult = transform->QueryFloatAttribute("x",&x);
 				queryResult |= transform->QueryFloatAttribute("y",&y);
 				queryResult |= transform->QueryFloatAttribute("z",&z);
@@ -264,6 +270,12 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 			// -->
 			transform=transform->NextSiblingElement();
 		}
+
+		char tbuffer[33];
+		itoa((existingTransforms - existingValidTransforms), tbuffer, 30);
+		if(existingTransforms != existingValidTransforms)
+			exit_("Exists " +(string)tbuffer+ " invalid transform(s) at node " +(string)pnode->id+ ".");
+
 		glGetFloatv(GL_MODELVIEW_MATRIX,pnode->transformMatrix);
 		glPopMatrix();
 
@@ -426,7 +438,7 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 		char buffer [33];
 		itoa((existingChilds - existingValidChilds), buffer, 30);
 		if(existingChilds != existingValidChilds)
-			exit_("Exists " +(string)buffer+ " invalid childs at node " +(string)pnode->id+ ".");
+			exit_("Exists " +(string)buffer+ " invalid child(s) at node " +(string)pnode->id+ ".");
 
 		// -->
 		nodes[(string)pnode->id]=pnode; // Add this node
@@ -453,59 +465,83 @@ void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
 	float shininess_value, texture_length_s, texture_length_t;
 	if(DEBUGMODE) cout << "\n--- Aparencias  ---" << endl;
 	// Loop trough appearances
+
 	while(node){
 		counter++;
+
+		int existingValidAppearanceElements = 0;
 
 		TiXmlElement *emissive, *ambient, *diffuse, *specular, *shininess, *texture;
 
 		emissive = node->FirstChildElement("emissive");
 		if(emissive != NULL)
 			if(strcmp(emissive->ValueTStr().c_str(),"emissive")==0){
-				emissive->QueryFloatAttribute("r",&emissive_vec[0]);
-				emissive->QueryFloatAttribute("g",&emissive_vec[1]);
-				emissive->QueryFloatAttribute("b",&emissive_vec[2]);
-				emissive->QueryFloatAttribute("a",&emissive_vec[3]);
+				existingValidAppearanceElements++;
+				queryResult = emissive->QueryFloatAttribute("r",&emissive_vec[0]);
+				queryResult |= emissive->QueryFloatAttribute("g",&emissive_vec[1]);
+				queryResult |= emissive->QueryFloatAttribute("b",&emissive_vec[2]);
+				queryResult |= emissive->QueryFloatAttribute("a",&emissive_vec[3]);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in emissive values at appearance " +(string)node->Attribute("id")+ ".");
 			}
 
 		ambient = node->FirstChildElement("ambient");
 		if(ambient != NULL)
 			if(strcmp(ambient->ValueTStr().c_str(), "ambient")==0){
-				ambient->QueryFloatAttribute("r",&ambient_vec[0]);
-				ambient->QueryFloatAttribute("g",&ambient_vec[1]);
-				ambient->QueryFloatAttribute("b",&ambient_vec[2]);
-				ambient->QueryFloatAttribute("a",&ambient_vec[3]);
+				existingValidAppearanceElements++;
+				queryResult = ambient->QueryFloatAttribute("r",&ambient_vec[0]);
+				queryResult |= ambient->QueryFloatAttribute("g",&ambient_vec[1]);
+				queryResult |= ambient->QueryFloatAttribute("b",&ambient_vec[2]);
+				queryResult |= ambient->QueryFloatAttribute("a",&ambient_vec[3]);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in ambient values at appearance " +(string)node->Attribute("id")+ ".");
 			}
 
 		diffuse = node->FirstChildElement("diffuse");
 		if(diffuse != NULL)
 			if(strcmp(diffuse->ValueTStr().c_str(), "diffuse")==0){
-				diffuse->QueryFloatAttribute("r",&diffuse_vec[0]);
-				diffuse->QueryFloatAttribute("g",&diffuse_vec[1]);
-				diffuse->QueryFloatAttribute("b",&diffuse_vec[2]);
-				diffuse->QueryFloatAttribute("a",&diffuse_vec[3]);
+				existingValidAppearanceElements++;
+				queryResult = diffuse->QueryFloatAttribute("r",&diffuse_vec[0]);
+				queryResult |= diffuse->QueryFloatAttribute("g",&diffuse_vec[1]);
+				queryResult |= diffuse->QueryFloatAttribute("b",&diffuse_vec[2]);
+				queryResult |= diffuse->QueryFloatAttribute("a",&diffuse_vec[3]);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in diffuse values at appearance " +(string)node->Attribute("id")+ ".");
 			}
 
 		specular = node->FirstChildElement("specular");
 		if(specular != NULL)
 			if(strcmp(specular->ValueTStr().c_str(), "specular")==0){
-				specular->QueryFloatAttribute("r",&specular_vec[0]);
-				specular->QueryFloatAttribute("g",&specular_vec[1]);
-				specular->QueryFloatAttribute("b",&specular_vec[2]);
-				specular->QueryFloatAttribute("a",&specular_vec[3]);
+				existingValidAppearanceElements++;
+				queryResult = specular->QueryFloatAttribute("r",&specular_vec[0]);
+				queryResult |= specular->QueryFloatAttribute("g",&specular_vec[1]);
+				queryResult |= specular->QueryFloatAttribute("b",&specular_vec[2]);
+				queryResult |= specular->QueryFloatAttribute("a",&specular_vec[3]);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in specular values at appearance " +(string)node->Attribute("id")+ ".");
 			}
 
 		shininess = node->FirstChildElement("shininess");
 		if(shininess != NULL)
 			if(strcmp(shininess->ValueTStr().c_str(), "shininess")==0){
-				shininess->QueryFloatAttribute("value", &shininess_value);
+				existingValidAppearanceElements++;
+				if(shininess->QueryFloatAttribute("value", &shininess_value) != TIXML_SUCCESS)
+					exit_("There is an error in shininess value at appearance " +(string)node->Attribute("id")+ ".");
 			}
 
+		char abuffer [33];
+		itoa((5 - existingValidAppearanceElements), abuffer, 30);
+		if(5 != existingValidAppearanceElements)
+			exit_("Exists " +(string)abuffer+ " invalid appearance element(s) at node " +(string)node->Attribute("id")+ ".");
 
 		texture = node->FirstChildElement("texture");
 		if(texture != NULL)
 			if(strcmp(texture->ValueTStr().c_str(), "texture")==0){
-				texture->QueryFloatAttribute("length_s", &texture_length_s);
-				texture->QueryFloatAttribute("length_t", &texture_length_t);
+				existingValidAppearanceElements++;
+				queryResult = texture->QueryFloatAttribute("length_s", &texture_length_s);
+				queryResult |= texture->QueryFloatAttribute("length_t", &texture_length_t);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in texture values at appearance " +(string)node->Attribute("id")+ ".");
 			}
 
 		if(DEBUGMODE){
@@ -534,13 +570,11 @@ void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
 		pappearance->setSpecular(specular_vec);
 		pappearance->setShininess(shininess_value);
 		if(texture != NULL){
-			string textureFile;
-			textureFile.assign(texture->Attribute("file"));
 			CGFtexture *text = new CGFtexture(texture->Attribute("file"));
 			text->setSize(texture_length_s, texture_length_t);
 			pappearance->setTexture(text);
 			pappearance->setTextureWrap(GL_REPEAT,GL_REPEAT);
-			if(DEBUGMODE) cout << "\nSettexture: " << textureFile << endl;
+			if(DEBUGMODE) cout << "\nSettexture: " << texture->Attribute("file") << endl;
 		}
 		// -->
 		string auxId;
