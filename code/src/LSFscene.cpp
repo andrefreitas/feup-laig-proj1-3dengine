@@ -64,7 +64,6 @@ void LSFscene::init()
 	if(lights_enabled) glEnable(GL_LIGHTING);
 	if(lights_doublesided) glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	if(lights_local) glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 	// Get the nodes
 	sceneParser->getNodes(nodes,rootNode);
 	// Get the cameras info
@@ -128,7 +127,7 @@ void LSFscene::display()
 {
 
 	// ---- BEGIN Background, camera and axis setup
-	
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 	// Clear image and depth buffer everytime we update the scene
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
