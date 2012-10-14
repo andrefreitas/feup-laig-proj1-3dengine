@@ -108,13 +108,6 @@ vector<LSFvertex> computeTriangleUV(vector<LSFvertex> vertexList){
 	float height=sideC*sin(angle);
 	float semiBase=sideC*cos(angle);
 
-	if(height>1){
-		float scaleFactor=1/(float)height;
-		height=1;
-		semiBase=scaleFactor*semiBase;
-		uv2.x=scaleFactor; // The triangle base was 1 unit before
-
-	}
 	uv3.x=semiBase;
 	uv3.y=height;
 

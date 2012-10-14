@@ -199,7 +199,7 @@
 			<diffuse r="1.0" g="1.0" b="1.0" a="1" />
 			<specular r="1.0" g="1.0" b="1.0" a="1" />
 			<shininess value="0.1" />
-			<texture file="pizzaSlice.jpg" length_s="1.5" length_t="1.5" />
+			<texture file="pizzaSlice.jpg" length_s="0.2" length_t="0.2" />
 		</appearance>
 		
 	   <!-- plate appearance -->

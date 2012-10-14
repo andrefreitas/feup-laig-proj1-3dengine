@@ -86,7 +86,7 @@
             <shininess value="60" />
 
             <!-- informacao opcional de textura (ver nota no enunciado sobre os parametros length_... -->
-            <texture file="wweMagazine.jpg" length_s="5" length_t="3" /> 
+            <texture file="wweMagazine.jpg" length_s="5.0" length_t="2" /> 
 		</appearance>
 
     </appearances>
@@ -99,7 +99,7 @@
             </transforms>
             <appearanceref id="triangle" />              
             <children>
-				<triangle x1="0.0" y1="0.0" z1="0.0" x2="5.0" y2="0.0" z2="0.0" x3="2.5" y3="0.0" z3="-9.0" /> 
+				<triangle x1="0.0" y1="0.0" z1="0.0" x2="5.0" y2="0.0" z2="0.0" x3="0" y3="0.0" z3="-8.0" /> 
 			</children>
 		</node>
 		
