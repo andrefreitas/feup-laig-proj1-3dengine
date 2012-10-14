@@ -5,6 +5,7 @@
 #include "CGFappearance.h"
 #include <vector>
 #include <map>
+
 class LSFscene : public CGFscene
 {
 	char* inputScene;

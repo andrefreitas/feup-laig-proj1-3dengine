@@ -1,15 +1,18 @@
 #ifndef LSFPARSER_H
 #define LSFPARSER_H
-#define DEBUGMODE 1
+
+#define DEBUGMODE 0
+
 #include "tinyxml.h"
 #include <vector>
 #include "CGFcamera.h"
 #include "LSFobjects.h"
 #include "CGFlight.h"
+
 using namespace std;
 
 struct globalsData{
-	float background_r,background_g,background_b,background_a;
+	float background[4];
 	const char *polygon_mode, *polygon_shading;
 	const char *culling__frontfaceorder, *culling_cullface; bool culling_enabled;
 };
@@ -23,6 +26,8 @@ class LSFparser{
 		TiXmlElement* graphElement;
 		TiXmlElement* appearancesElement;
 		TiXmlElement* lightingsElement;
+
+		int queryResult;
 
 	public:
 		LSFparser(char* a);

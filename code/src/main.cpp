@@ -4,9 +4,11 @@
 #include "LSFscene.h"
 #include "LSFinterface.h"
 #include "LSFobjects.h"
+
 using std::cout;
 using std::exception;
 using namespace std;
+
 int main(int argc, char* argv[]) {
 
 	CGFapplication app = CGFapplication();

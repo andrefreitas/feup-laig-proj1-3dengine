@@ -197,7 +197,7 @@ void LSFscene::setGlobals(){
 	sceneParser->getGlobals(&globals);
 
 	// Set Background
-	glClearColor(globals.background_r, globals.background_g, globals.background_b, globals.background_a);
+	glClearColor(globals.background[0], globals.background[1], globals.background[2], globals.background[3]);
 
 	// Set polygon mode and shading
 	GLenum  face=GL_FRONT_AND_BACK, mode=GL_FILL;

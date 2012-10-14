@@ -7,53 +7,88 @@
 #include <vector>
 #include "CGFlight.h"
 #include "LSFvertex.h"
+#include <iomanip>
+
+void exit_(string str, int error = 0){
+	cout << "\n\n\n" << endl;
+	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   ERROR   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+	cout << ">>                                                                     <<" << endl;
+	cout << "   " << str; if( error != 0) cout << " Row " << error; cout <<  endl;
+	cout << ">>                                                                     <<" << endl;
+	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+	exit(-1);
+}
+
 LSFparser::LSFparser(char* a){
 	// Load the File
 	if(DEBUGMODE) cout << "lsfParser(" << a <<");\n";
 	lsfFile= new TiXmlDocument(a);
 
-	if(DEBUGMODE){
-		cout << "1- XML open: ";
-		(lsfFile->LoadFile())? cout << "OK": cout << "ERROR" << endl;
-	}
+
+	cout << "XML open: ";
+	(lsfFile->LoadFile())? cout << "OK": cout << "ERROR";
+	cout << endl;
+
 
 	if(lsfFile->LoadFile()){
 		// Fetch main elements sections
-		lsfElement = lsfFile->FirstChildElement( "lsf" );
-		globalsElement = lsfElement->FirstChildElement( "globals" );
-		camerasElement = lsfElement->FirstChildElement( "cameras" );
-		graphElement = lsfElement->FirstChildElement( "graph" );
-		appearancesElement = lsfElement->FirstChildElement( "appearances" );
-		lightingsElement = lsfElement->FirstChildElement( "lighting" );
+		if((lsfElement = lsfFile->FirstChildElement( "lsf" )) == NULL)
+			exit_("Tag <lsf> is missing or misspelled.");
+
+		if((globalsElement = lsfElement->FirstChildElement( "globals" )) == NULL)
+			exit_("Tag <globals> is missing or misspelled.");
+
+		if((camerasElement = lsfElement->FirstChildElement( "cameras" )) == NULL)
+			exit_("Tag <cameras> is missing or misspelled.");
+
+		if((graphElement = lsfElement->FirstChildElement( "graph" )) == NULL)
+			exit_("Tag <graph> is missing or misspelled.");
+
+		if((appearancesElement = lsfElement->FirstChildElement( "appearances" )) == NULL)
+			exit_("Tag <appearances> is missing or misspelled.");
+
+		if((lightingsElement = lsfElement->FirstChildElement( "lighting" )) == NULL)
+			exit_("Tag <lighting> is missing or misspelled.");
 	}
 	else
-		exit(1);
-
+		exit_(lsfFile->ErrorDesc(), lsfFile->ErrorRow());
 	// Parse
 }
 
 void LSFparser::getGlobals(struct globalsData *globals){
 	// Background:
-	TiXmlElement *background=globalsElement->FirstChildElement( "background" );
-	background->QueryFloatAttribute("r",&globals->background_r);
-	background->QueryFloatAttribute("g",&globals->background_g);
-	background->QueryFloatAttribute("b",&globals->background_b);
-	background->QueryFloatAttribute("a",&globals->background_a);
+	TiXmlElement *background;
+	if((background = globalsElement->FirstChildElement( "background" )) == NULL)
+		exit_("Tag <background> is missing or misspelled.");
+	queryResult = background->QueryFloatAttribute("r",&globals->background[0]);
+	queryResult |= background->QueryFloatAttribute("g",&globals->background[1]);
+	queryResult |= background->QueryFloatAttribute("b",&globals->background[2]);
+	queryResult |= background->QueryFloatAttribute("a",&globals->background[3]);
+	if(queryResult != TIXML_SUCCESS) exit_("There is an error in the background values.");
 
 	// Polygon
-	TiXmlElement *polygon=globalsElement->FirstChildElement( "polygon" );
-	globals->polygon_mode=polygon->Attribute("mode");
-	globals->polygon_shading=polygon->Attribute("shading");
+	TiXmlElement *polygon;
+	if((polygon = globalsElement->FirstChildElement( "polygon" )) == NULL)
+		exit_("Tag <polygon> is missing or misspelled.");
+	if((globals->polygon_mode=polygon->Attribute("mode")) == NULL)
+		exit_("polygon mode is missing or misspelled.");
+	if((globals->polygon_shading=polygon->Attribute("shading")) == NULL)
+		exit_("polygon shading is missing or misspelled.");
 
 	// Culling
-	TiXmlElement *culling=globalsElement->FirstChildElement( "culling" );
-	globals->culling__frontfaceorder=culling->Attribute("frontfaceorder");
-	globals->culling_cullface=culling->Attribute("cullface");
-	culling->QueryBoolAttribute("enabled",&globals->culling_enabled);
+	TiXmlElement *culling;
+	if((culling = globalsElement->FirstChildElement( "culling" )) == NULL)
+		exit_("Tag <culling> is missing or misspelled.");
+	if((globals->culling__frontfaceorder=culling->Attribute("frontfaceorder")) == NULL)
+		exit_("culling frontfaceorder is missing or misspelled.");
+	if((globals->culling_cullface=culling->Attribute("cullface")) == NULL)
+		exit_("culling cullface is missing or misspelled.");
+	if((culling->QueryBoolAttribute("enabled",&globals->culling_enabled)) != TIXML_SUCCESS)
+		exit_("culling enabled is missing or misspelled.");
 
 	if(DEBUGMODE){
 		cout << "\n--- Globals---\n";
-		cout << "\tbackground: " <<globals->background_r << ' ' << globals->background_g << ' ' << globals->background_b << ' ' << globals->background_a << endl;
+		cout << "\tbackground: " <<globals->background[0] << ' ' << globals->background[1] << ' ' << globals->background[2] << ' ' << globals->background[3] << endl;
 		cout << "\tpolygon: " <<globals->polygon_mode << ' '<< globals->polygon_shading << endl;
 		cout << "\tculling: " <<globals->culling__frontfaceorder << ' '<< globals->culling_cullface <<' ' << globals->culling_enabled <<  endl;
 	}
@@ -63,24 +98,34 @@ void LSFparser::getCameras(map<string, LSFcamera*> &cameras){
 	TiXmlElement *node=camerasElement->FirstChildElement();
 	int counter=0;
 	const char *initial;
-	initial=camerasElement->Attribute("initial");
+	if(camerasElement->Attribute("initial"))
+		initial=camerasElement->Attribute("initial");
+	else
+		exit_("camera initial attribute is missing or misspelled.");
 	if(DEBUGMODE) cout << "\n--- Cameras: " << initial << " ---";
 	// Loop trough cameras
 	while(node){
 		counter++;
+
+		if((string)node->Value() != "perspective" && (string)node->Value() != "ortho")
+			exit_("Tag <" +(string)node->Value()+ "> not valid");
 
 		LSFcamera *camera = new LSFcamera();
 		camera->view.assign(node->Value());
 
 		// -->
 		if(strcmp(node->Value(), "ortho")==0){
-			camera->id=node->Attribute("id");
-			node->QueryFloatAttribute("near",&camera->_near);
-			node->QueryFloatAttribute("far",&camera->_far);
-			node->QueryFloatAttribute("left",&camera->left);
-			node->QueryFloatAttribute("right",&camera->right);
-			node->QueryFloatAttribute("top",&camera->top);
-			node->QueryFloatAttribute("bottom",&camera->bottom);
+			if(node->Attribute("id"))
+				camera->id=node->Attribute("id");
+			if(camera->id.empty())
+				exit_("camera id attribut is missing or misspelled.");
+			queryResult = node->QueryFloatAttribute("near",&camera->_near);
+			queryResult |= node->QueryFloatAttribute("far",&camera->_far);
+			queryResult |= node->QueryFloatAttribute("left",&camera->left);
+			queryResult |= node->QueryFloatAttribute("right",&camera->right);
+			queryResult |= node->QueryFloatAttribute("top",&camera->top);
+			queryResult |= node->QueryFloatAttribute("bottom",&camera->bottom);
+			if(queryResult != TIXML_SUCCESS) exit_("There is an error in ortho \"" +camera->id+ "\" camera values");
 
 			if(DEBUGMODE){
 				float attributes[]={camera->_near,camera->_far,camera->left,camera->right,camera->top,camera->bottom};
@@ -90,23 +135,30 @@ void LSFparser::getCameras(map<string, LSFcamera*> &cameras){
 			}
 		}
 		else{
-			camera->id=node->Attribute("id");
-			node->QueryFloatAttribute("near",&camera->_near);
-			node->QueryFloatAttribute("far",&camera->_far);
-			node->QueryFloatAttribute("angle",&camera->angle);
+			if(node->Attribute("id"))
+				camera->id=node->Attribute("id");
+			if(camera->id.empty())
+				exit_("camera id attribut is missing or misspelled.");
+			queryResult = node->QueryFloatAttribute("near",&camera->_near);
+			queryResult |= node->QueryFloatAttribute("far",&camera->_far);
+			queryResult |= node->QueryFloatAttribute("angle",&camera->angle);
 
 			// From
 			TiXmlElement *from, *to;
-			from=node->FirstChildElement("from");
-			from->QueryFloatAttribute("x",&camera->fromX);
-			from->QueryFloatAttribute("y",&camera->fromY);
-			from->QueryFloatAttribute("z",&camera->fromZ);
+			if((from=node->FirstChildElement("from")) == NULL)
+				exit_("Tag <from> is missing or misspelled.");
+			queryResult |= from->QueryFloatAttribute("x",&camera->fromX);
+			queryResult |= from->QueryFloatAttribute("y",&camera->fromY);
+			queryResult |= from->QueryFloatAttribute("z",&camera->fromZ);
 
 			// To
-			to=node->FirstChildElement("to");
-			to->QueryFloatAttribute("x",&camera->toX);
-			to->QueryFloatAttribute("y",&camera->toY);
-			to->QueryFloatAttribute("z",&camera->toZ);
+			if((to=node->FirstChildElement("to")) == NULL)
+				exit_("Tag <to> is missing or misspelled.");
+			queryResult |= to->QueryFloatAttribute("x",&camera->toX);
+			queryResult |= to->QueryFloatAttribute("y",&camera->toY);
+			queryResult |= to->QueryFloatAttribute("z",&camera->toZ);
+
+			if(queryResult != TIXML_SUCCESS) exit_("There is an error in perspective \"" +camera->id+ "\" camera values");
 
 			if(DEBUGMODE){
 				float attributes[]={camera->_near,camera->_far,camera->angle};
@@ -115,10 +167,9 @@ void LSFparser::getCameras(map<string, LSFcamera*> &cameras){
 				cout << endl;
 				cout << "\t\t\tFrom: " << camera->fromX << " " << camera->fromY << " " << camera->fromZ << endl;
 				cout << "\t\t\tTo: " << camera->toX << " " << camera->toY << " " << camera->toZ << endl;
-
 			}
-
 		}
+
 		if(camera->id == initial)
 			camera->initial = true;
 		else
@@ -317,7 +368,7 @@ void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
 	int counter = 0;
 	float emissive_vec[4], ambient_vec[4], diffuse_vec[4], specular_vec[4];
 	float shininess_value, texture_length_s, texture_length_t;
-	cout << "\n--- Aparencias  ---" << endl;
+	if(DEBUGMODE) cout << "\n--- Aparencias  ---" << endl;
 	// Loop trough appearances
 	while(node){
 		counter++;
