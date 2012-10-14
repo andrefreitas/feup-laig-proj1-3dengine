@@ -102,7 +102,9 @@ void LSFparser::getCameras(map<string, LSFcamera*> &cameras){
 		initial=camerasElement->Attribute("initial");
 	else
 		exit_("camera initial attribute is missing or misspelled.");
+
 	if(DEBUGMODE) cout << "\n--- Cameras: " << initial << " ---";
+
 	// Loop trough cameras
 	while(node){
 		counter++;
@@ -184,18 +186,30 @@ void LSFparser::getCameras(map<string, LSFcamera*> &cameras){
 
 void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 	const char * rootid=graphElement->Attribute("rootid");
-	rootNode.assign(rootid);
+	if(graphElement->Attribute("rootid"))
+		rootNode.assign(rootid);
+	else
+		exit_("graph rootid is missing or misspelled.");
+
 	if(DEBUGMODE) cout << "\n--- Graph: " << rootid << " ---"<< endl;
 	TiXmlElement *node=graphElement->FirstChildElement();
 
 	while(node){
 		LSFnode *pnode=new LSFnode();
 		pnode->id=new char[100];
-		strcpy(pnode->id,node->Attribute("id")); // save in the node
+
+		if(node->Attribute("id"))
+			strcpy(pnode->id,node->Attribute("id")); // save in the node
+		else
+			exit_("graph " +(string)node->Value()+ " id is missing or misspelled.");
+
 		if(DEBUGMODE) cout << "\tNode: " << node->Attribute("id") << endl;
 
 		// (1) Transforms
-		TiXmlElement *transforms=node->FirstChildElement("transforms");
+		TiXmlElement *transforms;
+		if((transforms = node->FirstChildElement("transforms")) == NULL)
+			exit_("Tag <transforms> at node " +(string)pnode->id+ " is missing or misspelled.");
+
 		TiXmlElement *transform=transforms->FirstChildElement();
 		if(DEBUGMODE)cout << "\tTransforms:"<< endl;
 		// Compute transforms
@@ -209,29 +223,39 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 			char axis;
 			const char* transVal=transform->Value();
 			if(strcmp(transVal,"translate")==0){
-				transform->QueryFloatAttribute("x",&x);
-				transform->QueryFloatAttribute("y",&y);
-				transform->QueryFloatAttribute("z",&z);
+				queryResult = transform->QueryFloatAttribute("x",&x);
+				queryResult |= transform->QueryFloatAttribute("y",&y);
+				queryResult |= transform->QueryFloatAttribute("z",&z);
+
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in translate values at node " +(string)pnode->id+ ".");
+
 				if(DEBUGMODE) cout << "\t\tTranslate: " << x << " " << y << " " << z << endl;
 				glTranslatef(x,y,z);
 
 			}
 			else if (strcmp(transVal,"rotate")==0){
-				transform->QueryFloatAttribute("angle",&angle);
-				axis=*transform->Attribute("axis");
+				if(transform->QueryFloatAttribute("angle",&angle) != TIXML_SUCCESS)
+					exit_("There is an error in rotate values at node " +(string)pnode->id+ ".");
+				axis = *transform->Attribute("axis");
+
 				if(DEBUGMODE) cout << "\t\tRotate: " << angle << " " << axis << endl;
+
 				x=0; y=0; z=0;
 				if(axis=='x') x=1;
-				if(axis=='y') y=1;
-				if(axis=='z') z=1;
+				else if(axis=='y') y=1;
+				else if(axis=='z') z=1;
+				else exit_("There is an error in rotate values at node " +(string)pnode->id+ ".");
 				glRotatef(angle,x,y,z);
-
 
 			}
 			else if (strcmp(transVal,"scale")==0){
-				transform->QueryFloatAttribute("x",&x);
-				transform->QueryFloatAttribute("y",&y);
-				transform->QueryFloatAttribute("z",&z);
+				queryResult = transform->QueryFloatAttribute("x",&x);
+				queryResult |= transform->QueryFloatAttribute("y",&y);
+				queryResult |= transform->QueryFloatAttribute("z",&z);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in scale values at node " +(string)pnode->id+ ".");
+
 				if(DEBUGMODE) cout << "\t\tScale: " << x << " " << y << " " << z << endl;
 				glScalef(x,y,z);
 
@@ -245,45 +269,70 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 
 		// (2) Appearance
 
-		TiXmlElement *appearanceref=node->FirstChildElement("appearanceref");
-		const char *appearance=appearanceref->Attribute("id");
-		pnode->appearance.assign(appearance);
+		TiXmlElement *appearanceref;
+		if((appearanceref = node->FirstChildElement("appearanceref")) == NULL)
+			exit_("Tag <appearanceref> at node " +(string)pnode->id+ " is missing or misspelled.");
+
+		if(appearanceref->Attribute("id"))
+			pnode->appearance = (string)appearanceref->Attribute("id");
+		else
+			exit_("appearanceref id at node " +(string)pnode->id+ " is missing or misspelled.");
+
 		if(DEBUGMODE) cout << "\tAppearance: " << pnode->appearance << endl;
 
 
 		// (3) Children
 		if(DEBUGMODE) cout << "\tChildren: " << endl;
-		TiXmlElement *children=node->FirstChildElement("children");
+		TiXmlElement *children;
+		if((children = node->FirstChildElement("children")) == NULL)
+			exit_("Tag <children> at node " +(string)pnode->id+ " is missing or misspelled.");
+
 		TiXmlElement *child=children->FirstChildElement();
+		if(child == NULL)
+			exit_("Tag <children> at node " +(string)pnode->id+ " is empty");
+
+		int existingChilds = 0;
+		int existingValidChilds = 0;
 		while(child){
-			const char* childVal=child->Value();
+			existingChilds++;
+			const char* childVal = child->Value();
+
 			map<const char*,float> attr;
 			// -->
 
 			if(strcmp(childVal,"rectangle")==0){
+				existingValidChilds++;
 				Primitive prim(rectangle);
-				child->QueryFloatAttribute("x1",&prim.attr["x1"]);
-				child->QueryFloatAttribute("x2",&prim.attr["x2"]);
-				child->QueryFloatAttribute("y1",&prim.attr["y1"]);
-				child->QueryFloatAttribute("y2",&prim.attr["y2"]);
+				queryResult = child->QueryFloatAttribute("x1",&prim.attr["x1"]);
+				queryResult |= child->QueryFloatAttribute("x2",&prim.attr["x2"]);
+				queryResult |= child->QueryFloatAttribute("y1",&prim.attr["y1"]);
+				queryResult |= child->QueryFloatAttribute("y2",&prim.attr["y2"]);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in rectangle values at node " +(string)pnode->id+ ".");
+
 				if(DEBUGMODE) cout << "\t\trectangle: " << prim.attr["x1"] << " " << prim.attr["y1"] << " " << prim.attr["x2"] << " " << prim.attr["y2"] << endl;
 				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"triangle")==0){
+				existingValidChilds++;
 				Primitive prim(triangle);
-				child->QueryFloatAttribute("x1",&prim.attr["x1"]);
-				child->QueryFloatAttribute("x2",&prim.attr["x2"]);
-				child->QueryFloatAttribute("x3",&prim.attr["x3"]);
-				child->QueryFloatAttribute("y1",&prim.attr["y1"]);
-				child->QueryFloatAttribute("y2",&prim.attr["y2"]);
-				child->QueryFloatAttribute("y3",&prim.attr["y3"]);
-				child->QueryFloatAttribute("z1",&prim.attr["z1"]);
-				child->QueryFloatAttribute("z2",&prim.attr["z2"]);
-				child->QueryFloatAttribute("z3",&prim.attr["z3"]);
+				queryResult = child->QueryFloatAttribute("x1",&prim.attr["x1"]);
+				queryResult |= child->QueryFloatAttribute("x2",&prim.attr["x2"]);
+				queryResult |= child->QueryFloatAttribute("x3",&prim.attr["x3"]);
+				queryResult |= child->QueryFloatAttribute("y1",&prim.attr["y1"]);
+				queryResult |= child->QueryFloatAttribute("y2",&prim.attr["y2"]);
+				queryResult |= child->QueryFloatAttribute("y3",&prim.attr["y3"]);
+				queryResult |= child->QueryFloatAttribute("z1",&prim.attr["z1"]);
+				queryResult |= child->QueryFloatAttribute("z2",&prim.attr["z2"]);
+				queryResult |= child->QueryFloatAttribute("z3",&prim.attr["z3"]);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in triangle values at node " +(string)pnode->id+ ".");
+
 				if(DEBUGMODE)cout << "\t\ttriangle " << prim.attr["x1"] << " " << prim.attr["y1"] << " " << prim.attr["z1"] << ""
 				    << prim.attr["x2"] << " " << prim.attr["y2"] << " " << prim.attr["z2"] << ""
 				    << prim.attr["x3"] << " " << prim.attr["y3"] << " " << prim.attr["z3"]
 				     << endl;
+
 				// Compute the normal
 				LSFvertex v1(prim.attr["x1"],prim.attr["y1"],prim.attr["z1"]);
 				LSFvertex v2(prim.attr["x2"],prim.attr["y2"],prim.attr["z2"]);
@@ -306,45 +355,66 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"cylinder")==0){
+				existingValidChilds++;
 				Primitive prim(cylinder);
 				int slices, stacks;
-				child->QueryFloatAttribute("base",&prim.attr["base"]);
-				child->QueryFloatAttribute("top",&prim.attr["top"]);
-				child->QueryFloatAttribute("height",&prim.attr["height"]);
-				child->QueryIntAttribute("slices",&slices);
-				child->QueryIntAttribute("stacks",&stacks);
+				queryResult = child->QueryFloatAttribute("base",&prim.attr["base"]);
+				queryResult |= child->QueryFloatAttribute("top",&prim.attr["top"]);
+				queryResult |= child->QueryFloatAttribute("height",&prim.attr["height"]);
+				queryResult |= child->QueryIntAttribute("slices",&slices);
+				queryResult |= child->QueryIntAttribute("stacks",&stacks);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in cylinder values at node " +(string)pnode->id+ ".");
+
 				prim.attr["slices"]=slices;
 				prim.attr["stacks"]=stacks;
+
 				if(DEBUGMODE) cout << "\t\tcylinder " << prim.attr["base"] << " " << prim.attr["top"] << " " << prim.attr["height"] << " "
 						<< prim.attr["slices"] << " " << prim.attr["stacks"] << endl;
+
 				pnode->childPrimitives.push_back(prim);
 
 			} else if(strcmp(childVal,"sphere")==0){
+				existingValidChilds++;
 				Primitive prim(sphere);
 				int slices,stacks;
-				child->QueryFloatAttribute("radius",&prim.attr["radius"]);
-				child->QueryIntAttribute("slices",&slices);
-				child->QueryIntAttribute("stacks",&stacks);
+				queryResult = child->QueryFloatAttribute("radius",&prim.attr["radius"]);
+				queryResult |= child->QueryIntAttribute("slices",&slices);
+				queryResult |= child->QueryIntAttribute("stacks",&stacks);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in sphere values at node " +(string)pnode->id+ ".");
+
 				prim.attr["slices"]=slices;
 				prim.attr["stacks"]=stacks;
+
 				if(DEBUGMODE) cout << "\t\tsphere " << prim.attr["radius"] << " " << prim.attr["slices"]<< " " << prim.attr["stacks"] << endl;
+
 				pnode->childPrimitives.push_back(prim);
 
 			}else if(strcmp(childVal,"torus")==0){
+				existingValidChilds++;
 				Primitive prim(torus);
 				int slices, loops;
-				child->QueryFloatAttribute("inner",&prim.attr["inner"]);
-				child->QueryFloatAttribute("outer",&prim.attr["outer"]);
-				child->QueryIntAttribute("slices",&slices);
-				child->QueryIntAttribute("loops",&loops);
+				queryResult = child->QueryFloatAttribute("inner",&prim.attr["inner"]);
+				queryResult |= child->QueryFloatAttribute("outer",&prim.attr["outer"]);
+				queryResult |= child->QueryIntAttribute("slices",&slices);
+				queryResult |= child->QueryIntAttribute("loops",&loops);
+				if(queryResult != TIXML_SUCCESS)
+					exit_("There is an error in triangle values at node " +(string)pnode->id+ ".");
+
 				prim.attr["slices"]=slices;
 				prim.attr["loops"]=loops;
-				//cout << "\t\ttorus " <<  prim.attr["inner"]<< " " << prim.attr["outer"] << " " << prim.attr["slices"] << " " << prim.attr["loops"]<<endl;
+
+				if(DEBUGMODE) cout << "\t\ttorus " <<  prim.attr["inner"]<< " " << prim.attr["outer"] << " " << prim.attr["slices"] << " " << prim.attr["loops"]<<endl;
+
 				pnode->childPrimitives.push_back(prim);
+
 			}else if(strcmp(childVal,"noderef")==0){
+				existingValidChilds++;
 				const char *idRef=child->Attribute("id");
 				string st(idRef);
 				pnode->childNoderefs.push_back(st);
+
 				if(DEBUGMODE) cout << "\t\tnoderef " << st << endl;
 
 			}
@@ -353,14 +423,27 @@ void LSFparser::getNodes(map<string,LSFnode*> &nodes,string &rootNode){
 			child=child->NextSiblingElement();
 		}
 
+		char buffer [33];
+		itoa((existingChilds - existingValidChilds), buffer, 30);
+		if(existingChilds != existingValidChilds)
+			exit_("Exists " +(string)buffer+ " invalid childs at node " +(string)pnode->id+ ".");
+
 		// -->
-		string aux;
-		aux.assign(pnode->id);
-		nodes[aux]=pnode; // Add this node
+		nodes[(string)pnode->id]=pnode; // Add this node
 		node=node->NextSiblingElement();
 		if(DEBUGMODE) cout << "\n\t-----\n";
 	}
 
+	bool rootidOK = false;
+	map<string,LSFnode*>::iterator it;
+	for(it = nodes.begin(); it != nodes.end(); it++){
+		if((*it).first == rootid){
+			rootidOK = true;
+			break;
+		}
+	}
+
+	if(!rootidOK) exit_("graph rootid is missing or misspelled.");
 }
 
 void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
