@@ -43,7 +43,7 @@ void LSFrender::render(map<string,LSFnode*> &nodes,string &rootNode,map<string,L
 				glEnd();
 			}break;
 			case triangle:{
-				glNormal3f(primitive.normal.x/primitive.normal.x,primitive.normal.y/primitive.normal.y,primitive.normal.z/primitive.normal.z);
+				glNormal3f(primitive.normal.x,primitive.normal.y,primitive.normal.z);
 				glBegin(GL_TRIANGLES);
 
 					// Compute the height and width of the triangle

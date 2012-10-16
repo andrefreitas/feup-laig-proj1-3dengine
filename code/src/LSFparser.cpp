@@ -561,16 +561,7 @@ void LSFparser::getAppearances(map<string,LSFappearance*> &appearances){
 		// Add to the map
 		CGFappearance* pappearance;
 		LSFappearance *pLSFappearance=new LSFappearance();
-
-		if(emissive != NULL)
-			pappearance = new CGFappearance(emissive_vec);
-		else
-			pappearance= new CGFappearance();
-
-		pappearance->setAmbient( ambient_vec);
-		pappearance->setDiffuse(diffuse_vec);
-		pappearance->setSpecular(specular_vec);
-		pappearance->setShininess(shininess_value);
+		pappearance= new CGFappearance(ambient_vec,diffuse_vec,specular_vec,shininess_value);
 		if(texture != NULL){
 			CGFtexture *text = new CGFtexture(texture->Attribute("file"));
 			text->setSize(texture_length_s, texture_length_t);
